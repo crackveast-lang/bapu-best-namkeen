@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { MARKETPLACES } from '@/data/site';
+import { asset } from '@/lib/asset';
 
 /**
  * "Also available on" — the official Amazon and Flipkart marks.
@@ -53,7 +54,7 @@ export default function MarketplaceLockup({ className = '' }: { className?: stri
 
           const mark = (
             <img
-              src={logo.src}
+              src={asset(logo.src)}
               alt={shop.label}
               width={logo.width}
               height={logo.height}

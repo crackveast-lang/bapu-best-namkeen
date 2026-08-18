@@ -11,8 +11,12 @@
 export const SITE = {
   name: 'Bapu Best Namkeen',
   shortName: 'Bapu Best',
-  /** Update once the domain is live — used for canonical URLs and OG tags. */
-  url: 'https://www.bapubest.com',
+  /**
+   * Canonical origin — drives canonical URLs, the sitemap and OG tags.
+   * Set NEXT_PUBLIC_SITE_URL per deployment; the fallback is the intended
+   * production domain, so pointing DNS at the host is the only step left.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bapubest.com',
   tagline: 'From the heart of Gwalior to your home.',
   description:
     'Bapu Best Namkeen — namkeen made in Gwalior by Sunnulal Amit Kumar and Sons. Traditional recipes, 100% vegetarian, made in an ISO 22000:2018 certified facility. Order on Amazon and Flipkart, or visit our stores in Gwalior.',

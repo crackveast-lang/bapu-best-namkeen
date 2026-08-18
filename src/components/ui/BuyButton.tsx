@@ -1,4 +1,5 @@
 import { MARKETPLACES } from '@/data/site';
+import { asset } from '@/lib/asset';
 
 type Marketplace = keyof typeof MARKETPLACES;
 
@@ -42,7 +43,7 @@ function Mark({ marketplace }: { marketplace: Marketplace }) {
   const m = MARKS[marketplace];
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={m.src} alt="" width={16} height={16} aria-hidden className={m.className} />
+    <img src={asset(m.src)} alt="" width={16} height={16} aria-hidden className={m.className} />
   );
 }
 
