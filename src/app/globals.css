@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Bapu Best — design tokens
+   Warm parchment ground, deep brown ink, brand maroon, saffron accent.
+   Pack colours below are sampled from the real packaging so a product card
+   can carry its own pack's accent.
+   ========================================================================== */
+
+@theme {
+  /* Ground */
+  --color-ivory: #fcf8f1;
+  --color-parchment: #f6efe2;
+  --color-cream: #efe4d1;
+  --color-sand: #e4d5bd;
+
+  /* Ink */
+  --color-ink: #2b1a12;
+  --color-ink-soft: #56412f;
+  --color-ink-faint: #8a7359;
+
+  /* Brand */
+  --color-maroon: #6d1420;
+  --color-maroon-deep: #4a0d16;
+  --color-crimson: #b01c2e;
+  --color-saffron: #e08a1e;
+  --color-saffron-soft: #f2b955;
+  --color-olive: #5b6b47;
+
+  /* Pack accents (sampled from packaging) */
+  --color-pack-ratlami: #1c4a9c;
+  --color-pack-sada: #e8901a;
+  --color-pack-milan: #4a2118;
+  --color-pack-kadipatta: #4c9a2a;
+  --color-pack-indori: #23a3b5;
+  --color-pack-red: #c42127;
+  --color-pack-khatta: #6b1220;
+  --color-pack-hing: #e06a16;
+
+  /* Type */
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-caveat), "Segoe Script", cursive;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Rhythm */
+  --spacing-section: 7rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-saffron);
+    color: var(--color-maroon-deep);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-maroon);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Hide scrollbars on the horizontal rails without losing keyboard scroll. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  /* Paper grain — a single inline SVG turbulence, no network request. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.14'/%3E%3C/svg%3E");
+  }
+
+  /* Editorial eyebrow above a section heading. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  /* Underline that draws in on hover — used across nav and text links. */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.4s var(--ease-out-soft);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@layer utilities {
+  /* --- Hero marquee -------------------------------------------------- */
+  /* The track holds two identical copies of the pack list, so shifting it
+     exactly -50% loops seamlessly with no JavaScript. */
+  @keyframes marquee-track {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee-track var(--marquee-duration, 48s) linear infinite;
+    will-change: transform;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* --- Floating hero elements ---------------------------------------- */
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(var(--drift-rot, 0deg));
+    }
+    50% {
+      transform: translate3d(0, var(--drift-y, -10px), 0)
+        rotate(calc(var(--drift-rot, 0deg) + var(--drift-spin, 3deg)));
+    }
+  }
+
+  .drift {
+    animation: drift var(--drift-duration, 7s) ease-in-out infinite;
+    animation-delay: var(--drift-delay, 0s);
+    will-change: transform;
+  }
+
+  /* White-sweep studio shots dropped onto the warm page: multiply makes the
+     backdrop vanish while keeping the pack's own shadow. Far cleaner than a
+     cut-out mask on packs whose labels are themselves white. */
+  .blend-pack {
+    mix-blend-mode: multiply;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .drift {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
