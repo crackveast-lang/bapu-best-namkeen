@@ -11,5 +11,11 @@
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 export function asset(path: string): string {
+  if (!BASE) return path;
+  // Idempotent: next/image applies basePath itself in some build modes but not
+  // when `unoptimized` is set, so this must be safe to call either way.
+  if (path.startsWith(`${BASE}/`)) return path;
+  // Data URIs and absolute URLs are already complete.
+  if (!path.startsWith('/')) return path;
   return `${BASE}${path}`;
 }

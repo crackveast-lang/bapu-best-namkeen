@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { img, type ImageKey } from '@/data/image-meta';
+import { asset } from '@/lib/asset';
 
 type Props = {
   /** Key into the generated image manifest. */
@@ -33,7 +34,7 @@ export default function Media({
   if (fill) {
     return (
       <Image
-        src={meta.src}
+        src={asset(meta.src)}
         alt={alt}
         fill
         sizes={sizes}
@@ -48,7 +49,7 @@ export default function Media({
 
   return (
     <Image
-      src={meta.src}
+      src={asset(meta.src)}
       alt={alt}
       width={meta.width}
       height={meta.height}
