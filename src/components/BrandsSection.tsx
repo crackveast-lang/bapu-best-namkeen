@@ -1,6 +1,7 @@
-import Link from 'next/link';
 import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
+import Spotlight from '@/components/ui/Spotlight';
+import DrawIn from '@/components/ui/DrawIn';
 import { SectionHeading } from '@/components/ui/Bits';
 import { BRANDS, type Brand } from '@/data/products';
 import { Flourish, SevStrands } from '@/components/art/Doodles';
@@ -8,8 +9,14 @@ import Decor from '@/components/art/Decor';
 
 function BrandCard({ brand, index }: { brand: Brand; index: number }) {
   return (
-    <Reveal as="article" delay={index * 0.08} className="group h-full">
-      <Link
+    <Reveal
+      as="article"
+      delay={index * 0.08}
+      variant={index === 0 ? 'left' : 'right'}
+      y={22}
+      className="group h-full"
+    >
+      <Spotlight
         href={brand.href}
         className="relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-ink/10 bg-ivory transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:border-ink/20 hover:shadow-[0_44px_70px_-52px_rgba(43,26,18,0.7)]"
       >
@@ -20,7 +27,7 @@ function BrandCard({ brand, index }: { brand: Brand; index: number }) {
           style={{ background: brand.accent }}
         />
 
-        <div className="relative aspect-16/11 overflow-hidden bg-cream">
+        <div className="sheen relative aspect-16/11 overflow-hidden bg-cream">
           <Media
             name={brand.image}
             alt={`${brand.name} packaging photographed with a bowl of namkeen`}
@@ -37,7 +44,7 @@ function BrandCard({ brand, index }: { brand: Brand; index: number }) {
           />
         </div>
 
-        <div className="flex flex-1 flex-col p-6 sm:p-7">
+        <div className="relative z-[2] flex flex-1 flex-col p-6 sm:p-7">
           <h3 className="text-[1.6rem] leading-tight">{brand.name}</h3>
           <p className="mt-1 text-[0.7rem] font-semibold tracking-[0.16em] text-ink-faint uppercase">
             {brand.lockup}
@@ -57,7 +64,7 @@ function BrandCard({ brand, index }: { brand: Brand; index: number }) {
             </span>
           </span>
         </div>
-      </Link>
+      </Spotlight>
     </Reveal>
   );
 }
@@ -70,15 +77,15 @@ export default function BrandsSection() {
         <Reveal>
           <SectionHeading
             eyebrow="Our brands"
-            title={<span id="brands-heading">Two names. One love for great namkeen.</span>}
+            title="Two names. One love for great namkeen."
+            titleId="brands-heading"
             lede="Both are made by the same family, in the same city. One has been on Gwalior's kitchen shelves for decades; the other was built to travel."
           />
         </Reveal>
 
-        <Flourish
-          aria-hidden
-          className="mt-10 hidden w-40 text-ink/20 md:block"
-        />
+        <DrawIn delay={220} className="mt-10 hidden w-40 md:block">
+          <Flourish aria-hidden className="w-full text-ink/20" />
+        </DrawIn>
 
         <div className="mt-10 grid gap-6 md:mt-12 md:grid-cols-2 lg:gap-8">
           {Object.values(BRANDS).map((brand, i) => (

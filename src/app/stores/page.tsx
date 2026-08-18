@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
+import TextReveal from '@/components/ui/TextReveal';
 import StoreMap from '@/components/StoreMap';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 import { StoreCard } from '@/components/StoresSection';
@@ -30,9 +31,11 @@ export default function StoresPage() {
         />
         <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8">
           <Eyebrow>Our stores</Eyebrow>
-          <h1 className="mt-5 max-w-3xl text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]">
-            Come say namaste.
-          </h1>
+          <TextReveal
+            as="h1"
+            text="Come say namaste."
+            className="mt-5 max-w-3xl text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]"
+          />
           <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ink-soft">
             Find Bapu Best near you in Gwalior. Our counter at {LEGAL.addressLine} is both the
             shop and the kitchen — the address printed on the back of every pack.

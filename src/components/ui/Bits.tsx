@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import Reveal from '@/components/ui/Reveal';
+import TextReveal from '@/components/ui/TextReveal';
 
 /* ------------------------------------------------------------------ *
  * Wordmark
@@ -40,31 +42,38 @@ export function Wordmark({
  * Section furniture
  * ------------------------------------------------------------------ */
 
+/** The rule to the left of the label draws itself out as the eyebrow arrives. */
 export function Eyebrow({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <p className={`eyebrow flex items-center gap-2.5 ${className}`}>
-      <span className="h-px w-6 bg-current opacity-45" />
+    <Reveal as="p" variant="fade" duration={0.5} className={`eyebrow flex items-center gap-2.5 ${className}`}>
+      <span className="h-px w-6 origin-left animate-[grow-rule_0.7s_cubic-bezier(0.16,1,0.3,1)] bg-current opacity-45" />
       {children}
-    </p>
+    </Reveal>
   );
 }
 
 export function SectionHeading({
   eyebrow,
   title,
+  titleId,
   lede,
   align = 'left',
   className = '',
   children,
 }: {
   eyebrow?: string;
+  /** A plain string gets the word-by-word mask reveal; a node is rendered as-is. */
   title: ReactNode;
+  /** Anchor id for the <h2>, when `title` is a plain string. */
+  titleId?: string;
   lede?: ReactNode;
   align?: 'left' | 'center';
   className?: string;
   children?: ReactNode;
 }) {
   const centered = align === 'center';
+  const headingClass = 'mt-4 text-[clamp(1.9rem,4.4vw,3.1rem)] leading-[1.06]';
+
   return (
     <div
       className={`${centered ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'} ${className}`}
@@ -72,11 +81,19 @@ export function SectionHeading({
       {eyebrow ? (
         <Eyebrow className={centered ? 'justify-center' : ''}>{eyebrow}</Eyebrow>
       ) : null}
-      <h2 className="mt-4 text-[clamp(1.9rem,4.4vw,3.1rem)] leading-[1.06]">{title}</h2>
+
+      {typeof title === 'string' ? (
+        <TextReveal as="h2" id={titleId} text={title} className={headingClass} delay={0.08} />
+      ) : (
+        <h2 className={headingClass}>{title}</h2>
+      )}
+
       {lede ? (
-        <p className="mt-4 max-w-xl text-[0.98rem] leading-relaxed text-ink-soft md:text-[1.03rem]">
-          {lede}
-        </p>
+        <Reveal delay={0.18} y={12}>
+          <p className="mt-4 max-w-xl text-[0.98rem] leading-relaxed text-ink-soft md:text-[1.03rem]">
+            {lede}
+          </p>
+        </Reveal>
       ) : null}
       {children}
     </div>

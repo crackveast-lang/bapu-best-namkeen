@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
+import TextReveal from '@/components/ui/TextReveal';
+import DrawIn from '@/components/ui/DrawIn';
 import ProductCard from '@/components/ProductCard';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 import { ArrowLink, Eyebrow } from '@/components/ui/Bits';
@@ -24,14 +26,20 @@ export default function BrandsPage() {
         <Decor variant="header" />
         <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8">
           <Eyebrow>Our brands</Eyebrow>
-          <h1 className="mt-5 max-w-3xl text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]">
-            Two names. One love for great namkeen.
-          </h1>
-          <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ink-soft">
-            The same family, the same kadhai, the same city. What changes is the pack — and
-            how far it travels.
-          </p>
-          <Flourish aria-hidden className="mt-8 w-40 text-ink/20" />
+          <TextReveal
+            as="h1"
+            text="Two names. One love for great namkeen."
+            className="mt-5 max-w-3xl text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]"
+          />
+          <Reveal delay={0.2} y={12}>
+            <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ink-soft">
+              The same family, the same kadhai, the same city. What changes is the pack — and
+              how far it travels.
+            </p>
+          </Reveal>
+          <DrawIn delay={320} className="mt-8 block w-40">
+            <Flourish aria-hidden className="w-full text-ink/20" />
+          </DrawIn>
         </div>
       </section>
 

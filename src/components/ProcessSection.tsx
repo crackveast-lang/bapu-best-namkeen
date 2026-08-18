@@ -65,7 +65,8 @@ export default function ProcessSection() {
         <Reveal>
           <SectionHeading
             eyebrow="How we make it"
-            title={<span id="process-heading">From our kitchen to your home.</span>}
+            title="From our kitchen to your home."
+            titleId="process-heading"
             lede="Five steps, described only as far as we can evidence them. Where the detail is still with the family, you will see a marked gap rather than a guess."
           />
         </Reveal>

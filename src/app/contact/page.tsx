@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/ui/Reveal';
+import TextReveal from '@/components/ui/TextReveal';
 import Media from '@/components/ui/Media';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 import { Eyebrow, Placeholder } from '@/components/ui/Bits';
@@ -58,12 +59,16 @@ export default function ContactPage() {
         <div className="mx-auto grid w-full max-w-[88rem] items-end gap-10 px-5 sm:px-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Eyebrow>Contact</Eyebrow>
-            <h1 className="mt-5 text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]">
-              Say hello to Gwalior.
-            </h1>
-            <p className="mt-6 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
-              Call the shop, write to us, or come and stand at the counter. All three work.
-            </p>
+            <TextReveal
+              as="h1"
+              text="Say hello to Gwalior."
+              className="mt-5 text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]"
+            />
+            <Reveal delay={0.2} y={12}>
+              <p className="mt-6 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
+                Call the shop, write to us, or come and stand at the counter. All three work.
+              </p>
+            </Reveal>
           </div>
           <div className="lg:col-span-5">
             <div className="relative aspect-16/10 overflow-hidden rounded-[1.5rem] border border-ink/10">

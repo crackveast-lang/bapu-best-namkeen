@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Media from '@/components/ui/Media';
 import BuyButton from '@/components/ui/BuyButton';
+import Spotlight from '@/components/ui/Spotlight';
 import { BRANDS, type Product } from '@/data/products';
 import { Sparkle } from '@/components/art/Doodles';
 
@@ -18,12 +19,13 @@ export default function ProductCard({
   const brand = BRANDS[product.brand];
 
   return (
-    <article
-      className={`group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-ink/10 bg-ivory transition-[transform,box-shadow,border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-ink/18 hover:bg-parchment hover:shadow-[0_36px_60px_-46px_rgba(43,26,18,0.65)] ${className}`}
+    <Spotlight
+      as="article"
+      className={`group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-ink/10 bg-ivory transition-[transform,box-shadow,border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:border-ink/18 hover:bg-parchment hover:shadow-[0_36px_60px_-46px_rgba(43,26,18,0.65)] ${className}`}
     >
       <Link
         href={`/namkeen/${product.slug}`}
-        className="relative block aspect-4/5 overflow-hidden bg-cream"
+        className="sheen relative block aspect-4/5 overflow-hidden bg-cream"
         aria-label={`${product.name} — view pack details`}
       >
         <Media
@@ -42,7 +44,7 @@ export default function ProductCard({
         />
 
         <span
-          className="absolute top-3.5 left-3.5 rounded-full px-2.5 py-1 text-[0.58rem] font-semibold tracking-[0.14em] text-ivory uppercase"
+          className="absolute top-3.5 left-3.5 z-10 rounded-full px-2.5 py-1 text-[0.58rem] font-semibold tracking-[0.14em] text-ivory uppercase transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5"
           style={{ background: product.accent }}
         >
           {brand.name}
@@ -50,11 +52,11 @@ export default function ProductCard({
 
         <Sparkle
           aria-hidden
-          className="pointer-events-none absolute top-4 right-4 w-5 -translate-y-1 text-ivory/0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:text-ivory/75"
+          className="pointer-events-none absolute top-4 right-4 z-10 w-5 -translate-y-1 text-ivory/0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:text-ivory/75"
         />
       </Link>
 
-      <div className="flex flex-1 flex-col p-4 sm:p-5">
+      <div className="relative z-[2] flex flex-1 flex-col p-4 sm:p-5">
         <h3 className="text-[1.16rem] leading-tight">
           <Link href={`/namkeen/${product.slug}`} className="link-underline">
             {product.name}
@@ -90,6 +92,6 @@ export default function ProductCard({
           />
         </div>
       </div>
-    </article>
+    </Spotlight>
   );
 }

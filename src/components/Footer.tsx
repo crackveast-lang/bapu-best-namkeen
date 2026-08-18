@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { CONTACT, LEGAL, SITE, SOCIAL } from '@/data/site';
+import Reveal, { Stagger, StaggerItem } from '@/components/ui/Reveal';
 import { Placeholder, Wordmark } from '@/components/ui/Bits';
 import BuyButton from '@/components/ui/BuyButton';
 import GwaliorSkyline from '@/components/art/GwaliorSkyline';
@@ -48,7 +49,7 @@ export default function Footer() {
       <div className="relative mx-auto w-full max-w-[88rem] px-5 pt-16 pb-10 sm:px-8 md:pt-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           {/* ---- brand block ---- */}
-          <div className="lg:col-span-4">
+          <Reveal className="lg:col-span-4">
             <Wordmark tone="ivory" className="scale-[1.15] origin-left" />
             <p className="mt-7 max-w-xs font-display text-[1.22rem] leading-snug text-ivory/85 italic">
               Proudly made in Gwalior. Bringing authentic taste to every home.
@@ -67,36 +68,47 @@ export default function Footer() {
                 className="!border-ivory/30 !bg-transparent !text-ivory hover:!border-ivory/60"
               />
             </div>
-          </div>
+          </Reveal>
 
           {/* ---- link columns ---- */}
-          <nav
-            aria-label="Footer"
+          <Stagger
+            as="div"
+            step={0.05}
             className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5"
           >
-            {COLUMNS.map((col) => (
-              <div key={col.title}>
-                <h2 className="font-sans text-[0.66rem] font-semibold tracking-[0.2em] text-ivory/45 uppercase">
-                  {col.title}
-                </h2>
-                <ul className="mt-4 space-y-2.5">
-                  {col.links.map((l) => (
-                    <li key={l.href}>
-                      <Link
-                        href={l.href}
-                        className="link-underline text-[0.86rem] text-ivory/75 transition-colors hover:text-ivory"
-                      >
-                        {l.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
+            <nav aria-label="Footer" className="contents">
+              {COLUMNS.map((col) => (
+                <StaggerItem key={col.title}>
+                  <h2 className="font-sans text-[0.66rem] font-semibold tracking-[0.2em] text-ivory/45 uppercase">
+                    {col.title}
+                  </h2>
+                  <ul className="mt-4 space-y-2.5">
+                    {col.links.map((l) => (
+                      <li key={l.href}>
+                        <Link
+                          href={l.href}
+                          className="group/fl inline-flex items-center gap-1.5 text-[0.86rem] text-ivory/75 transition-colors hover:text-ivory"
+                        >
+                          <span className="link-underline">{l.label}</span>
+                          {/* The arrow is absent until hover, then slides in —
+                              a nudge, not a permanent row of chevrons. */}
+                          <span
+                            aria-hidden
+                            className="-translate-x-1 text-[0.75rem] opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/fl:translate-x-0 group-hover/fl:opacity-100"
+                          >
+                            →
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </StaggerItem>
+              ))}
+            </nav>
+          </Stagger>
 
           {/* ---- contact ---- */}
-          <div className="lg:col-span-3">
+          <Reveal delay={0.12} className="lg:col-span-3">
             <h2 className="font-sans text-[0.66rem] font-semibold tracking-[0.2em] text-ivory/45 uppercase">
               Contact
             </h2>
@@ -153,11 +165,11 @@ export default function Footer() {
                 </Placeholder>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
 
         {/* ---- legal strip ---- */}
-        <div className="mt-14 border-t border-ivory/12 pt-7">
+        <Reveal variant="fade" className="mt-14 border-t border-ivory/12 pt-7">
           <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 text-[0.72rem] text-ivory/50">
             <p>
               &copy; {year} {LEGAL.entity}. All rights reserved.
@@ -173,7 +185,7 @@ export default function Footer() {
             {LEGAL.proprietor}. Orders placed through Amazon or Flipkart are fulfilled under
             those marketplaces&rsquo; own terms.
           </p>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );

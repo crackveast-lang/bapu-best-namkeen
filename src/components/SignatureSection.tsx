@@ -23,7 +23,8 @@ export default function SignatureSection() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Our signature namkeen"
-              title={<span id="signature-heading">Made for every craving.</span>}
+              title="Made for every craving."
+              titleId="signature-heading"
               lede={`${PRODUCTS.length} mixtures and sevs across our two brands, each with its own pack and its own reason to reach for it.`}
               className="max-w-xl"
             />

@@ -11,6 +11,7 @@ import MarketplaceLockup from '@/components/ui/MarketplaceLockup';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 import BuyButton from '@/components/ui/BuyButton';
 import Reveal from '@/components/ui/Reveal';
+import TextReveal from '@/components/ui/TextReveal';
 import { Placeholder } from '@/components/ui/Bits';
 import { Rays, SevStrands, Sparkle } from '@/components/art/Doodles';
 
@@ -148,15 +149,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <p className="text-[0.68rem] font-semibold tracking-[0.18em] text-ink-faint uppercase">
                 {brand.name}
               </p>
-              <h1
+              <TextReveal
+                as="h1"
                 id="product-title"
+                text={product.name}
                 className="mt-2 text-[clamp(2rem,5vw,3.1rem)] leading-[1.02]"
-              >
-                {product.name}
-              </h1>
-              <p className="mt-1.5 font-script text-[1.35rem] leading-none text-saffron">
-                {product.strapline}
-              </p>
+              />
+              <Reveal delay={0.16} y={10}>
+                <p className="mt-1.5 font-script text-[1.35rem] leading-none text-saffron">
+                  {product.strapline}
+                </p>
+              </Reveal>
 
               {/* weight — no price, because we have no MRP on record */}
               <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -180,6 +183,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </p>
 
               {/* ---- the only purchase actions on the site ---- */}
+              {/* Not magnetic: these two stretch to fill the row, and the
+                  magnetic wrapper's own box would swallow `flex-1`. */}
               <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
                 <BuyButton
                   marketplace="amazon"

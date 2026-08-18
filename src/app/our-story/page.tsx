@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
+import DrawIn from '@/components/ui/DrawIn';
 import Timeline from '@/components/Timeline';
 import ProcessSection from '@/components/ProcessSection';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
@@ -37,10 +38,9 @@ export default function OurStoryPage() {
             It started in{' '}
             <span className="relative inline-block">
               Gwalior.
-              <CircleScribble
-                aria-hidden
-                className="pointer-events-none absolute -inset-x-5 -inset-y-4 h-[calc(100%+2rem)] w-[calc(100%+2.5rem)] text-saffron/55"
-              />
+              <DrawIn delay={620} className="pointer-events-none absolute inset-0">
+                <CircleScribble className="absolute -inset-x-5 -inset-y-4 h-[calc(100%+2rem)] w-[calc(100%+2.5rem)] text-saffron/55" />
+              </DrawIn>
             </span>
           </h1>
           <p className="mt-8 max-w-2xl font-display text-[1.2rem] leading-relaxed text-ivory/85 italic md:text-[1.4rem]">
@@ -101,12 +101,19 @@ export default function OurStoryPage() {
       </section>
 
       {/* ---------------- timeline ---------------- */}
-      <section className="grain bg-parchment py-16 md:py-24" aria-labelledby="timeline-heading">
+      {/* `overflow-hidden` because the timeline entries slide in from the
+          left and right: until each one is scrolled to, it rests at its
+          offset, which at narrow widths would sit outside the viewport. */}
+      <section
+        className="grain overflow-hidden bg-parchment py-16 md:py-24"
+        aria-labelledby="timeline-heading"
+      >
         <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
           <Reveal>
             <SectionHeading
               eyebrow="The long version"
-              title={<span id="timeline-heading">Six decades, in order.</span>}
+              title="Six decades, in order."
+              titleId="timeline-heading"
               lede="Two of these dates come off the packs themselves. The rest are marked, and stay marked, until the family fills them in."
               align="center"
             />

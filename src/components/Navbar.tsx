@@ -44,7 +44,11 @@ export default function Navbar() {
           scrolled ? 'h-16' : 'h-20 md:h-24'
         }`}
       >
-        <Link href="/" className="shrink-0" aria-label="Bapu Best Namkeen — home">
+        <Link
+          href="/"
+          className="shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
+          aria-label="Bapu Best Namkeen — home"
+        >
           <Wordmark />
         </Link>
 
@@ -154,6 +158,17 @@ export default function Navbar() {
                 className="flex-1"
               />
             </div>
+
+            {/* Scrim over the page below the sheet. Anchored to the sheet's own
+                foot rather than the viewport, so it never tints the bar above
+                it. Decorative — the sheet also closes on navigation. */}
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden
+              onClick={() => setOpen(false)}
+              className="absolute inset-x-0 top-full h-screen cursor-default bg-ink/25 backdrop-blur-[2px]"
+            />
           </motion.div>
         ) : null}
       </AnimatePresence>

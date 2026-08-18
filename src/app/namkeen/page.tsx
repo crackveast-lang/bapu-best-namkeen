@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
+import TextReveal from '@/components/ui/TextReveal';
 import ProductCard from '@/components/ProductCard';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 import { Eyebrow } from '@/components/ui/Bits';
@@ -28,15 +29,17 @@ export default function NamkeenPage() {
         <div className="mx-auto grid w-full max-w-[88rem] items-end gap-10 px-5 sm:px-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Eyebrow>Our namkeen</Eyebrow>
-            <h1 className="mt-5 text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]">
-              {PRODUCTS.length} ways to reach
-              <br />
-              for the pack.
-            </h1>
-            <p className="mt-6 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
-              Sevs and mixtures across both our brands. Every one is fried and seasoned in
-              Gwalior, and every one is on the shelf at our Phalka Bazar counter.
-            </p>
+            <TextReveal
+              as="h1"
+              text={`${PRODUCTS.length} ways to reach\nfor the pack.`}
+              className="mt-5 text-[clamp(2.4rem,6.5vw,4.4rem)] leading-[1.0]"
+            />
+            <Reveal delay={0.22} y={12}>
+              <p className="mt-6 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
+                Sevs and mixtures across both our brands. Every one is fried and seasoned in
+                Gwalior, and every one is on the shelf at our Phalka Bazar counter.
+              </p>
+            </Reveal>
           </div>
           <div className="lg:col-span-5">
             <div className="relative aspect-4/3 overflow-hidden rounded-[1.5rem] border border-ink/10">

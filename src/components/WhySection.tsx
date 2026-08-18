@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import Reveal from '@/components/ui/Reveal';
+import Reveal, { Stagger, StaggerItem } from '@/components/ui/Reveal';
+import DrawIn from '@/components/ui/DrawIn';
 import { SectionHeading } from '@/components/ui/Bits';
 import { LEGAL } from '@/data/site';
 import { Flourish } from '@/components/art/Doodles';
@@ -96,28 +97,39 @@ export default function WhySection() {
         <Reveal>
           <SectionHeading
             eyebrow="Why Bapu Best"
-            title={<span id="why-heading">Nothing here that isn&rsquo;t on the pack.</span>}
+            title="Nothing here that isn’t on the pack."
+            titleId="why-heading"
             lede="Six things we can point to and prove — printed on the pouch, or on the licence behind it."
             align="center"
           />
-          <Flourish aria-hidden className="mx-auto mt-8 w-36 text-ink/20" />
+          <DrawIn delay={260} className="mx-auto mt-8 block w-36">
+            <Flourish aria-hidden className="w-full text-ink/20" />
+          </DrawIn>
         </Reveal>
 
-        <ul className="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f, i) => (
-            <Reveal as="li" key={f.title} delay={i * 0.06}>
-              <div className="flex gap-4">
-                <span className="grid size-12 shrink-0 place-items-center rounded-full border border-ink/12 bg-parchment text-maroon">
+        <Stagger as="ul" step={0.08} className="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f) => (
+            <StaggerItem as="li" key={f.title}>
+              {/* The whole row is the hover target, so the icon reacts wherever
+                  the cursor lands on the card — not just on the 48px disc. */}
+              <div className="group/f flex gap-4">
+                <span className="relative grid size-12 shrink-0 place-items-center rounded-full border border-ink/12 bg-parchment text-maroon transition-[transform,border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/f:-translate-y-1 group-hover/f:border-maroon/30 group-hover/f:bg-saffron/15">
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 rounded-full border border-saffron/0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/f:scale-125 group-hover/f:border-saffron/35"
+                  />
                   {f.icon}
                 </span>
                 <div>
-                  <h3 className="text-[1.08rem] leading-snug">{f.title}</h3>
+                  <h3 className="text-[1.08rem] leading-snug transition-colors duration-300 group-hover/f:text-maroon">
+                    {f.title}
+                  </h3>
                   <p className="mt-1.5 text-[0.87rem] leading-relaxed text-ink-soft">{f.body}</p>
                 </div>
               </div>
-            </Reveal>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </div>
     </section>
   );

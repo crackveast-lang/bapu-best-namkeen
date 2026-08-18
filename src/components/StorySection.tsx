@@ -1,5 +1,8 @@
 import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
+import Counter from '@/components/ui/Counter';
+import Parallax from '@/components/ui/Parallax';
+import DrawIn from '@/components/ui/DrawIn';
 import { ArrowLink, Copy, Eyebrow } from '@/components/ui/Bits';
 import { STORY_INTRO } from '@/data/story';
 import { LEGAL } from '@/data/site';
@@ -24,16 +27,20 @@ export default function StorySection() {
 
       <div className="relative mx-auto grid w-full max-w-[88rem] items-center gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
         {/* ---- image ---- */}
-        <Reveal className="lg:col-span-6">
-          <figure className="relative">
+        <Reveal className="lg:col-span-6" variant="left" y={24}>
+          <figure className="group relative">
             <div className="relative aspect-4/3 overflow-hidden rounded-[1.5rem] border border-ivory/12 shadow-[0_50px_90px_-50px_rgba(0,0,0,0.8)]">
-              <Media
-                name={STORY_INTRO.image}
-                alt="Inside a Bapu Best shop in Gwalior, with namkeen and sweets on the counter"
-                fill
-                sizes="(max-width: 1024px) 92vw, 46vw"
-                imgClassName="object-cover"
-              />
+              {/* The photograph is oversized and drifts inside its frame, so the
+                  counter reads as a window rather than a pasted-on card. */}
+              <Parallax speed={0.06} className="absolute inset-[-6%]" innerClassName="relative size-full">
+                <Media
+                  name={STORY_INTRO.image}
+                  alt="Inside a Bapu Best shop in Gwalior, with namkeen and sweets on the counter"
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 46vw"
+                  imgClassName="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                />
+              </Parallax>
             </div>
             <figcaption className="mt-3 text-[0.72rem] tracking-[0.08em] text-ivory/50 uppercase">
               Our counter in {LEGAL.city}
@@ -52,10 +59,11 @@ export default function StorySection() {
             It started in{' '}
             <span className="relative inline-block">
               Gwalior.
-              <CircleScribble
-                aria-hidden
-                className="pointer-events-none absolute -inset-x-4 -inset-y-3 h-[calc(100%+1.5rem)] w-[calc(100%+2rem)] text-saffron/55"
-              />
+              {/* The circle is drawn round the word once it is in view, a beat
+                  after the line lands — the gesture of someone ringing it. */}
+              <DrawIn delay={520} className="pointer-events-none absolute inset-0">
+                <CircleScribble className="absolute -inset-x-4 -inset-y-3 h-[calc(100%+1.5rem)] w-[calc(100%+2rem)] text-saffron/55" />
+              </DrawIn>
             </span>
           </h2>
 
@@ -72,7 +80,9 @@ export default function StorySection() {
               <dt className="text-[0.66rem] tracking-[0.18em] text-ivory/45 uppercase">
                 On packs since
               </dt>
-              <dd className="mt-1 font-display text-[2rem] leading-none text-saffron">1960</dd>
+              <dd className="mt-1 font-display text-[2rem] leading-none text-saffron">
+                <Counter to={1960} from={1930} duration={1.6} />
+              </dd>
             </div>
             <div>
               <dt className="text-[0.66rem] tracking-[0.18em] text-ivory/45 uppercase">

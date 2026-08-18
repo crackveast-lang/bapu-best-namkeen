@@ -10,7 +10,7 @@ export function StoreCard({ store, className = '' }: { store: Store; className?:
     <article
       className={`group flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-ink/10 bg-ivory transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-ink/20 hover:shadow-[0_36px_60px_-46px_rgba(43,26,18,0.6)] ${className}`}
     >
-      <div className="relative aspect-16/10 overflow-hidden bg-cream">
+      <div className="sheen relative aspect-16/10 overflow-hidden bg-cream">
         <Media
           name={store.image}
           alt={
@@ -81,7 +81,8 @@ export default function StoresSection() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Our stores"
-              title={<span id="stores-heading">Come say namaste.</span>}
+              title="Come say namaste."
+              titleId="stores-heading"
               lede="Find Bapu Best near you in Gwalior. The Phalka Bazar counter is where everything is still made."
               className="max-w-xl"
             />

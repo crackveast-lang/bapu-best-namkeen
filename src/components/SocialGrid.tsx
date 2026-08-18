@@ -66,7 +66,8 @@ export default function SocialGrid() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="A little taste of Bapu Best"
-              title={<span id="social-heading">Namkeen, shop and city.</span>}
+              title="Namkeen, shop and city."
+              titleId="social-heading"
               lede="Everything on this wall was photographed for us, in Gwalior."
               className="max-w-xl"
             />
@@ -93,7 +94,8 @@ export default function SocialGrid() {
             <Reveal
               key={tile.name}
               delay={i * 0.05}
-              className={`${tile.span} group relative overflow-hidden rounded-[0.9rem] border border-ink/10 bg-cream`}
+              variant="scale"
+              className={`${tile.span} sheen group relative overflow-hidden rounded-[0.9rem] border border-ink/10 bg-cream`}
             >
               <Media
                 name={tile.name}

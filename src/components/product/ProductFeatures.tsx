@@ -73,8 +73,8 @@ export default function ProductFeatures() {
               delay={i * 0.06}
               className="w-[68vw] shrink-0 snap-start sm:w-[42vw] lg:w-auto"
             >
-              <div className="flex h-full flex-col rounded-[1.1rem] border border-ink/10 bg-parchment p-5">
-                <span className="grid size-12 place-items-center rounded-full border border-ink/12 bg-ivory text-maroon">
+              <div className="group/pf flex h-full flex-col rounded-[1.1rem] border border-ink/10 bg-parchment p-5 transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-ink/20 hover:shadow-[0_30px_50px_-40px_rgba(43,26,18,0.6)]">
+                <span className="grid size-12 place-items-center rounded-full border border-ink/12 bg-ivory text-maroon transition-[transform,border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/pf:scale-108 group-hover/pf:border-maroon/30 group-hover/pf:bg-saffron/15">
                   <FeatureIcon kind={f.icon} />
                 </span>
                 <h3 className="mt-4 text-[1.02rem] leading-snug">{f.title}</h3>

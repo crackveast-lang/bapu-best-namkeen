@@ -12,12 +12,15 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
   const rail = useRef<HTMLUListElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const sync = useCallback(() => {
     const el = rail.current;
     if (!el) return;
     setAtStart(el.scrollLeft < 8);
     setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 8);
+    const travel = el.scrollWidth - el.clientWidth;
+    setProgress(travel > 0 ? el.scrollLeft / travel : 0);
   }, []);
 
   useEffect(() => {
@@ -56,28 +59,48 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
         ))}
       </ul>
 
+      {/* Progress rail — the one control that works on touch, where the
+          arrows are hidden and there is otherwise nothing to say how far the
+          list runs. */}
+      <div className="mt-6 h-px w-full overflow-hidden bg-ink/10" aria-hidden>
+        <div
+          className="h-full origin-left bg-maroon/70 transition-transform duration-200 ease-out"
+          style={{ transform: `scaleX(${Math.max(0.06, progress)})` }}
+        />
+      </div>
+
       {/* controls — desktop only; touch users just swipe */}
-      <div className="mt-7 hidden items-center gap-3 md:flex">
+      <div className="mt-6 hidden items-center gap-3 md:flex">
         <button
           type="button"
           onClick={() => nudge(-1)}
           disabled={atStart}
           aria-label="Previous products"
-          className="grid size-11 place-items-center rounded-full border border-ink/18 text-ink transition-all duration-300 hover:border-ink/45 hover:bg-ink hover:text-ivory disabled:pointer-events-none disabled:opacity-25"
+          className="group/n grid size-11 place-items-center rounded-full border border-ink/18 text-ink transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-ink/45 hover:bg-ink hover:text-ivory active:translate-y-0 disabled:pointer-events-none disabled:opacity-25"
         >
-          <span aria-hidden>←</span>
+          <span
+            aria-hidden
+            className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/n:-translate-x-0.5"
+          >
+            ←
+          </span>
         </button>
         <button
           type="button"
           onClick={() => nudge(1)}
           disabled={atEnd}
           aria-label="More products"
-          className="grid size-11 place-items-center rounded-full border border-ink/18 text-ink transition-all duration-300 hover:border-ink/45 hover:bg-ink hover:text-ivory disabled:pointer-events-none disabled:opacity-25"
+          className="group/n grid size-11 place-items-center rounded-full border border-ink/18 text-ink transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-ink/45 hover:bg-ink hover:text-ivory active:translate-y-0 disabled:pointer-events-none disabled:opacity-25"
         >
-          <span aria-hidden>→</span>
+          <span
+            aria-hidden
+            className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/n:translate-x-0.5"
+          >
+            →
+          </span>
         </button>
         <p className="ml-2 text-[0.72rem] tracking-[0.1em] text-ink-faint uppercase">
-          Scroll for more
+          {atEnd ? 'That’s the shelf' : 'Scroll for more'}
         </p>
       </div>
     </div>

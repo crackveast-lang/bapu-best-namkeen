@@ -6,6 +6,10 @@ import AnnouncementBar from '@/components/AnnouncementBar';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import StickyBuyBar from '@/components/StickyBuyBar';
+import Preloader from '@/components/ui/Preloader';
+import ScrollProgress from '@/components/ui/ScrollProgress';
+import BackToTop from '@/components/ui/BackToTop';
+import PageTransition from '@/components/ui/PageTransition';
 import { CONTACT, LEGAL, SITE } from '@/data/site';
 
 const fraunces = Fraunces({
@@ -116,12 +120,38 @@ function StructuredData() {
   );
 }
 
+/**
+ * Runs before first paint. If the loader has already played in this tab, it
+ * stamps the flag that `html[data-preloaded] #preloader { display: none }`
+ * keys off, so repeat page loads never flash the overlay while React hydrates.
+ */
+const PRELOAD_FLAG = `try{if(sessionStorage.getItem('bapu:preloaded')==='1')document.documentElement.dataset.preloaded='1'}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en-IN"
       className={`${fraunces.variable} ${jakarta.variable} ${caveat.variable}`}
+      // The preload script stamps `data-preloaded` on this element before
+      // hydration, which React would otherwise report as a server/client
+      // mismatch. Scoped to the attribute on <html> only.
+      suppressHydrationWarning
     >
+      <head>
+        {/* eslint-disable-next-line react/no-danger */}
+        <script dangerouslySetInnerHTML={{ __html: PRELOAD_FLAG }} />
+        {/* Without scripting, nothing ever animates — so anything an animation
+            was going to reveal has to be revealed up front instead.
+
+            The preloader is drawn in the server HTML so that it covers the page
+            before hydration, but only JavaScript takes it away; left alone, the
+            curtain would never lift. And Framer Motion serialises each `initial`
+            as an inline `opacity:0`, so every reveal on the page would stay
+            invisible. Both rules apply only when scripts are off. */}
+        <noscript>
+          <style>{`#preloader{display:none!important}[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="antialiased">
         <a
           href="#main"
@@ -129,11 +159,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <Preloader />
+        <ScrollProgress />
         <AnnouncementBar />
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
         <StickyBuyBar />
+        <BackToTop />
         <StructuredData />
       </body>
     </html>

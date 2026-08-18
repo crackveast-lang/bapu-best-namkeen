@@ -1,3 +1,4 @@
+import Magnetic from '@/components/ui/Magnetic';
 import { MARKETPLACES } from '@/data/site';
 import { asset } from '@/lib/asset';
 
@@ -12,6 +13,14 @@ type Props = {
   href?: string;
   className?: string;
   label?: string;
+  /**
+   * Leans towards the cursor. Reserve it for the page's primary CTA.
+   *
+   * Adds an inline-flex wrapper, so it cannot be combined with a `className`
+   * that sizes the button from its parent (`flex-1`, `w-full`) — the wrapper,
+   * not the button, would need the rule.
+   */
+  magnetic?: boolean;
 };
 
 const SIZES = {
@@ -61,12 +70,15 @@ export default function BuyButton({
   href,
   className = '',
   label,
+  magnetic = false,
 }: Props) {
   const shop = MARKETPLACES[marketplace];
   const target = href ?? shop.href;
   const unset = target === '#';
 
-  const classes = `group/buy inline-flex items-center justify-center rounded-full font-semibold tracking-[0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:translate-y-px ${SIZES[size]} ${VARIANTS[variant]} ${className}`;
+  // `sheen` adds the one-pass light sweep on hover; `overflow-hidden` keeps it
+  // inside the pill. The lift is small enough to read as pressure, not bounce.
+  const classes = `group/buy sheen inline-flex items-center justify-center overflow-hidden rounded-full font-semibold tracking-[0.01em] transition-[background-color,border-color,color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 active:translate-y-px ${SIZES[size]} ${VARIANTS[variant]} ${className}`;
 
   const inner = (
     <>
@@ -85,25 +97,23 @@ export default function BuyButton({
 
   // Until the storefront URL is set in src/data/site.ts, render an inert
   // button rather than a link to "#" that would jump the page to the top.
-  if (unset) {
-    return (
-      <button
-        type="button"
-        disabled
-        data-placeholder-link
-        title={`${shop.label} link not set yet — see CONTENT-TODO.md`}
-        className={`${classes} cursor-not-allowed`}
-      >
-        {inner}
-      </button>
-    );
-  }
-
-  return (
+  const el = unset ? (
+    <button
+      type="button"
+      disabled
+      data-placeholder-link
+      title={`${shop.label} link not set yet — see CONTENT-TODO.md`}
+      className={`${classes} cursor-not-allowed`}
+    >
+      {inner}
+    </button>
+  ) : (
     <a href={target} target="_blank" rel="noopener noreferrer" className={classes}>
       {inner}
     </a>
   );
+
+  return magnetic ? <Magnetic>{el}</Magnetic> : el;
 }
 
 /** Both buttons, in the order used everywhere on the site. */
@@ -112,16 +122,30 @@ export function BuyPair({
   className = '',
   amazonHref,
   flipkartHref,
+  magnetic = false,
 }: {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   amazonHref?: string;
   flipkartHref?: string;
+  magnetic?: boolean;
 }) {
   return (
     <div className={`flex flex-wrap items-center gap-2.5 ${className}`}>
-      <BuyButton marketplace="amazon" variant="solid" size={size} href={amazonHref} />
-      <BuyButton marketplace="flipkart" variant="outline" size={size} href={flipkartHref} />
+      <BuyButton
+        marketplace="amazon"
+        variant="solid"
+        size={size}
+        href={amazonHref}
+        magnetic={magnetic}
+      />
+      <BuyButton
+        marketplace="flipkart"
+        variant="outline"
+        size={size}
+        href={flipkartHref}
+        magnetic={magnetic}
+      />
     </div>
   );
 }

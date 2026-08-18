@@ -116,6 +116,16 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.14'/%3E%3C/svg%3E");
   }
 
+  /* The short rule beside an eyebrow, drawn out from its left edge. */
+  @keyframes grow-rule {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
   /* Editorial eyebrow above a section heading. */
   .eyebrow {
     font-family: var(--font-sans);
@@ -187,12 +197,221 @@
   .blend-pack {
     mix-blend-mode: multiply;
   }
+
+  /* --- Preloader ------------------------------------------------------ */
+  /* A blocking inline script in <head> stamps `data-preloaded` on <html>
+     when this session has already seen the loader, so the overlay is gone
+     before first paint on every subsequent page load — no flash, no
+     hydration wait. */
+  html[data-preloaded] #preloader {
+    display: none !important;
+  }
+
+  /* The sunburst behind the wordmark turns while the page loads. */
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .spin-slow {
+    animation: spin-slow var(--spin-duration, 9s) linear infinite;
+  }
+
+  /* --- Hover sheen ----------------------------------------------------- */
+  /* A diagonal band of light that sweeps once across a card on hover. The
+     band lives outside the box until `--sheen-x` is animated across it. */
+  @keyframes sheen-sweep {
+    from {
+      transform: translateX(-130%) skewX(-18deg);
+    }
+    to {
+      transform: translateX(230%) skewX(-18deg);
+    }
+  }
+
+  .sheen {
+    position: relative;
+  }
+  .sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 253, 248, 0.42) 46%,
+      rgba(255, 253, 248, 0.62) 50%,
+      transparent
+    );
+    transform: translateX(-130%) skewX(-18deg);
+    transition: opacity 0.25s linear;
+  }
+  .group:hover .sheen::before,
+  .sheen:hover::before {
+    opacity: 1;
+    animation: sheen-sweep 0.95s var(--ease-out-soft);
+  }
+
+  /* --- Pointer spotlight ------------------------------------------------ */
+  /* `--mx`/`--my` are written by the Spotlight component on pointer move. */
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-soft);
+    background: radial-gradient(
+      16rem circle at var(--mx, 50%) var(--my, 50%),
+      rgba(224, 138, 30, 0.16),
+      transparent 62%
+    );
+  }
+  .spotlight[data-lit="true"]::after {
+    opacity: 1;
+  }
+
+  /* --- Stroke draw-in --------------------------------------------------- */
+  /* Any SVG path inside gets dashed out then drawn once it is in view.
+     `pathLength="1"` on the path keeps the maths independent of geometry. */
+  @keyframes draw-stroke {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .draw-in path,
+  .draw-in circle,
+  .draw-in line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .draw-in[data-drawn="true"] path,
+  .draw-in[data-drawn="true"] circle,
+  .draw-in[data-drawn="true"] line {
+    animation: draw-stroke 1.5s var(--ease-out-soft) forwards;
+  }
+
+  /* --- Shimmer placeholder ---------------------------------------------- */
+  @keyframes shimmer {
+    to {
+      background-position: 200% 0;
+    }
+  }
+  .shimmer {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-cream) 8%,
+      var(--color-parchment) 22%,
+      var(--color-cream) 36%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* --- Attention pulse --------------------------------------------------- */
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.55;
+    }
+    70% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+  .pulse-ring {
+    animation: pulse-ring 2.4s var(--ease-out-soft) infinite;
+  }
+
+  /* --- Page entrance ------------------------------------------------------ */
+  /* No fill mode: the element sits at its natural, visible state before and
+     after the run, so a page that never animates is still a page you can read. */
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .page-enter {
+    animation: page-enter 0.5s var(--ease-out-soft);
+  }
+
+  /* --- Accordion ---------------------------------------------------------- */
+  /* Native <details> toggles discretely, so the panel cannot be height-
+     animated without JavaScript. Fading and easing the content in on open
+     gives the disclosure a sense of movement while keeping the element — and
+     its no-JavaScript behaviour — completely native. */
+  @keyframes accordion-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  details[open] > .accordion-panel {
+    animation: accordion-in 0.4s var(--ease-out-soft);
+  }
+
+  /* --- Scroll cue --------------------------------------------------------- */
+  @keyframes scroll-cue {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(9px);
+      opacity: 0;
+    }
+  }
+  .scroll-cue {
+    animation: scroll-cue 2s var(--ease-out-soft) infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
-  .drift {
+  .drift,
+  .spin-slow,
+  .shimmer,
+  .pulse-ring,
+  .scroll-cue {
     animation: none !important;
+  }
+
+  /* Sheen and spotlight are pure decoration — drop them rather than flash
+     them at 0.01ms, which reads as a glitch. */
+  .sheen::before,
+  .spotlight::after {
+    display: none !important;
+  }
+
+  /* A drawn line that never finishes drawing is an invisible line. */
+  .draw-in path,
+  .draw-in circle,
+  .draw-in line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
   }
 
   html {

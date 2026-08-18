@@ -19,7 +19,7 @@ npm start
 
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**
 - **Tailwind CSS v4** — tokens live in `@theme` at the top of `src/app/globals.css`
-- **Framer Motion** for reveals and the hero parallax
+- **Framer Motion** for the reveals, parallax and preloader — see [Motion](#motion)
 - `next/image` for every photograph, with generated blur placeholders
 
 ## Where things live
@@ -36,7 +36,10 @@ src/
   components/
     art/                 GwaliorSkyline, Doodles, IngredientIcons — original SVG
     product/             Gallery, Accordion, IngredientBreakdown, Features, Related
-    ui/                  Media, BuyButton, MarketplaceLockup, Reveal, Bits
+    ui/                  Media, BuyButton, MarketplaceLockup, Bits
+                         motion: Preloader, Reveal, TextReveal, Counter,
+                         Parallax, ScrollLine, ScrollProgress, DrawIn,
+                         Magnetic, Spotlight, BackToTop, PageTransition
     *.tsx                one file per homepage section
   data/
     site.ts              business facts, marketplace links, verified claims
@@ -122,6 +125,40 @@ Two forms, both derived from the same official files:
   is ~135 KB of traced clip paths — far too heavy for an 18px button icon.
 
 See CONTENT-TODO.md for the one brand-policy check worth doing before launch.
+
+### Motion
+
+Everything moves for a reason, and everything stops under
+`prefers-reduced-motion`. The pieces, in `components/ui/`:
+
+| Component | What it does |
+| --- | --- |
+| `Preloader` | First-visit brand curtain: the heritage seal, a real progress bar, then a curtain wipe. Once per tab. |
+| `Reveal` / `Stagger` | Scroll-in entrance. Seven variants (`up`, `left`, `scale`, `blur`, …); `Stagger` + `StaggerItem` time a group from one place. |
+| `TextReveal` | Headline that rises a word at a time from behind a clipping mask. Takes a string; `\n` breaks the line. |
+| `Counter` | Counts a number up when it reaches view. Renders the final value on the server. |
+| `Parallax` / `ScrollLine` | Scroll-linked drift inside a frame; a rule that fills as its block is read. |
+| `DrawIn` | Draws SVG strokes on. Needs `pathLength={1}` on the paths. |
+| `Magnetic` / `Spotlight` | Cursor-led hover: a CTA that leans in, a card lit where you point. Mouse only. |
+| `ScrollProgress` / `BackToTop` | Reading position across the top; a return control with a progress ring. |
+| `PageTransition` | Enter-only fade-and-rise on route change, keyed to the pathname. |
+
+Three things are easy to get wrong here:
+
+- **The preloader must render without JavaScript.** It exists for slow
+  connections, so nothing inside it may carry a Framer `initial` — that
+  serialises to `opacity: 0` in the server HTML and the loader would be a blank
+  circle until hydration. The seal is plain markup on purpose.
+- **Never branch the tree on `useReducedMotion`.** The server cannot know the
+  preference, so `if (reduced) return null` hydrates into a mismatch. Hide with
+  `motion-reduce:hidden` instead — `ScrollProgress` shows the pattern.
+- **A horizontal `Reveal` needs a clipped section.** Until it is scrolled to, the
+  element rests at its x-offset; on a narrow screen that sits outside the
+  viewport. Any section using `variant="left"`/`"right"` must be
+  `overflow-hidden`.
+
+The hero marquee, the drift, the sheen and the accordion stay pure CSS
+(`globals.css`), so they cost no JavaScript and no hydration.
 
 ### Decoration
 

@@ -16,6 +16,33 @@ import {
   SpiceScatter,
 } from '@/components/art/Doodles';
 import { Boondi, CornFlake, GreenPeas, SevStrand, Wafer } from '@/components/art/IngredientIcons';
+import { Floater } from '@/components/art/Decor';
+
+/**
+ * The three lines of the headline. `wrap` styles the clipping mask (margins and
+ * the padding that stops descenders being shaved); `className` styles the type
+ * that travels inside it.
+ */
+const HERO_LINES = [
+  {
+    text: 'From the heart of',
+    wrap: 'pb-[0.12em]',
+    className:
+      'font-script text-[clamp(1.9rem,5vw,2.9rem)] leading-[0.95] text-saffron',
+  },
+  {
+    text: 'Gwalior',
+    wrap: 'mt-1 pb-[0.06em]',
+    className:
+      'font-display text-[clamp(3.4rem,11.5vw,6.6rem)] leading-[0.86] font-semibold tracking-[-0.035em] text-maroon',
+  },
+  {
+    text: 'to your home.',
+    wrap: 'mt-2 pb-[0.08em]',
+    className:
+      'font-display text-[clamp(1.15rem,3.4vw,1.9rem)] leading-[1.1] font-normal tracking-[0.09em] text-ink uppercase',
+  },
+] as const;
 
 const TRUST = [
   { label: 'Traditional recipes', icon: 'recipe' },
@@ -68,47 +95,6 @@ function TrustIcon({ kind }: { kind: (typeof TRUST)[number]['icon'] }) {
   }
 }
 
-/**
- * A small drifting snack piece. Position and motion are passed in so the whole
- * scatter can be tuned from one place, and each one gets its own rhythm so they
- * never move in lockstep.
- */
-function Floater({
-  children,
-  className,
-  y = -12,
-  rot = 0,
-  spin = 4,
-  duration = 8,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  y?: number;
-  rot?: number;
-  spin?: number;
-  duration?: number;
-  delay?: number;
-}) {
-  return (
-    <span
-      aria-hidden
-      className={`drift pointer-events-none absolute ${className ?? ''}`}
-      style={
-        {
-          '--drift-y': `${y}px`,
-          '--drift-rot': `${rot}deg`,
-          '--drift-spin': `${spin}deg`,
-          '--drift-duration': `${duration}s`,
-          '--drift-delay': `${delay}s`,
-        } as React.CSSProperties
-      }
-    >
-      {children}
-    </span>
-  );
-}
-
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
@@ -123,6 +109,7 @@ export default function Hero() {
   const backY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '6%']);
   const frontY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '22%']);
   const archY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-7%']);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
 
   return (
     <section
@@ -159,22 +146,37 @@ export default function Hero() {
       <div className="relative mx-auto grid w-full max-w-[88rem] grid-cols-1 items-center gap-y-4 px-5 pt-10 pb-4 sm:px-8 lg:grid-cols-12 lg:gap-6 lg:pt-12 lg:pb-10">
         {/* ================= LEFT ================= */}
         <div className="relative lg:col-span-5 lg:pr-6">
+          {/* Each line rises out from behind its own clipping mask, one after
+              the next, so the headline sets itself rather than fading on. */}
           <motion.h1
             id="hero-heading"
-            initial={{ opacity: 0, y: reduced ? 0 : 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden"
+            animate="shown"
+            variants={{
+              hidden: {},
+              shown: { transition: { staggerChildren: reduced ? 0 : 0.11 } },
+            }}
             className="relative"
           >
-            <span className="block font-script text-[clamp(1.9rem,5vw,2.9rem)] leading-[0.95] text-saffron">
-              From the heart of
-            </span>
-            <span className="mt-1 block font-display text-[clamp(3.4rem,11.5vw,6.6rem)] leading-[0.86] font-semibold tracking-[-0.035em] text-maroon">
-              Gwalior
-            </span>
-            <span className="mt-2 block font-display text-[clamp(1.15rem,3.4vw,1.9rem)] leading-[1.1] font-normal tracking-[0.09em] text-ink uppercase">
-              to your home.
-            </span>
+            {HERO_LINES.map((line) => (
+              <span key={line.text} className={`block overflow-hidden ${line.wrap}`}>
+                <motion.span
+                  variants={{
+                    // `opacity: 0` alongside the mask — see the note in
+                    // TextReveal: it keeps the no-JS fallback selector uniform.
+                    hidden: { y: reduced ? 0 : '105%', opacity: 0 },
+                    shown: {
+                      y: 0,
+                      opacity: 1,
+                      transition: { duration: reduced ? 0.25 : 0.95, ease: [0.16, 1, 0.3, 1] },
+                    },
+                  }}
+                  className={`block ${line.className}`}
+                >
+                  {line.text}
+                </motion.span>
+              </span>
+            ))}
 
             <Floater
               className="-top-8 right-4 hidden w-24 text-saffron/50 xl:block"
@@ -203,7 +205,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="relative mt-8"
           >
-            <BuyPair size="lg" />
+            <BuyPair size="lg" magnetic />
             <p className="mt-3 text-[0.75rem] text-ink-faint">
               Prefer to visit?{' '}
               <a href="/stores" className="link-underline font-medium text-ink">
@@ -217,21 +219,34 @@ export default function Hero() {
           </motion.div>
 
           <motion.ul
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.36 }}
+            initial="hidden"
+            animate="shown"
+            variants={{
+              hidden: {},
+              shown: {
+                transition: { staggerChildren: reduced ? 0 : 0.08, delayChildren: 0.36 },
+              },
+            }}
             className="mt-10 grid grid-cols-2 gap-x-4 gap-y-3.5 border-t border-ink/10 pt-7 sm:max-w-md"
           >
             {TRUST.map((t) => (
-              <li
+              <motion.li
                 key={t.label}
-                className="flex items-center gap-2.5 text-[0.73rem] leading-tight font-medium text-ink-soft"
+                variants={{
+                  hidden: { opacity: 0, y: reduced ? 0 : 10 },
+                  shown: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: reduced ? 0.2 : 0.6, ease: [0.16, 1, 0.3, 1] },
+                  },
+                }}
+                className="group/t flex items-center gap-2.5 text-[0.73rem] leading-tight font-medium text-ink-soft transition-colors hover:text-ink"
               >
-                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-ink/12 bg-ivory/70 text-maroon">
+                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-ink/12 bg-ivory/70 text-maroon transition-[transform,border-color,background-color] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/t:-translate-y-0.5 group-hover/t:scale-110 group-hover/t:border-maroon/35 group-hover/t:bg-saffron/15">
                   <TrustIcon kind={t.icon} />
                 </span>
                 {t.label}
-              </li>
+              </motion.li>
             ))}
           </motion.ul>
         </div>
@@ -270,9 +285,16 @@ export default function Hero() {
                 ride on the SAME element every time — a transformed parent would
                 isolate the blend and the pack would render as a white box. */}
             <div className="relative">
+              {/* The entrance animates `scale` only. `y` is already driven by
+                  the parallax motion value on this same element, and nothing
+                  may animate `opacity` here — see the blend note above. */}
+
               {/* back left — Indori, tucked behind the hero pack */}
               <motion.div
                 style={{ y: backY }}
+                initial={{ scale: reduced ? 1 : 0.9 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.1, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
                 className="blend-pack absolute bottom-[6%] left-0 z-0 w-[38%] max-w-[11rem] sm:max-w-[12.5rem] lg:max-w-[14rem]"
               >
                 <Media
@@ -286,6 +308,9 @@ export default function Hero() {
               {/* the hero pack */}
               <motion.figure
                 style={{ y: packY }}
+                initial={{ scale: reduced ? 1 : 0.92 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="blend-pack relative z-10 px-10 sm:px-16 lg:px-12"
               >
                 <Media
@@ -300,6 +325,9 @@ export default function Hero() {
               {/* front right — Kadipatta, overlapping the hero pack */}
               <motion.div
                 style={{ y: frontY }}
+                initial={{ scale: reduced ? 1 : 0.9 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.1, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
                 className="blend-pack absolute right-0 bottom-0 z-20 w-[42%] max-w-[12rem] sm:max-w-[13.5rem] lg:max-w-[15rem]"
               >
                 <Media
@@ -312,10 +340,22 @@ export default function Hero() {
             </div>
 
             {/* ---------- heritage badge ---------- */}
-            <div className="absolute top-2 right-2 z-20 sm:top-0 sm:right-6 lg:top-4 lg:right-2">
-              <div className="grid size-24 place-items-center rounded-full border border-saffron/45 bg-ivory/92 text-center shadow-[0_18px_34px_-20px_rgba(43,26,18,0.6)] backdrop-blur-sm sm:size-28">
+            {/* Stamped on a beat after the packs settle, and it leans in when
+                you point at it — the one piece of the hero that answers back. */}
+            <motion.div
+              initial={{ opacity: 0, scale: reduced ? 1 : 0.7, rotate: reduced ? 0 : -14 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.85, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={reduced ? undefined : { scale: 1.06, rotate: 4 }}
+              className="group/badge absolute top-2 right-2 z-20 sm:top-0 sm:right-6 lg:top-4 lg:right-2"
+            >
+              <div className="grid size-24 place-items-center rounded-full border border-saffron/45 bg-ivory/92 text-center shadow-[0_18px_34px_-20px_rgba(43,26,18,0.6)] backdrop-blur-sm transition-shadow duration-500 group-hover/badge:shadow-[0_26px_48px_-22px_rgba(43,26,18,0.7)] sm:size-28">
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full border border-saffron/0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/badge:scale-110 group-hover/badge:border-saffron/40"
+                />
                 <div>
-                  <Rays className="mx-auto mb-0.5 w-8 text-saffron" />
+                  <Rays className="mx-auto mb-0.5 w-8 text-saffron transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/badge:scale-110" />
                   <span className="block font-display text-[0.62rem] leading-[1.15] font-semibold tracking-[0.13em] text-maroon uppercase sm:text-[0.68rem]">
                     Heritage
                     <br />
@@ -323,7 +363,7 @@ export default function Hero() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* ---------- floating snack pieces ---------- */}
             <Floater className="top-[12%] left-[2%] w-11 text-maroon/45 sm:w-14" y={-14} rot={-12} duration={7.5}>
@@ -368,9 +408,24 @@ export default function Hero() {
 
       {/* ================= MARQUEE ================= */}
       <div className="relative mt-4 pb-7 lg:mt-0">
-        <p className="mx-auto mb-1 w-full max-w-[88rem] px-5 text-[0.66rem] font-semibold tracking-[0.2em] text-ink-faint uppercase sm:px-8">
-          The whole shelf
-        </p>
+        <div className="mx-auto mb-1 flex w-full max-w-[88rem] items-center justify-between px-5 sm:px-8">
+          <p className="text-[0.66rem] font-semibold tracking-[0.2em] text-ink-faint uppercase">
+            The whole shelf
+          </p>
+
+          {/* Scroll cue. Fades out over the first fifth of the hero, so it
+              never lingers once the visitor has taken the hint. */}
+          <motion.span
+            aria-hidden
+            style={{ opacity: cueOpacity }}
+            className="pointer-events-none hidden items-center gap-2.5 text-[0.6rem] font-semibold tracking-[0.22em] text-ink-faint uppercase lg:flex"
+          >
+            Scroll
+            <span className="flex h-7 w-4.5 justify-center rounded-full border border-ink/20 pt-1.5">
+              <span className="scroll-cue size-1 rounded-full bg-maroon" />
+            </span>
+          </motion.span>
+        </div>
         <PackMarquee />
       </div>
 

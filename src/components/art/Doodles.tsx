@@ -86,7 +86,12 @@ export function CircleScribble({ className, strokeWidth = 2 }: D) {
       {...base}
       strokeWidth={strokeWidth}
     >
-      <path d="M180 12C132 2 66 4 30 20 4 32 2 56 24 68c30 16 122 20 178 6 32-8 40-30 16-44-12-7-32-12-52-14" />
+      {/* pathLength normalises the stroke to 0…1 so <DrawIn> can dash it
+          without knowing the geometry. Purely a unit change when undrawn. */}
+      <path
+        pathLength={1}
+        d="M180 12C132 2 66 4 30 20 4 32 2 56 24 68c30 16 122 20 178 6 32-8 40-30 16-44-12-7-32-12-52-14"
+      />
     </svg>
   );
 }
@@ -94,8 +99,8 @@ export function CircleScribble({ className, strokeWidth = 2 }: D) {
 export function Flourish({ className, strokeWidth = 1.5 }: D) {
   return (
     <svg viewBox="0 0 200 24" className={className} aria-hidden {...base} strokeWidth={strokeWidth}>
-      <path d="M4 14c26 0 26-8 44-8s18 8 44 8 26-8 44-8 18 8 44 8" />
-      <path d="M96 4c3-2 6-2 9 0M96 20c3 2 6 2 9 0" opacity={0.6} />
+      <path pathLength={1} d="M4 14c26 0 26-8 44-8s18 8 44 8 26-8 44-8 18 8 44 8" />
+      <path pathLength={1} d="M96 4c3-2 6-2 9 0M96 20c3 2 6 2 9 0" opacity={0.6} />
     </svg>
   );
 }
