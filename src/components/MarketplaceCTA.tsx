@@ -7,6 +7,7 @@ import { BuyPair } from '@/components/ui/BuyButton';
 import { Eyebrow } from '@/components/ui/Bits';
 import MarketplaceLockup from '@/components/ui/MarketplaceLockup';
 import { Peanut, SevStrands, Sparkle } from '@/components/art/Doodles';
+import PatternPanel from '@/components/art/PatternPanel';
 
 /** The conversion moment. One heading, two buttons, nothing competing. */
 export default function MarketplaceCTA() {
@@ -53,22 +54,33 @@ export default function MarketplaceCTA() {
         <Sparkle className="w-full" />
       </Floater>
 
-      <div className="relative mx-auto grid w-full max-w-[88rem] items-center gap-12 px-5 sm:px-8 lg:grid-cols-12">
+      {/* The buy band is dressed as a printed mithai-box label: block-print
+          field, die-cut corners, gold hairline frame. The pattern is held well
+          back so the heading and buttons stay the loudest thing here. */}
+      <div className="relative mx-auto w-full max-w-[88rem] px-5 sm:px-8">
+        <PatternPanel
+          tone="blush"
+          patternOpacity={0.9}
+          scale={0.72}
+          notch="2.75rem"
+          className="px-6 py-14 sm:px-10 md:px-14 md:py-20"
+        >
+      <div className="grid items-center gap-12 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
-          <Eyebrow>Buy online</Eyebrow>
+          <Eyebrow className="!text-maroon">Buy online</Eyebrow>
           <TextReveal
             as="h2"
             id="cta-heading"
             text="Your favourite namkeen is just a click away."
             className="mt-5 max-w-2xl text-[clamp(2.1rem,5.4vw,3.8rem)] leading-[1.02]"
           />
-          <p className="mt-5 max-w-lg text-[1rem] leading-relaxed text-ink-soft">
+          <p className="mt-5 max-w-lg text-[1rem] leading-relaxed text-ink">
             Now available on Amazon and Flipkart, delivered anywhere in India — the same
             400&nbsp;g packs we sell over the counter in Gwalior.
           </p>
           <BuyPair size="lg" className="mt-9" magnetic />
-          <MarketplaceLockup className="mt-9 border-t border-ink/12 pt-7" />
-          <p className="mt-4 text-[0.75rem] text-ink-faint">
+          <MarketplaceLockup className="mt-9 border-t border-maroon/20 pt-7" />
+          <p className="mt-4 text-[0.75rem] text-ink-soft">
             Bapu Best does not sell directly from this site — every order is fulfilled by the
             marketplace you choose.
           </p>
@@ -93,6 +105,8 @@ export default function MarketplaceCTA() {
             </div>
           </figure>
         </Reveal>
+      </div>
+        </PatternPanel>
       </div>
     </section>
   );

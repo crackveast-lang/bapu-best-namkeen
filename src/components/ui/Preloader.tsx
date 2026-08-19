@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Wordmark } from '@/components/ui/Bits';
-import { BadgeRing, Rays, SevStrands } from '@/components/art/Doodles';
+import { BadgeRing, SevStrands } from '@/components/art/Doodles';
 import { EASE } from '@/components/ui/Reveal';
 
 /**
@@ -115,7 +115,7 @@ export default function Preloader() {
             {/* --- seal + wordmark --- */}
             {/* The same furniture as the hero's "Heritage of taste" badge, so
                 the loader is recognisably this site rather than a spinner. */}
-            <div className="relative grid size-36 place-items-center">
+            <div className="relative grid size-44 place-items-center">
               <span
                 className="pulse-ring absolute inset-2 rounded-full border border-saffron/30"
                 aria-hidden
@@ -129,10 +129,9 @@ export default function Preloader() {
                   hydrates, and a framer `initial` renders as opacity:0 in the
                   server HTML — the loader would be a blank circle on exactly
                   the slow connections it exists for. */}
-              <div className="text-center">
-                <Rays className="mx-auto mb-1.5 w-9 text-saffron" aria-hidden />
-                <Wordmark className="scale-[0.92]" />
-              </div>
+              {/* The badge carries its own sunburst, so the loose <Rays> that
+                  stood in for it before would now read as a second sun. */}
+              <Wordmark stacked />
             </div>
 
             {/* --- progress --- */}

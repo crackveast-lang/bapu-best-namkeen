@@ -5,6 +5,7 @@ import { Eyebrow, Placeholder } from '@/components/ui/Bits';
 import { TESTIMONIALS } from '@/data/story';
 import { SpiceScatter } from '@/components/art/Doodles';
 import Decor from '@/components/art/Decor';
+import Pattern from '@/components/art/Pattern';
 
 /**
  * No reviews have been supplied. Every slot renders as a visibly empty quote
@@ -16,6 +17,11 @@ export default function Testimonials() {
       className="grain relative overflow-hidden bg-maroon py-20 text-ivory md:py-28"
       aria-labelledby="love-heading"
     >
+      {/* Block-print field over the flat maroon. Held to a fifth so the
+          ivory copy on top keeps its contrast — the pattern should read as
+          texture in the weave, not as a competing layer. */}
+      <Pattern tone="maroon" opacity={0.2} scale={0.66} />
+
       <Decor variant="reviews" tone="dark" />
       <SpiceScatter
         aria-hidden

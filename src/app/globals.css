@@ -27,6 +27,16 @@
   --color-saffron-soft: #f2b955;
   --color-olive: #5b6b47;
 
+  /* Festive accents, drawn from the mithai-box print and the palette Om
+     Sweets uses (deep green + gold + soft rose). These dress the decorative
+     pattern fields; the maroon/saffron core above still carries the brand. */
+  --color-rose: #e8918a;
+  --color-rose-deep: #df837b;
+  --color-emerald: #0f6f61;
+  --color-emerald-deep: #0d6155;
+  --color-gold: #e3b34a;
+  --color-gold-soft: #f0c040;
+
   /* Pack accents (sampled from packaging) */
   --color-pack-ratlami: #1c4a9c;
   --color-pack-sada: #e8901a;
@@ -329,6 +339,31 @@
   }
   .pulse-ring {
     animation: pulse-ring 2.4s var(--ease-out-soft) infinite;
+  }
+
+  /* --- Notched panel ------------------------------------------------------ */
+  /* The concave corners of a printed mithai-box label. Four radial-gradient
+     masks, one per corner, each biting a quarter-circle out of the box — so it
+     stays a single element and reflows with the panel at any size.
+
+     Masks compose by intersection here: each gradient covers just over a
+     quarter of the box (51%) and is opaque except for the bitten corner. */
+  .notched {
+    --notch: 2rem;
+    -webkit-mask:
+      radial-gradient(var(--notch) at 0 0, #0000 98%, #000) 0 0,
+      radial-gradient(var(--notch) at 100% 0, #0000 98%, #000) 100% 0,
+      radial-gradient(var(--notch) at 0 100%, #0000 98%, #000) 0 100%,
+      radial-gradient(var(--notch) at 100% 100%, #0000 98%, #000) 100% 100%;
+    -webkit-mask-size: 51% 51%;
+    -webkit-mask-repeat: no-repeat;
+    mask:
+      radial-gradient(var(--notch) at 0 0, #0000 98%, #000) 0 0,
+      radial-gradient(var(--notch) at 100% 0, #0000 98%, #000) 100% 0,
+      radial-gradient(var(--notch) at 0 100%, #0000 98%, #000) 0 100%,
+      radial-gradient(var(--notch) at 100% 100%, #0000 98%, #000) 100% 100%;
+    mask-size: 51% 51%;
+    mask-repeat: no-repeat;
   }
 
   /* --- Page entrance ------------------------------------------------------ */

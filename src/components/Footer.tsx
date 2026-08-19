@@ -4,6 +4,7 @@ import Reveal, { Stagger, StaggerItem } from '@/components/ui/Reveal';
 import { Placeholder, Wordmark } from '@/components/ui/Bits';
 import BuyButton from '@/components/ui/BuyButton';
 import GwaliorSkyline from '@/components/art/GwaliorSkyline';
+import PatternRule from '@/components/art/PatternRule';
 
 const COLUMNS = [
   {
@@ -38,6 +39,8 @@ export default function Footer() {
 
   return (
     <footer className="grain relative overflow-hidden bg-maroon-deep text-ivory">
+      {/* Printed ribbon along the lid, the way a sweet box is banded. */}
+      <PatternRule tone="maroon" height="h-7 md:h-9" />
       {/* heritage line art along the base */}
       <div
         aria-hidden

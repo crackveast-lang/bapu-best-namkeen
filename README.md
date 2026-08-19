@@ -160,6 +160,58 @@ Three things are easy to get wrong here:
 The hero marquee, the drift, the sheen and the accordion stay pure CSS
 (`globals.css`), so they cost no JavaScript and no hydration.
 
+### Logo
+
+The printed badge lives at `public/brand/bapu-best-logo.webp`, referenced once
+through `LOGO_SRC` in `components/ui/Bits.tsx`. Swap that file to change the
+mark in the header, the footer and the preloader together. `src/app/icon.png`
+is the same artwork as the favicon.
+
+It ships as WebP for the same reason the marketplace marks do: the source PNG
+is 174 KB of gradient and quantising it only reaches 39 KB, while WebP holds
+the gradient cleanly at 22 KB — and this one sits in the header of every page.
+
+`Wordmark` pairs the badge with a typographic lockup rather than using it
+alone. The "Namkeen" and "SINCE 1960" set into the artwork stop being legible
+below roughly 80px, so at header size the type carries the name while the badge
+carries the recognition.
+
+### Pattern
+
+`components/art/Pattern.tsx` is a tileable block-print motif — a four-petal
+flower in a lobed diamond, ringed with stippling — in the language of a printed
+mithai box. Four colourways, driven by two CSS variables so one tile serves all
+of them: `rose`, `blush`, `emerald`, `maroon` and `parchment`.
+
+```tsx
+<Pattern tone="maroon" opacity={0.2} scale={0.66} />   // texture behind copy
+<PatternPanel tone="blush" notch="2.75rem">…</PatternPanel>  // die-cut label
+<PatternRule tone="maroon" />                          // ribbon divider
+```
+
+Three things to keep in mind:
+
+- **`scale` is the tile edge as a multiple of 120px**, and it is exact: the
+  `<svg>` deliberately has no `viewBox`, so one user unit is one CSS pixel and
+  `patternTransform` does the sizing. Sizing through a `viewBox` instead makes
+  the motif depend on the panel's aspect ratio, because `preserveAspectRatio`
+  fits whichever axis overflows — the same panel then tiles differently on a
+  phone and a desktop.
+- **The motif is laid out around the centre of the tile.** An off-centre path
+  still tiles, but the rows visibly drift.
+- **Check contrast before putting copy on a field.** On the full `rose`,
+  `ink-soft` lands at 4.0:1 and `ink-faint` at 1.9:1, both under AA — which is
+  why the buy band uses `blush` and lifts its own text a step darker.
+
+Ids come from `useId`, not from the tone: two fields of the same tone on one
+page would otherwise share an id and both would resolve to whichever `<pattern>`
+the document defined first.
+
+The palette additions behind it (`--color-rose`, `--color-emerald`,
+`--color-gold`) are drawn from the deep green, gold and soft rose that Om Sweets
+uses. They dress the decorative fields only — the maroon and saffron core still
+carries the brand, because that is what matches the packs.
+
 ### Decoration
 
 `components/art/Decor.tsx` is the site-wide doodle system, sharing the hero's

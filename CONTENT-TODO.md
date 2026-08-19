@@ -19,7 +19,6 @@ These make the site functional rather than merely correct.
 | **Amazon storefront URL** | `src/data/site.ts` → `MARKETPLACES.amazon.href` | Every Buy button on the site reads from this one value. Until it is set, the buttons render as `#` and are marked `aria-disabled`. |
 | **Flipkart storefront URL** | `src/data/site.ts` → `MARKETPLACES.flipkart.href` | Same. |
 | **Live domain** | `src/data/site.ts` → `SITE.url` | Currently `https://www.bapubest.com`. Drives canonical URLs, sitemap and Open Graph tags. |
-| **Logo artwork** | `src/components/ui/Bits.tsx` → `Wordmark` | I did **not** recreate your printed logo. The header/footer currently use a plain typographic lockup. Send the vector (SVG/AI/EPS) of the `Bapu Best` and `Bappu Best Bites` marks and I will drop them straight in. |
 
 **Per-product listing links** — strongly recommended now that each product has
 its own page. Set `amazon` / `flipkart` on each entry in

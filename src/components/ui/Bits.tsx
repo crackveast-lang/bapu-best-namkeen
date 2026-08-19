@@ -1,38 +1,72 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Reveal from '@/components/ui/Reveal';
+import { asset } from '@/lib/asset';
 import TextReveal from '@/components/ui/TextReveal';
 
 /* ------------------------------------------------------------------ *
  * Wordmark
  * ------------------------------------------------------------------ */
 
+/** The printed badge. Swap this file to change the logo everywhere. */
+const LOGO_SRC = '/brand/bapu-best-logo.webp';
+
 /**
- * A typographic lockup, not a reproduction of the printed logo. The real
- * artwork should replace this — see CONTENT-TODO.md.
+ * The printed logo, paired with a typographic lockup of the name.
+ *
+ * The badge alone is not enough at header size: the "Namkeen" and "SINCE 1960"
+ * set into the artwork are illegible much below ~80px, so the type beside it
+ * carries the name while the badge carries the recognition. `stacked` puts the
+ * two one above the other for the preloader seal.
+ *
+ * A raw <img> rather than next/image, matching the marketplace marks: the file
+ * is small, needs no responsive set, and this way the same component serves a
+ * PNG or an SVG without the optimiser rejecting the latter. `asset()` applies
+ * the deployment base path, which next/image would otherwise have handled.
  */
 export function Wordmark({
   className = '',
   tone = 'ink',
+  stacked = false,
 }: {
   className?: string;
   tone?: 'ink' | 'ivory';
+  /** Badge above the name rather than beside it. */
+  stacked?: boolean;
 }) {
   const color = tone === 'ivory' ? 'text-ivory' : 'text-ink';
   const rule = tone === 'ivory' ? 'bg-ivory/35' : 'bg-ink/20';
   const sub = tone === 'ivory' ? 'text-ivory/65' : 'text-ink-faint';
 
   return (
-    <span className={`inline-flex flex-col leading-none ${color} ${className}`}>
-      <span className="font-display text-[1.02rem] font-semibold tracking-[0.16em] uppercase">
-        Bapu Best
-      </span>
-      <span className="mt-[3px] flex items-center gap-1.5">
-        <span className={`h-px w-3 ${rule}`} />
-        <span className={`text-[0.53rem] font-semibold tracking-[0.34em] uppercase ${sub}`}>
-          Namkeen
+    <span
+      className={`inline-flex leading-none ${color} ${
+        stacked ? 'flex-col items-center gap-3' : 'items-center gap-2.5'
+      } ${className}`}
+    >
+      {/* Decorative: the lockup beside it already says the name, and the link
+          wrapping this carries its own label. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={asset(LOGO_SRC)}
+        alt=""
+        aria-hidden
+        width={160}
+        height={160}
+        className={`shrink-0 ${stacked ? 'size-16' : 'size-10'}`}
+      />
+
+      <span className="inline-flex flex-col leading-none">
+        <span className="font-display text-[1.02rem] font-semibold tracking-[0.16em] uppercase">
+          Bapu Best
         </span>
-        <span className={`h-px flex-1 ${rule}`} />
+        <span className="mt-[3px] flex items-center gap-1.5">
+          <span className={`h-px w-3 ${rule}`} />
+          <span className={`text-[0.53rem] font-semibold tracking-[0.34em] uppercase ${sub}`}>
+            Namkeen
+          </span>
+          <span className={`h-px flex-1 ${rule}`} />
+        </span>
       </span>
     </span>
   );
