@@ -432,6 +432,42 @@ export const IMAGE_META = {
     "width": 1583,
     "height": 1600,
     "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAABwAgCdASoQABAABABoJbACdAYw7wK3j22USSKAAP7eA9J7ItNg7iroczw3KXc3Y59HuMBwm3HAOKcYCNpc1bCXpHYQySu5Fadr5JjZjEpnOv6jw3xV2dGPDci8LJRerprm3Yo3ZNJNhG199gAAAA=="
+  },
+  "process-ingredients": {
+    "src": "/images/process-ingredients.webp",
+    "width": 1400,
+    "height": 934,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAsABABoJZQCdAYtKiuUAAD+jTm0p8lnQ/cmxD3DzL7+oM5FodLt3H1B2cHC+C2FtO90pmvbkkaK5UsXt2JTLnmJdMyAAAA="
+  },
+  "process-preparation": {
+    "src": "/images/process-preparation.webp",
+    "width": 1400,
+    "height": 934,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAsABABoJYgCdADdLvPYzLAA/uX3M1h9iPM/B9jMRsTxOw/pTdvdtftAe6zr4t19iwUdKC8AnXaBFkkSSTn7k0AAAA=="
+  },
+  "process-seasoning": {
+    "src": "/images/process-seasoning.webp",
+    "width": 933,
+    "height": 1400,
+    "blurDataURL": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADQAQCdASoLABAABABoJZwAAlLKQep4AAD+FjAAWD09srwfn/oRBbmMP0OAAA=="
+  },
+  "process-quality": {
+    "src": "/images/process-quality.webp",
+    "width": 1400,
+    "height": 934,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoQAAsABABoJagCdAEPSDiuWVSAAPWRx1czX2rFO1aWHzKLhTqI6quGaTHS12iGOE7UNQXDGHdzIF7Oiy/mKPmx5uymiECuLxbzrrsQAAA="
+  },
+  "process-packing": {
+    "src": "/images/process-packing.webp",
+    "width": 933,
+    "height": 1400,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAQCdASoLABAABABoJZgAAf/2G7UhsAD+mJVha3EzXudCJGdlNrDTWSgdLvRo1QomwmLa7jvsVRb1hZ4tNqyZwbFFfPWfvEg8lzpvDPL32WPRSHtn5Q/TwAA="
+  },
+  "pour-bowl": {
+    "src": "/images/pour-bowl.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAQCdASoMABAABABoJbACdADcQcaHegAA/vOHHlQixGdURoPY71A1AFib27WBBnCmvQ/hscwmb83j0cuaNDiWnvMPeGM115JH4OUbtJ4vX1BXpwYiLZDyPKgmL2tuxob+/l2oAAA="
   }
 } as const satisfies Record<string, ImageMeta>;
 

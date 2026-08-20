@@ -428,6 +428,163 @@
     animation: scroll-cue 2s var(--ease-out-soft) infinite;
   }
 
+  /* --- How we make it: per-card motion layers ----------------------------- *
+     Each process card plays a small loop over its photograph, chosen to match
+     what that stage actually does — dust settling, oil rising, masala falling,
+     a check sweeping down the frame, a seal running across it.
+
+     Every one of these animates `transform` and `opacity` only, on elements a
+     few pixels across. That is the deliberate opposite of what the pinned house
+     stage got wrong: nothing here is viewport-sized, nothing scales a
+     photograph, nothing blends. The particles are positioned and delayed from
+     the component so this stays generic.
+     ----------------------------------------------------------------------- */
+  .proc-fx {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Lifted on hover, so the loop reads as ambient until you look at it. */
+    opacity: 0.55;
+    transition: opacity 0.5s var(--ease-out-soft);
+  }
+
+  .group:hover .proc-fx,
+  .group:focus-within .proc-fx {
+    opacity: 1;
+  }
+
+  .proc-fx i {
+    position: absolute;
+    display: block;
+    width: var(--fx-size, 4px);
+    height: var(--fx-size, 4px);
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0;
+    animation-duration: var(--fx-duration, 6s);
+    animation-delay: var(--fx-delay, 0s);
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  @keyframes proc-drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(0.6);
+      opacity: 0;
+    }
+    25% {
+      opacity: 0.75;
+    }
+    100% {
+      transform: translate3d(16px, -34px, 0) scale(1);
+      opacity: 0;
+    }
+  }
+
+  @keyframes proc-rise {
+    0% {
+      transform: translate3d(0, 0, 0) scale(0.5);
+      opacity: 0;
+    }
+    18% {
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate3d(6px, -120px, 0) scale(1.25);
+      opacity: 0;
+    }
+  }
+
+  @keyframes proc-fall {
+    0% {
+      transform: translate3d(0, -24px, 0) scale(0.7);
+      opacity: 0;
+    }
+    18% {
+      opacity: 0.95;
+    }
+    100% {
+      transform: translate3d(-8px, 150px, 0) scale(1);
+      opacity: 0;
+    }
+  }
+
+  .proc-fx--settle i {
+    animation-name: proc-drift;
+  }
+  .proc-fx--sizzle i {
+    animation-name: proc-rise;
+  }
+  .proc-fx--fall i {
+    animation-name: proc-fall;
+  }
+
+  /* A check running down the frame, and a seal running across it. Both are one
+     soft band on a pseudo-element rather than a particle field. */
+  .proc-fx--scan::before,
+  .proc-fx--seal::before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(
+      var(--fx-angle, 180deg),
+      transparent,
+      currentColor,
+      transparent
+    );
+    opacity: 0.55;
+    animation: var(--fx-name) var(--fx-duration, 4.5s) ease-in-out infinite;
+  }
+
+  .proc-fx--scan::before {
+    --fx-name: proc-scan;
+    inset-inline: 0;
+    height: 28%;
+    top: 0;
+  }
+
+  .proc-fx--seal::before {
+    --fx-name: proc-seal;
+    --fx-angle: 90deg;
+    inset-block: 0;
+    width: 22%;
+    left: 0;
+  }
+
+  @keyframes proc-scan {
+    0% {
+      transform: translateY(-40%);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.55;
+    }
+    88% {
+      opacity: 0.55;
+    }
+    100% {
+      transform: translateY(400%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes proc-seal {
+    0% {
+      transform: translateX(-60%);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.5;
+    }
+    85% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateX(500%);
+      opacity: 0;
+    }
+  }
+
   /* --- Pinned stage ------------------------------------------------------- *
      A tall track with a screen-height sticky child inside it (HouseSection).
 
@@ -470,9 +627,11 @@
   }
 
   /* Sheen and spotlight are pure decoration — drop them rather than flash
-     them at 0.01ms, which reads as a glitch. */
+     them at 0.01ms, which reads as a glitch. The process motion layers go the
+     same way: a spice speck frozen mid-fall is a smudge on the photograph. */
   .sheen::before,
-  .spotlight::after {
+  .spotlight::after,
+  .proc-fx {
     display: none !important;
   }
 

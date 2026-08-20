@@ -3,10 +3,11 @@ import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
 import DrawIn from '@/components/ui/DrawIn';
 import Timeline from '@/components/Timeline';
+import LegacySection from '@/components/LegacySection';
 import ProcessSection from '@/components/ProcessSection';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 import { Copy, Eyebrow, Placeholder, SectionHeading } from '@/components/ui/Bits';
-import { STORY_INTRO } from '@/data/story';
+import { LEGACY, STORY_INTRO } from '@/data/story';
 import { LEGAL } from '@/data/site';
 import GwaliorSkyline from '@/components/art/GwaliorSkyline';
 import { CircleScribble } from '@/components/art/Doodles';
@@ -71,18 +72,22 @@ export default function OurStoryPage() {
 
           <Reveal delay={0.1} className="lg:col-span-6 lg:pt-6">
             <h2 id="founding-heading" className="text-[clamp(1.8rem,4.2vw,2.8rem)] leading-tight">
-              The part only the family can tell.
+              Where it started, and who started it.
             </h2>
             <div className="mt-6 space-y-5 text-[0.98rem] leading-relaxed text-ink-soft">
               <p>
                 We know where it is made: {LEGAL.addressLine}, {LEGAL.city}. We know the year on
-                the pack: 1960. Everything after that — who lit the first stove, whose recipe it
-                was, what the shop was called before it was called Bapu Best — belongs to the
-                family, and we would rather print it right than print it soon.
+                the pack: 1960. And we now know whose year it was — {LEGACY.founder.name}, and
+                the belief he started with.
               </p>
               <div>
                 <Copy value={STORY_INTRO.body} />
               </div>
+              <p>
+                The long version is below, in the family&rsquo;s own words. What is still open is
+                the middle: when the first counter opened, when the other shops followed, when
+                the kitchen was certified. Those are marked on this page rather than guessed.
+              </p>
             </div>
 
             <div className="mt-9 rounded-[1.1rem] border border-dashed border-crimson/35 bg-crimson/[0.04] p-5">
@@ -100,6 +105,11 @@ export default function OurStoryPage() {
         </div>
       </section>
 
+      {/* ---------------- the long version ---------------- */}
+      {/* The story in the business's own words, told down the page. Same
+          component as the homepage — one copy of the narrative, in story.ts. */}
+      <LegacySection />
+
       {/* ---------------- timeline ---------------- */}
       {/* `overflow-hidden` because the timeline entries slide in from the
           left and right: until each one is scrolled to, it rests at its
@@ -111,16 +121,16 @@ export default function OurStoryPage() {
         <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
           <Reveal>
             <SectionHeading
-              eyebrow="The long version"
+              eyebrow="The same story, dated"
               title="Six decades, in order."
               titleId="timeline-heading"
-              lede="Two of these dates come off the packs themselves. The rest are marked, and stay marked, until the family fills them in."
+              lede="1960 is confirmed twice over — the sunburst mark on the pack, and the founder named above. The dates between it and today are marked, and stay marked, until the family fills them in."
               align="center"
             />
           </Reveal>
           <Timeline />
           <Reveal className="mt-4 text-center">
-            <Placeholder>Add founding story &amp; dates</Placeholder>
+            <Placeholder>Add the dates between 1960 and today</Placeholder>
           </Reveal>
         </div>
       </section>

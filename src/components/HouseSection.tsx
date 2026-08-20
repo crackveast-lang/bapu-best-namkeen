@@ -411,123 +411,6 @@ function BrandPanel({ brand, index }: { brand: HouseBrand; index: number }) {
 }
 
 /* ------------------------------------------------------------------ *
- * Act III — one kitchen, and the way in
- * ------------------------------------------------------------------ */
-
-/** The band that closes the fork back up before the visitor is asked to choose. */
-function Bridge() {
-  return (
-    <div className="relative isolate overflow-hidden bg-ink text-ivory">
-      <Parallax
-        speed={0.09}
-        className="absolute inset-0 -z-10"
-        innerClassName="relative size-full scale-110 will-change-transform"
-      >
-        <Media
-          name={HOUSE.bridge.image}
-          alt={HOUSE.bridge.imageAlt}
-          fill
-          sizes="100vw"
-          imgClassName="object-cover opacity-45"
-        />
-      </Parallax>
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/35"
-      />
-
-      <div className="mx-auto w-full max-w-[88rem] px-5 py-20 sm:px-8 md:py-28">
-        <Reveal className="max-w-xl">
-          <p className="eyebrow flex items-center gap-2.5 text-saffron">
-            <span className="h-px w-6 bg-current opacity-45" />
-            {HOUSE.bridge.eyebrow}
-          </p>
-          <h3 className="mt-5 text-[clamp(1.8rem,4.4vw,2.9rem)] leading-[1.05] text-ivory">
-            {HOUSE.bridge.heading}
-          </h3>
-          <p className="mt-5 text-[0.97rem] leading-relaxed text-ivory/75">
-            {HOUSE.bridge.body}
-          </p>
-        </Reveal>
-      </div>
-    </div>
-  );
-}
-
-/**
- * The way in. Both doors are shown at once and given equal weight — the point
- * of the whole section is that neither name is the junior one.
- */
-function Close() {
-  return (
-    <div className="relative isolate overflow-hidden bg-parchment">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.14]"
-      >
-        <Media name={HOUSE.close.image} alt="" fill sizes="100vw" imgClassName="object-cover" />
-      </div>
-
-      <div className="mx-auto w-full max-w-4xl px-5 py-20 text-center sm:px-8 md:py-28">
-        <Reveal>
-          <h3 className="mx-auto max-w-2xl text-[clamp(1.9rem,5vw,3.2rem)] leading-[1.04] text-ink">
-            {HOUSE.close.heading}
-          </h3>
-        </Reveal>
-
-        <Reveal delay={0.1} y={12}>
-          <p className="mt-5 font-display text-[1.1rem] text-maroon italic md:text-[1.25rem]">
-            {HOUSE.close.standfirst}
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.18} y={14}>
-          <p className="mt-10 text-[0.62rem] font-semibold tracking-[0.28em] text-ink-faint uppercase">
-            Shop by brand
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.24} y={16}>
-          <div className="mt-5 flex flex-wrap items-stretch justify-center gap-3">
-            {HOUSE.brands.map((brand) => (
-              <Link
-                key={brand.id}
-                href={brand.href}
-                className={`group/pill inline-flex items-center gap-2.5 rounded-full px-6 py-3.5 text-[0.85rem] font-semibold transition-[transform,background-color,box-shadow] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 ${
-                  brand.tone === 'heritage'
-                    ? 'bg-maroon text-ivory shadow-[0_18px_34px_-20px_rgba(109,20,32,0.9)] hover:bg-maroon-deep'
-                    : 'border border-ink/15 bg-ivory text-ink hover:border-ink/35'
-                }`}
-              >
-                Explore {brand.label}
-                <span
-                  aria-hidden
-                  className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/pill:translate-x-1"
-                >
-                  →
-                </span>
-              </Link>
-            ))}
-            <Link
-              href="/namkeen"
-              className="group/pill inline-flex items-center gap-2.5 px-4 py-3.5 text-[0.85rem] font-semibold text-ink-soft transition-colors hover:text-ink"
-            >
-              <span className="link-underline">All products</span>
-              <span
-                aria-hidden
-                className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/pill:translate-x-1"
-              >
-                →
-              </span>
-            </Link>
-          </div>
-        </Reveal>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ *
  * The section
  * ------------------------------------------------------------------ */
 
@@ -545,9 +428,6 @@ export default function HouseSection() {
           </div>
         </div>
       </div>
-
-      <Bridge />
-      <Close />
     </section>
   );
 }

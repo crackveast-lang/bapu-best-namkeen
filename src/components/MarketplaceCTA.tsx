@@ -88,15 +88,15 @@ export default function MarketplaceCTA() {
 
         <Reveal delay={0.12} variant="scale" className="lg:col-span-5">
           <figure className="group relative mx-auto max-w-md">
-            <div className="sheen relative aspect-square overflow-hidden rounded-[1.5rem] border border-ink/10 shadow-[0_44px_80px_-52px_rgba(43,26,18,0.6)]">
+            <div className="sheen relative aspect-4/5 overflow-hidden rounded-[1.5rem] border border-ink/10 shadow-[0_44px_80px_-52px_rgba(43,26,18,0.6)]">
               <Parallax
                 speed={0.07}
                 className="absolute inset-[-7%]"
                 innerClassName="relative size-full"
               >
                 <Media
-                  name="detail-milan-bowl"
-                  alt="Bapu Best Bites Milan Mixture pack with a bowl of mixture"
+                  name="pour-bowl"
+                  alt="A Bapu Best Bites namkeen pack being poured into a bowl, sev spilling across the table"
                   fill
                   sizes="(max-width: 1024px) 88vw, 34vw"
                   imgClassName="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"

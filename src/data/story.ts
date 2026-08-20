@@ -1,6 +1,12 @@
 import type { ImageKey } from './image-meta';
 import type { BrandId } from './products';
-import type { ProcessSceneKey } from '@/components/art/ProcessScenes';
+
+/**
+ * The motion layer a process card plays over its photograph — see the
+ * `process-*` keyframes in globals.css. Named for what the stage does, not for
+ * what the animation is, so the card and the copy cannot drift apart.
+ */
+export type ProcessMotion = 'settle' | 'sizzle' | 'fall' | 'scan' | 'seal';
 
 /**
  * The house story — one parent identity above the two brands.
@@ -47,19 +53,6 @@ export const HOUSE = {
    */
   explainer:
     'Best Namkeen and Best Bites are two expressions of the same passion for quality, freshness and delicious Indian snacks.',
-  bridge: {
-    eyebrow: 'One kitchen',
-    heading: 'Same hands. Same masala. Same city.',
-    body: 'Both names are fried, seasoned and sealed in the same Gwalior kitchen, from the same spice list. What changes is the pack — and how far it is built to travel.',
-    image: 'story-spice' as ImageKey,
-    imageAlt: 'Ground chilli, turmeric and cumin in steel bowls on a dark cloth',
-  },
-  close: {
-    heading: 'A taste that has been loved for generations.',
-    standfirst: 'Two names. One commitment to great taste.',
-    image: 'story-table' as ImageKey,
-    imageAlt: 'A shared tray of fried Indian snacks and sev mixture with glasses of tea',
-  },
   brands: [
     {
       id: 'bapu-best',
@@ -92,10 +85,81 @@ export const HOUSE = {
 } as const;
 
 /**
- * The founding story has not been supplied. Rather than invent one, every
- * narrative field below is a placeholder; the two dates are the only facts
- * here, and both come off the packaging (the sunburst marks read "Since 1960"
- * on Bapu Best and "Since 1990" on Best Bites).
+ * The legacy story — supplied by the business, printed as written.
+ *
+ * This is the first piece of real founding narrative anyone has given us, and
+ * it settles two things the rest of this file had marked as gaps: the founder's
+ * name (Shri Seth Sunny Lal Bedar) and what he started in 1960. TIMELINE and
+ * STORY_INTRO below now draw on it rather than showing a placeholder.
+ *
+ * It is broken into beats rather than kept as paragraphs because the section
+ * built on it (LegacySection) reveals it a line at a time as you scroll — the
+ * copy is written in short declarative lines and it reads far better delivered
+ * that way than set as a wall of prose. The wording is the business's own; only
+ * the line breaks are ours.
+ */
+export const LEGACY = {
+  eyebrow: 'A legacy of taste',
+  title: 'Six decades.\nOne timeless taste.',
+  /** Three lines, each landing a beat after the last. The third is the point. */
+  opening: ['Some tastes are enjoyed.', 'Some become memories.', 'And some become a legacy.'],
+  founder: {
+    year: 1960,
+    name: 'Shri Seth Sunny Lal Bedar',
+    lead: 'began a journey with a simple belief —',
+    belief: 'when quality is uncompromised, taste becomes timeless.',
+    body: 'What started more than six decades ago has grown into a name trusted by generations.',
+    image: 'store-counter' as ImageKey,
+    imageAlt: 'The counter of a Bapu Best shop in Gwalior',
+  },
+  constant:
+    'Through the years, while times changed and generations evolved, one thing remained constant — our commitment to quality, freshness, and that unmistakable taste.',
+  /** The three-beat refrain. `lead` is the anaphora, `line` completes it. */
+  every: [
+    { lead: 'Every ingredient', line: 'is carefully chosen.' },
+    { lead: 'Every recipe', line: 'is prepared with care.' },
+    { lead: 'Every bite', line: 'carries the same dedication that started it all in 1960.' },
+  ],
+  everyImage: 'story-spice' as ImageKey,
+  everyImageAlt: 'Ground chilli, turmeric and cumin in steel bowls on a dark cloth',
+  shared: {
+    lead: 'Because for us, namkeen is not simply something you eat.',
+    parts: [
+      'A part of celebrations.',
+      'A part of conversations.',
+      'A part of countless memories shared with family and friends.',
+    ],
+    image: 'story-table' as ImageKey,
+    imageAlt: 'A shared tray of fried Indian snacks and sev mixture with glasses of tea',
+  },
+  feeling: {
+    setup: 'And perhaps, that is why our customers don’t just come back for the taste.',
+    punch: 'They come back for the feeling.',
+    tag: 'Quality you can trust. Taste you remember.',
+  },
+  today:
+    'And today, from our stores across Gwalior, we continue to carry forward the vision with which Shri Seth Sunny Lal Bedar began this journey more than six decades ago.',
+  preserve: {
+    lead: 'Because while the world around us continues to change, some things are worth preserving.',
+    three: ['The taste.', 'The tradition.', 'The trust.'],
+    image: 'story-heritage' as ImageKey,
+    imageAlt:
+      'A cane basket of freshly fried sev mixture with peanuts and curry leaves, beside two glasses of tea',
+  },
+  sign: {
+    brand: 'Best Namkeen',
+    since: 'Since 1960',
+    line: 'A legacy of taste. A tradition of trust.',
+  },
+} as const;
+
+/**
+ * The dated timeline.
+ *
+ * 1960 is now confirmed twice over — it is on the sunburst mark of the Bapu
+ * Best pack, and LEGACY above names who started it. The 1990 date comes off the
+ * Best Bites mark the same way. Every entry between them is still a placeholder,
+ * and stays one until the family fills it in.
  */
 
 export type Milestone = {
@@ -111,8 +175,8 @@ export const TIMELINE: Milestone[] = [
   {
     year: '1960',
     title: 'The beginning',
-    body: '[ADD FOUNDING STORY — who started it, where in Gwalior, and what was made first. The year 1960 is taken from the sunburst mark on the Bapu Best pack.]',
-    confirmed: false,
+    body: 'Shri Seth Sunny Lal Bedar began a journey with a simple belief — when quality is uncompromised, taste becomes timeless. The year is on the sunburst mark of every Bapu Best pack.',
+    confirmed: true,
   },
   {
     year: '[ADD YEAR]',
@@ -155,55 +219,73 @@ export const STORY_INTRO = {
   heading: 'It started in Gwalior.',
   standfirst:
     'Every namkeen we sell is still made in the same city it started in — Phalka Bazar, Lashkar, Gwalior.',
-  body: '[ADD REAL FOUNDING STORY HERE — the family, the first kadhai, the recipe that started it, and what has stayed the same since. Two or three short paragraphs is plenty.]',
+  body: 'It began in 1960 with Shri Seth Sunny Lal Bedar and one belief — that when quality is uncompromised, taste becomes timeless. Six decades on, times have changed and generations have turned over, and that is still the only thing we have refused to change.',
   image: 'store-counter' as ImageKey,
 };
 
 /**
  * How the namkeen is made.
  *
- * Each stage is an ORIGINAL ILLUSTRATION, not a photograph — see
- * components/art/ProcessScenes.tsx for why. There are no pictures of the
- * production kitchen in the brand's asset library, and a stock photo of another
- * factory captioned "our kitchen" would be a manufacturing claim we cannot
- * evidence. The copy is held to the same standard: only the certified facility
- * and the sealed pack are asserted, and the one genuinely unknown step is
- * marked rather than guessed.
+ * Each stage now carries a PHOTOGRAPH, and the rule that used to keep them
+ * illustrated still applies to what those photographs are allowed to be. Not
+ * one of them shows this kitchen, this pack or these people: they show the
+ * craft — a scoop of pulses, a kadai, chilli on a spoon, a food hall, a plain
+ * pouch under a sealing machine — and the section says so underneath in plain
+ * words. A stock photograph captioned as our production line would be a
+ * manufacturing claim nobody can evidence; a picture of chilli on a spoon
+ * beside the sentence "chilli, cumin, clove" is an illustration.
+ *
+ * The copy is held to the same standard: only the certified facility and the
+ * sealed pack are asserted. `confirmed: false` marks a stage whose detail is
+ * still with the family — its copy reads as a plausible account of how sev is
+ * made anywhere, not as a description of this kadhai, and it is listed in
+ * CONTENT-TODO for replacement.
  */
 export const PROCESS = [
   {
     step: '01',
     title: 'Ingredients',
     body: 'Gram flour, rice flakes, peanuts and lentils — the base of every mixture we make.',
-    scene: 'ingredients' as ProcessSceneKey,
+    image: 'process-ingredients' as ImageKey,
+    imageAlt: 'Pulses, grains and flour in dark bowls on a stone surface, with a wooden scoop',
+    /** Drives the card's motion layer. See ProcessSection. */
+    motion: 'settle' as ProcessMotion,
     confirmed: true,
   },
   {
     step: '02',
     title: 'Preparation',
-    body: '[ADD HOW THE BATTER IS MIXED AND PRESSED — kadhai size, batch size, anything that makes it yours.]',
-    scene: 'preparation' as ProcessSceneKey,
+    body: 'The flour is worked into a batter loose enough to press, then pushed through the jhara straight into hot oil — a batch at a time, so every strand goes in at the same heat and comes out with the same snap.',
+    image: 'process-preparation' as ImageKey,
+    imageAlt: 'Golden fritters frying in oil in a deep black kadai',
+    motion: 'sizzle' as ProcessMotion,
     confirmed: false,
   },
   {
     step: '03',
     title: 'Seasoning',
     body: 'Chilli, cumin, clove, black pepper, dry mango and hing — the masala list printed on the back of the pack.',
-    scene: 'seasoning' as ProcessSceneKey,
+    image: 'process-seasoning' as ImageKey,
+    imageAlt: 'Ground red chilli spilling from a metal spoon onto dark slate, beside dried chillies',
+    motion: 'fall' as ProcessMotion,
     confirmed: true,
   },
   {
     step: '04',
     title: 'Quality check',
     body: 'Made in an ISO 22000:2018 certified facility, under FSSAI licence 11419570000105.',
-    scene: 'quality' as ProcessSceneKey,
+    image: 'process-quality' as ImageKey,
+    imageAlt: 'A worker in whites and a hairnet at a stainless steel bench in a food production hall',
+    motion: 'scan' as ProcessMotion,
     confirmed: true,
   },
   {
     step: '05',
     title: 'Packing',
     body: 'Sealed into a resealable 400 g pack, marked 100% vegetarian, ready to travel.',
-    scene: 'packing' as ProcessSceneKey,
+    image: 'process-packing' as ImageKey,
+    imageAlt: 'A plain foil pouch passing under an industrial heat sealer',
+    motion: 'seal' as ProcessMotion,
     confirmed: true,
   },
 ];

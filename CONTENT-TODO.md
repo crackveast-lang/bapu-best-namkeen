@@ -92,13 +92,18 @@ Bites** for display and records the exact pack spelling in
 
 ## 3. The founding story
 
-**Not written.** `src/data/story.ts` is entirely placeholders except two dates,
-which come off the sunburst marks on the packs (Bapu Best "Since 1960", Best
-Bites "Since 1990").
+**Partly written now.** You sent the legacy story — *Six Decades. One Timeless
+Taste.* — and it is on the site twice, word for word: on the homepage after the
+short "It started in Gwalior" card, and on **Our Story** as the long version.
+It lives in one place, `LEGACY` in `src/data/story.ts`, so editing it there
+changes both.
 
-Please send, in whatever form is easiest — a voice note is fine:
+That settled two things that had been marked as gaps since the start: the
+founder, **Shri Seth Sunny Lal Bedar**, and what he began in 1960. The 1960
+timeline entry and the Our Story intro are no longer placeholders.
 
-- Who started it, and where in Gwalior
+Still open, in whatever form is easiest — a voice note is fine:
+
 - What was made first, and what the shop was called
 - When the Phalka Bazar counter opened
 - When and why the other outlets opened
@@ -106,7 +111,12 @@ Please send, in whatever form is easiest — a voice note is fine:
 - When the facility became ISO 22000:2018 certified
 - When you started selling online
 
-Fill in `TIMELINE` (set `confirmed: true` per entry) and `STORY_INTRO.body`.
+Fill in `TIMELINE` (set `confirmed: true` per entry) as each one lands.
+
+**One spelling to confirm.** The founder's name is printed on the site exactly
+as you sent it — *Shri Seth Sunny Lal Bedar*. If the family spells it
+differently (Sunnu Lal / Sunnulal, as in the registered entity **M/s Sunnulal
+Amit Kumar and Sons**), say which is right and it is one string to change.
 
 ### 3b. "Best Foods" — the house name, and two decisions inside it
 
@@ -178,19 +188,44 @@ Also absent, for the same reason — nothing was supplied to support them:
 What the site **does** claim, and the evidence for each, is recorded in
 `VERIFIED_CLAIMS` in `src/data/site.ts`.
 
-### Five photographs that are not yours
+### Ten photographs that are not yours
 
-The house section uses five licensed photographs — a basket of namkeen, sev on a
-plate, a spice table, a shared tray, a bowl of mixture — because the section
-needed editorial imagery the asset library does not have. They are under the
-Pexels licence (commercial use, no attribution required); the files, the credits
-and the swap-out instructions are in `assets/web/SOURCES.md`.
+Two sections use licensed photography, because they needed pictures the asset
+library does not contain. All ten are under the Pexels licence (commercial use,
+no attribution required); the files, the credits and the swap-out instructions
+are in `assets/web/SOURCES.md`.
 
-They were chosen to show *the kind of food this is*, never to stand in for your
-kitchen or your packs: none of them is captioned as Bapu Best product, premises
-or people. If you would rather the site showed only your own photography, send
-five frames and it is a one-line change per image in
-`scripts/assets.manifest.mjs`.
+- **The house section (5)** — a basket of namkeen, sev on a plate, a spice
+  table, a shared tray, a bowl of mixture.
+- **How we make it (5)** — a scoop of pulses, a kadai, chilli on a spoon, a
+  food hall, a plain pouch under a sealer.
+
+**The five in "How we make it" are the ones to read carefully.** That section
+sits under the heading *From our kitchen to your home*, so every frame was
+chosen to show the **craft** and not your kitchen: no Bapu Best pack, no Phalka
+Bazar, nobody who works for you. The note printed under the row says so to the
+reader in plain words, and the only claims in that section that are yours are
+the ISO 22000:2018 certification and the FSSAI licence number, both of which are
+on the pack.
+
+If you would rather the site showed only your own photography — and for that
+section especially it would be better — send frames of the kitchen and it is one
+line per image in `scripts/assets.manifest.mjs`.
+
+### The "Preparation" step
+
+Card **02** in "How we make it" was the one step you had never described, and it
+used to render as a visible gap. You asked for something to be written there, so
+it now reads:
+
+> The flour is worked into a batter loose enough to press, then pushed through
+> the jhara straight into hot oil — a batch at a time, so every strand goes in
+> at the same heat and comes out with the same snap.
+
+That is a true description of how sev is made **anywhere**; it is not a
+description of your kadhai. It is still flagged `confirmed: false` in
+`src/data/story.ts`. Replace it with what actually happens in Phalka Bazar —
+kadhai size, batch size, who does it, anything that makes it yours.
 
 ---
 

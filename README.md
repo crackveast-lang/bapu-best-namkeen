@@ -53,7 +53,8 @@ src/
     stores.ts            outlets
     story.ts             house story, timeline, process, testimonials
     image-meta.ts        GENERATED — do not edit
-assets/web/              the five licensed story photographs + SOURCES.md
+assets/web/              licensed photography (story + process) + SOURCES.md
+assets/brand/            brand photography handed over outside the photo drive
 public/images/           GENERATED — do not edit
 ```
 
@@ -155,7 +156,7 @@ on is set by the entrance timeline that never runs.
 ### The house
 
 Below the horizon, `HouseSection.tsx` answers the first question a visitor asks
-on a site carrying two names: *why are there two?* It runs in four acts —
+on a site carrying two names: *why are there two?* It runs in two acts —
 
 1. **The pin.** Three screens of scroll spent on one screen of content. The
    house name is a title card from the moment it arrives; the scroll then draws
@@ -167,9 +168,6 @@ on a site carrying two names: *why are there two?* It runs in four acts —
    ivory, straight edges, tracked sans name, one crimson rule. What they share
    (the crop, the descriptor line, the spacing, the shape of the link) is what
    makes them read as sisters rather than as strangers on a shelf.
-3. **The bridge.** One kitchen, so the fork closes again before anyone is asked
-   to choose.
-4. **The way in.** Both doors at equal weight, plus *all products*.
 
 Worth knowing before editing it:
 
@@ -204,8 +202,8 @@ Worth knowing before editing it:
   its height, the stage loses `sticky`, and every step collapses to its settled
   value, so the same composition renders as one static screen.
 
-The three photographs in this section are the only ones on the site that are not
-the brand's own — see **Images** below.
+The three photographs in this section are not the brand's own — see **Images**
+below.
 
 ### The hero (not currently mounted)
 
@@ -402,8 +400,7 @@ at the brand asset folder on disk; `npm run assets` re-generates
 `public/images/*.webp` and `src/data/image-meta.ts`. The whole image set is
 ~3.5 MB, and `next/image` resizes and re-encodes per device from there.
 
-One exception: the five `story-*` frames in the house section are licensed
-photographs, not the brand's own, and they DO ship in the repo — under
+One exception: the `story-*` and `process-*` frames are licensed photographs, not the brand's own, and they DO ship in the repo — under
 `assets/web/`, reached by the `root` field on a manifest entry. They are there
 because the section needed editorial imagery (a spice table, a shared plate)
 that the asset library does not contain. None of them shows Bapu Best product,
@@ -433,21 +430,46 @@ Nothing is traced, hotlinked or stock.
   Jai Vilas wing.
 - **`Doodles.tsx`** — the marginal food doodles.
 - **`IngredientIcons.tsx`** — 21 icons for the per-product breakdowns.
-- **`ProcessScenes.tsx`** — the five "How we make it" scenes.
+- **`ProcessScenes.tsx`** — the five "How we make it" scenes. **Not currently
+  mounted**: that section now runs on photographs (see below). The file is kept
+  because it is original artwork and because the argument it was drawn for is
+  still the one that governs the section.
 
-**Why the process scenes are drawn and not photographed.** There are no
-pictures of the production kitchen in the asset library. A stock photo of
-another factory under the heading "From our kitchen to your home" would be a
-manufacturing claim the business cannot evidence, so the section is illustrated
-instead — an illustration reads as depiction, not documentation. The section
-says so in a footnote.
+**How we make it, and what a photograph there is allowed to be.** The five
+stages were illustrated at first, for a reason that has not gone away: a stock
+photo of another factory under the heading "From our kitchen to your home" is a
+manufacturing claim the business cannot evidence.
 
-If real behind-the-scenes photography is shot later, swap `scene` for an
-`image` key in `PROCESS` (`src/data/story.ts`) and render `Media` instead of
-`PROCESS_SCENES[...]` in `ProcessSection.tsx`. That is the whole change.
+They are photographs now because the business asked for them, and they were
+chosen so the original argument still holds. Each frame shows the *craft* and
+not this kitchen — a scoop of pulses, a kadai, chilli on a spoon, a food hall, a
+plain unbranded pouch under a sealer. No frame shows a Bapu Best pack, premises
+or person; no alt text says it does; and the note under the section tells the
+reader in plain words that these are illustrative and that only the ISO and
+FSSAI numbers above them are ours. Hold any replacement to the same test.
 
-Scenes are drawn at 400×500 to match the 4:5 card exactly, with a small
-parallax overscan — keep anything that matters inside x 34–366, y 44–456.
+Each card also carries a small motion layer keyed to its stage — dust settling,
+oil rising, masala falling, a check sweeping down, a seal running across — plus
+a pointer-driven tilt. All of it is `transform`/`opacity` on card-sized or
+speck-sized elements: see the flicker note under **The house**, and keep it
+that way.
+
+To go back to drawings, or forward to real kitchen photography, only `PROCESS`
+in `src/data/story.ts` and the card body in `ProcessSection.tsx` change. Scenes
+are drawn at 400×500 to match the 4:5 card exactly, with a small parallax
+overscan — keep anything that matters inside x 34–366, y 44–456.
+
+### The legacy story
+
+`LegacySection.tsx` is the founding narrative, in the business's own words,
+told down the page one line at a time with a thread in the left margin that
+fills as you read. It is mounted twice — on the homepage after the short
+`StorySection` card, and on `/our-story` as "the long version" — from a single
+copy of the text in `LEGACY` (`src/data/story.ts`). Edit the words there and
+both move together.
+
+It is deliberately **not** pinned. It is far longer than the house stage, and
+everything in it moves by opacity, translate and stroke only.
 
 ## Deploying
 

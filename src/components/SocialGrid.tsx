@@ -6,52 +6,49 @@ import type { ImageKey } from '@/data/image-meta';
 import Decor from '@/components/art/Decor';
 
 /**
- * Deliberately asymmetric — two tall frames, one wide, four square — so it
- * reads as an editorial spread rather than an ecommerce grid. Images are the
- * brand's own; no social feed is embedded until an account URL is supplied.
- */
-/**
- * Packs exactly, with no gaps, at both breakpoints — one big frame, two shop
- * panoramas, three squares. Each tile's span is chosen to suit the shape of the
- * photograph in it, so nothing is cropped to a letterbox.
+ * Six frames, one photographic idea.
  *
- *   lg (6 cols x 4 rows)        base (4 cols x 5 rows)
- *   A A A  B B B                A A A A
- *   A A A  C C C                A A A A
- *   D D E E F F                 B B C C
- *   D D E E F F                 D D E E
- *                               D D F F
+ * This wall used to mix shop interiors, flat-lay pack shots and bowl shots at
+ * three different crops, which read as a folder rather than a set. Every tile
+ * here is now the SAME picture of a different product: the pack standing, a
+ * bowl of what is inside it beside the pack, daylight, the same cream ground.
+ *
+ * That rule is the whole point of the section, so it is worth stating plainly:
+ * a tile only belongs here if it is a pack *and* a bowl. Frames that show the
+ * pack alone (`p-ratlami-sev`), the bowl alone (`detail-bowl-khatta-meetha`),
+ * the BACK of the pack (`p-lahsun-mix`, `p-ujjaini-sev`) or a flat lay rather
+ * than a standing pack (`g-ujjaini-d`) are good photographs and are used
+ * elsewhere — they just break the row.
+ *
+ * The grid is a plain uniform 4:5 rather than the old mosaic of spans. Most of
+ * these frames are portrait, and a wide tile would have to crop one to a
+ * letterbox and throw the pack away; one tile in the same crop, six times over,
+ * is what makes the row read as a set in the first place.
  */
-const TILES: { name: ImageKey; alt: string; span: string }[] = [
-  {
-    name: 'detail-ratlami-flat',
-    alt: 'Ratlami Sev photographed from above with sev scattered around the pack',
-    span: 'col-span-4 row-span-2 lg:col-span-3',
-  },
-  {
-    name: 'store-sweets',
-    alt: 'A sweets counter in a Bapu Best shop in Gwalior',
-    span: 'col-span-2 row-span-1 lg:col-span-3',
-  },
-  {
-    name: 'store-mithai',
-    alt: 'Trays of mithai in the shop display case',
-    span: 'col-span-2 row-span-1 lg:col-span-3',
-  },
+const TILES: { name: ImageKey; alt: string }[] = [
   {
     name: 'p-milan-mixture',
-    alt: 'Milan Mixture pack beside a bowl of mixture',
-    span: 'col-span-2 row-span-2 lg:col-span-2',
+    alt: 'A pack of Milan Mixture standing beside a bowl of the mixture',
   },
   {
-    name: 'detail-kadipatta-flat',
-    alt: 'Kadipatta Mix photographed from above',
-    span: 'col-span-2 row-span-1 lg:col-span-2 lg:row-span-2',
+    name: 'p-kadipatta-mix',
+    alt: 'A pack of Kadipatta Mix standing beside a bowl of the mixture',
   },
   {
-    name: 'detail-waffer-pour',
-    alt: 'Waffer Mix being poured from the pack into a bowl',
-    span: 'col-span-2 row-span-1 lg:col-span-2 lg:row-span-2',
+    name: 'p-khatta-meetha',
+    alt: 'A pack of Bapu Best Khatta Meetha standing beside a bowl of namkeen',
+  },
+  {
+    name: 'g-sada-b',
+    alt: 'A pack of Sada Sev standing beside a glass bowl of sev',
+  },
+  {
+    name: 'g-indori-b',
+    alt: 'A pack of Indori Khatta Meetha standing beside a glass bowl of the mixture',
+  },
+  {
+    name: 'p-waffer-mix',
+    alt: 'A pack of Waffer Mix standing beside a bowl of the mixture',
   },
 ];
 
@@ -59,16 +56,19 @@ export default function SocialGrid() {
   const hasAccount = Boolean(SOCIAL.instagram);
 
   return (
-    <section className="relative bg-ivory py-20 md:py-28 overflow-hidden" aria-labelledby="social-heading">
+    <section
+      className="relative overflow-hidden bg-ivory py-20 md:py-28"
+      aria-labelledby="social-heading"
+    >
       <Decor variant="social" />
       <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="A little taste of Bapu Best"
-              title="Namkeen, shop and city."
+              title="Open a pack. Fill a bowl."
               titleId="social-heading"
-              lede="Everything on this wall was photographed for us, in Gwalior."
+              lede="Six of ours, photographed the same way — the pack, and what comes out of it."
               className="max-w-xl"
             />
             {hasAccount ? (
@@ -89,19 +89,19 @@ export default function SocialGrid() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid auto-rows-[7.5rem] grid-cols-4 gap-3 sm:auto-rows-[10rem] sm:gap-4 lg:auto-rows-[13rem] lg:grid-cols-6">
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:gap-5">
           {TILES.map((tile, i) => (
             <Reveal
               key={tile.name}
               delay={i * 0.05}
               variant="scale"
-              className={`${tile.span} sheen group relative overflow-hidden rounded-[0.9rem] border border-ink/10 bg-cream`}
+              className="sheen group relative aspect-4/5 overflow-hidden rounded-[0.9rem] border border-ink/10 bg-cream"
             >
               <Media
                 name={tile.name}
                 alt={tile.alt}
                 fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 30vw"
+                sizes="(max-width: 768px) 48vw, 31vw"
                 imgClassName="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
               />
               <span

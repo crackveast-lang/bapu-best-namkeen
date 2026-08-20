@@ -11,6 +11,13 @@ export const SOURCE_ROOT = 'C:/Users/studi/Downloads/Bapu Best All Resources';
  */
 export const WEB_ROOT = 'assets/web';
 
+/**
+ * Brand photography supplied straight into the repository rather than through
+ * the photo drive — files handed over one at a time after the drive was last
+ * synced. Same pipeline, same output; it just does not live on D:.
+ */
+export const BRAND_ROOT = 'assets/brand';
+
 /** @type {{out:string, src:string, max:number, quality?:number, root?:string}[]} */
 export const IMAGES = [
   // ---- Hero -------------------------------------------------------------
@@ -118,4 +125,18 @@ export const IMAGES = [
   { out: 'story-modern', src: 'story-modern.jpg', max: 1600, root: WEB_ROOT },
   { out: 'story-spice', src: 'story-spice.jpg', max: 1800, root: WEB_ROOT },
   { out: 'story-table', src: 'story-table.jpg', max: 1600, root: WEB_ROOT },
+
+  // ---- How we make it (licensed, NOT the brand's own) -------------------
+  // One frame per stage. Each is a picture of the CRAFT, not a picture of this
+  // kitchen — a scoop of pulses, a kadai, chilli on a spoon, a food hall, a
+  // sealing machine — and the section says so in as many words underneath.
+  // Swap them for photographs of the Phalka Bazar kitchen the day those exist.
+  { out: 'process-ingredients', src: 'process-ingredients.jpg', max: 1400, root: WEB_ROOT },
+  { out: 'process-preparation', src: 'process-preparation.jpg', max: 1400, root: WEB_ROOT },
+  { out: 'process-seasoning', src: 'process-seasoning.jpg', max: 1400, root: WEB_ROOT },
+  { out: 'process-quality', src: 'process-quality.jpg', max: 1400, root: WEB_ROOT },
+  { out: 'process-packing', src: 'process-packing.jpg', max: 1400, root: WEB_ROOT },
+
+  // ---- Supplied by the business, straight into the repo ------------------
+  { out: 'pour-bowl', src: 'pour-bowl.png', max: 1600, root: BRAND_ROOT },
 ];
