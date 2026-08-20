@@ -57,6 +57,8 @@ export type Product = {
   image: ImageKey;
   /** Studio pack shot, where one exists in the asset library. */
   pack?: ImageKey;
+  /** The same shot on a real alpha channel, for placing over artwork. */
+  cutout?: ImageKey;
   /** Gallery for the product page — first frame is the one shown on load. */
   gallery: ImageKey[];
   /** Net weight printed on the pack. Undefined where unconfirmed. */
@@ -115,6 +117,7 @@ export const PRODUCTS: Product[] = [
     accent: 'var(--color-pack-ratlami)',
     image: 'p-ratlami-sev',
     pack: 'pack-ratlami-sev',
+    cutout: 'cut-ratlami-sev',
     gallery: ['pack-ratlami-sev', 'hero-ratlami-sev', 'detail-ratlami-flat', 'g-ratlami-b'],
     breakdown: {
       eyebrow: 'What goes in',
@@ -145,6 +148,7 @@ export const PRODUCTS: Product[] = [
     accent: 'var(--color-pack-sada)',
     image: 'p-sada-sev',
     pack: 'pack-sada-sev',
+    cutout: 'cut-sada-sev',
     gallery: ['pack-sada-sev', 'p-sada-sev', 'detail-sev-scatter', 'g-sada-b'],
     breakdown: {
       eyebrow: 'What goes in',
@@ -174,6 +178,7 @@ export const PRODUCTS: Product[] = [
     accent: 'var(--color-pack-milan)',
     image: 'p-milan-mixture',
     pack: 'pack-milan-mixture',
+    cutout: 'cut-milan-mixture',
     gallery: ['pack-milan-mixture', 'p-milan-mixture', 'detail-milan-bowl', 'g-milan-b'],
     breakdown: {
       eyebrow: "What’s in the bowl",
@@ -205,6 +210,7 @@ export const PRODUCTS: Product[] = [
     accent: 'var(--color-pack-indori)',
     image: 'p-indori-khatta-meetha',
     pack: 'pack-indori-khatta-meetha',
+    cutout: 'cut-indori-khatta-meetha',
     gallery: ['pack-indori-khatta-meetha', 'p-indori-khatta-meetha', 'g-indori-b', 'g-indori-c'],
     breakdown: {
       eyebrow: "What’s in the bowl",
@@ -237,6 +243,7 @@ export const PRODUCTS: Product[] = [
     accent: 'var(--color-pack-kadipatta)',
     image: 'p-kadipatta-mix',
     pack: 'pack-kadipatta-mix',
+    cutout: 'cut-kadipatta-mix',
     gallery: ['pack-kadipatta-mix', 'p-kadipatta-mix', 'detail-kadipatta-flat', 'g-kadipatta-b'],
     breakdown: {
       eyebrow: "What’s in the bowl",
@@ -351,6 +358,7 @@ export const PRODUCTS: Product[] = [
     accent: 'var(--color-pack-khatta)',
     image: 'p-khatta-meetha',
     pack: 'pack-khatta-meetha',
+    cutout: 'cut-khatta-meetha',
     gallery: ['pack-khatta-meetha', 'brand-bapu-best', 'detail-bowl-khatta-meetha', 'g-khatta-b'],
     breakdown: {
       eyebrow: "What’s in the bowl",
@@ -369,6 +377,83 @@ export const PRODUCTS: Product[] = [
     funFact:
       'The line across the bottom of this pack — “chat ka saat, ka saath” — has been on the Bapu Best wrapper for as long as anyone has been printing it.',
     featured: true,
+  },
+  {
+    slug: 'bapu-ratlami-sev',
+    name: 'Ratlami Sev',
+    strapline: 'Swad jo bhulat nai',
+    description: 'Thick gram-flour strands, speckled dark with the masala they are tossed in.',
+    longDescription:
+      'Ratlami sev in the Bapu Best pack: a wide strand, fried firm, carrying more seasoning on its surface than a fine sev has room for. The strand snaps rather than folds, which is the whole point of pressing it this thick.',
+    brand: 'bapu-best',
+    accent: 'var(--color-pack-bapu-ratlami)',
+    image: 'card-bapu-ratlami-sev',
+    pack: 'pack-bapu-ratlami-sev',
+    cutout: 'cut-bapu-ratlami-sev',
+    gallery: ['card-bapu-ratlami-sev'],
+    breakdown: {
+      eyebrow: "What’s in the bowl",
+      heading: 'One thing, done thick.',
+      lede: 'A sev pack is a short list by definition — the interest is in the strand and what is on it.',
+      parts: [
+        { icon: 'sev', name: 'Thick gram-flour sev', detail: 'Pressed wide, so it breaks instead of bending.' },
+        { icon: 'spices', name: 'Red chilli masala', detail: 'The colour and the specks you can see on every strand.' },
+      ],
+      image: 'card-bapu-ratlami-sev',
+      imageAlt: 'The Bapu Best Ratlami Sev pack in its green livery',
+    },
+  },
+  {
+    slug: 'bapu-lahsun-sev',
+    name: 'Lahsun Sev',
+    strapline: 'Swad aur sehat ka saath',
+    description: 'A garlic sev — the same wide strand, seasoned so the lahsun arrives first.',
+    longDescription:
+      'Lahsun sev is the pack to open beside something plain: a cup of tea, a bowl of rice, an evening with nothing else in it. Garlic is the first thing you taste and the reason the rest of the room knows the pack is open.',
+    brand: 'bapu-best',
+    accent: 'var(--color-pack-bapu-lahsun)',
+    image: 'card-bapu-lahsun-sev',
+    pack: 'pack-bapu-lahsun-sev',
+    cutout: 'cut-bapu-lahsun-sev',
+    gallery: ['card-bapu-lahsun-sev'],
+    breakdown: {
+      eyebrow: "What’s in the bowl",
+      heading: 'Named for the thing you taste first.',
+      lede: 'The pack is named after its seasoning, which is the honest way round for a sev.',
+      parts: [
+        { icon: 'sev', name: 'Gram-flour sev', detail: 'The same wide strand, fried firm.' },
+        { icon: 'garlic', name: 'Garlic', detail: 'Lahsun — printed on the front, and the first note in the bowl.' },
+      ],
+      image: 'card-bapu-lahsun-sev',
+      imageAlt: 'The Bapu Best Lahsun Sev pack in its blue livery',
+    },
+  },
+  {
+    slug: 'bapu-wafer-mixture',
+    name: 'Wafer Mixture',
+    strapline: 'Ka mazza ka saath',
+    description: 'Broad brittle wafers with sev, peanuts and fried lentils folded through them.',
+    longDescription:
+      'A mixture built around the wafer: wide, brittle pieces that break with a sound, with sev filling the gaps between them and whole peanuts giving the handful some weight. The loudest pack on the shelf, and the one that goes first.',
+    brand: 'bapu-best',
+    accent: 'var(--color-pack-bapu-wafer)',
+    image: 'card-bapu-wafer-mixture',
+    pack: 'pack-bapu-wafer-mixture',
+    cutout: 'cut-bapu-wafer-mixture',
+    gallery: ['card-bapu-wafer-mixture'],
+    breakdown: {
+      eyebrow: "What’s in the bowl",
+      heading: 'Four things you can pick out by eye.',
+      lede: 'Everything named here is visible through the window on the front of the pack.',
+      parts: [
+        { icon: 'wafer', name: 'Wafer chips', detail: 'Wide and brittle. Every piece breaks with a sound.' },
+        { icon: 'sev', name: 'Sev', detail: 'Fine strands filling the gaps between the wafers.' },
+        { icon: 'peanut', name: 'Peanuts', detail: 'Whole, and the reason a handful has weight.' },
+        { icon: 'pulses', name: 'Fried lentils', detail: 'Scattered through, for the harder bite.' },
+      ],
+      image: 'card-bapu-wafer-mixture',
+      imageAlt: 'The Bapu Best Wafer Mixture pack in its yellow livery',
+    },
   },
   {
     slug: 'hing-mixture',

@@ -31,6 +31,34 @@ export const IMAGES = [
   { out: 'pack-indori-khatta-meetha', src: 'Best Namkeen Product images/Best Bites/Indori Khatta Meetha/Indori_khatta_meetha.png', max: 1000, whiteBackdrop: true },
   { out: 'pack-khatta-meetha', src: 'Best Namkeen Product images/Best Namkeen/Kattha Meetha/Kattha_meetha.png', max: 1000, whiteBackdrop: true },
 
+  // ---- Cut-outs: pack on a real alpha channel ---------------------------
+  // For the horizon hero, where packs sit over the WebGL landscape rather than
+  // over the page. `mix-blend-mode` cannot reach a backdrop it does not share a
+  // stacking context with, so these need the alpha baked in. One per studio
+  // pack shot in the library; the products without one are named but not shown.
+  { out: 'cut-ratlami-sev', src: 'Best Namkeen Product images/Best Bites/Ratlami Sev/Ratlami_sev.png', max: 1000, cutout: true },
+  { out: 'cut-sada-sev', src: 'Best Namkeen Product images/Best Bites/Sada Sev/Sada Sev.png', max: 1000, cutout: true },
+  { out: 'cut-milan-mixture', src: 'Best Namkeen Product images/Best Bites/Milan Mixture/milanMix.png', max: 1000, cutout: true },
+  { out: 'cut-kadipatta-mix', src: 'Best Namkeen Product images/Best Bites/Kadipatta Mix/kadipatta_2.png', max: 1000, cutout: true },
+  { out: 'cut-indori-khatta-meetha', src: 'Best Namkeen Product images/Best Bites/Indori Khatta Meetha/Indori_khatta_meetha.png', max: 1000, cutout: true },
+  { out: 'cut-khatta-meetha', src: 'Best Namkeen Product images/Best Namkeen/Kattha Meetha/Kattha_meetha.png', max: 1000, cutout: true },
+
+  // ---- Bapu Best: the rest of the Namkeen & Bakery range -----------------
+  // One studio shot each, so each one is built three ways: the sweep for the
+  // marquee, the cut-out for the hero, and a framed card face — the product
+  // cards crop 4:5 and a bare pack shot would lose the top of the bag.
+  { out: 'pack-bapu-ratlami-sev', src: 'Best Namkeen Product images/Best Namkeen/Ratlami sev/Ratlami sev.png', max: 1000, whiteBackdrop: true },
+  { out: 'cut-bapu-ratlami-sev', src: 'Best Namkeen Product images/Best Namkeen/Ratlami sev/Ratlami sev.png', max: 1000, cutout: true },
+  { out: 'card-bapu-ratlami-sev', src: 'Best Namkeen Product images/Best Namkeen/Ratlami sev/Ratlami sev.png', max: 1000, cutout: true, frame: true },
+
+  { out: 'pack-bapu-lahsun-sev', src: 'Best Namkeen Product images/Best Namkeen/lahsun sev/Lahsun sev.png', max: 1000, whiteBackdrop: true },
+  { out: 'cut-bapu-lahsun-sev', src: 'Best Namkeen Product images/Best Namkeen/lahsun sev/Lahsun sev.png', max: 1000, cutout: true },
+  { out: 'card-bapu-lahsun-sev', src: 'Best Namkeen Product images/Best Namkeen/lahsun sev/Lahsun sev.png', max: 1000, cutout: true, frame: true },
+
+  { out: 'pack-bapu-wafer-mixture', src: 'Best Namkeen Product images/Best Namkeen/waffer Mixture/waffer Mixture.png', max: 1000, whiteBackdrop: true },
+  { out: 'cut-bapu-wafer-mixture', src: 'Best Namkeen Product images/Best Namkeen/waffer Mixture/waffer Mixture.png', max: 1000, cutout: true },
+  { out: 'card-bapu-wafer-mixture', src: 'Best Namkeen Product images/Best Namkeen/waffer Mixture/waffer Mixture.png', max: 1000, cutout: true, frame: true },
+
   // ---- Editorial / story / texture --------------------------------------
   { out: 'detail-bowl-khatta-meetha', src: 'Best Namkeen Product images/Best Namkeen/Kattha Meetha/Kattha_meetha7.png', max: 1600 },
   { out: 'detail-sev-scatter', src: 'Best Namkeen Product images/Best Bites/Sada Sev/Sada Sev 4.png', max: 1600 },

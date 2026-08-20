@@ -46,6 +46,11 @@
   --color-pack-red: #c42127;
   --color-pack-khatta: #6b1220;
   --color-pack-hing: #e06a16;
+  /* The three newer Bapu Best packs, darkened from the band colour they are
+     sampled from so ivory type still reads on them. */
+  --color-pack-bapu-ratlami: #0e8a3e;
+  --color-pack-bapu-lahsun: #0d7fae;
+  --color-pack-bapu-wafer: #a37c07;
 
   /* Type */
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;

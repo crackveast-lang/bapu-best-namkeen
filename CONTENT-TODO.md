@@ -46,6 +46,26 @@ Both files are plain SVG — replacing them is a one-line change.
 
 ---
 
+## 1b. The three newest Bapu Best packs
+
+Ratlami Sev, Lahsun Sev and Wafer Mixture were added from the single studio
+shot each in `Best Namkeen Product images/Best Namkeen/…`. Everything written
+about them describes only the pack front and what is visible through its
+window — no ingredient, weight or sourcing claim. Three things need your eye:
+
+| What | Where | Notes |
+| --- | --- | --- |
+| **Strapline wording** | `PRODUCTS` → `bapu-ratlami-sev`, `bapu-wafer-mixture` | The line runs around the pack seam in the photograph. I read Ratlami as **"Swad jo bhulat nai"** and Wafer as **"Ka mazza ka saath"** — both may be longer than the camera caught. |
+| **Net weights** | same entries, `netWeight` | Omitted rather than guessed. Every other pack shows its weight on the product page. |
+| **More photography** | `scripts/assets.manifest.mjs` | One frame each, so the card, the gallery and the breakdown all use the same picture. A bowl shot and one lifestyle frame each would fill the gaps. |
+
+Still missing a studio pack shot altogether — named on the site but not
+pictured: **Waffer Mix**, **Ujjaini Sev**, **Lahsun Mix** (Best Bites) and
+**Hing Mixture** (Bapu Best). A plain white-background shot of any of them is
+all it takes; the hero shows a pack the moment one exists.
+
+---
+
 ## 2. Conflicts on your own documents
 
 Two facts appear differently on different sources. I used the signed FSSAI
