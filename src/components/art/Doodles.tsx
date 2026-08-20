@@ -137,6 +137,58 @@ export function Rays({ className, strokeWidth = 1.5 }: D) {
   );
 }
 
+/** A single drawn cloud, for the sky above the horizon. */
+export function Cloud({ className, strokeWidth = 1.6 }: D) {
+  return (
+    <svg viewBox="0 0 160 64" className={className} aria-hidden {...base} strokeWidth={strokeWidth}>
+      <path d="M26 54c-12 0-22-8-22-18s10-18 21-17c3-11 14-19 27-19 12 0 23 7 27 17 5-3 10-4 15-4 14 0 25 11 25 24 0 9-7 17-17 17z" />
+      <path d="M44 54c7-11 20-16 34-12" opacity={0.45} />
+    </svg>
+  );
+}
+
+/** Three birds, the way everyone draws birds. */
+export function Birds({ className, strokeWidth = 1.6 }: D) {
+  return (
+    <svg viewBox="0 0 120 44" className={className} aria-hidden {...base} strokeWidth={strokeWidth}>
+      <path d="M6 24q9-11 18 0 9-11 18 0" />
+      <path d="M56 12q7-9 14 0 7-9 14 0" opacity={0.8} />
+      <path d="M84 36q6-7 12 0 6-7 12 0" opacity={0.55} />
+    </svg>
+  );
+}
+
+/** A cashew, for the scatter — the one nut everybody recognises in outline. */
+export function Cashew({ className, strokeWidth = 1.6 }: D) {
+  return (
+    <svg viewBox="0 0 64 48" className={className} aria-hidden {...base} strokeWidth={strokeWidth}>
+      <path d="M48 12c8 7 9 19 2 27-8 9-23 11-33 4-5-3-4-10 1-11 5-1 9 2 14 3 7 1 13-2 15-8 1-5 0-9-3-12-3-4 1-6 4-3z" />
+      <path d="M24 34c5-2 10-2 14 1" opacity={0.45} />
+    </svg>
+  );
+}
+
+/**
+ * A brush stroke to stand a pack on — the shadow a product shot casts on a
+ * printed page rather than a real one. Filled, not stroked, so give it a
+ * colour and an opacity from the page.
+ */
+export function Splash({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 320 116" className={className} aria-hidden>
+      <path
+        fill="currentColor"
+        d="M14 70c10-24 44-42 96-47 40-4 72 3 104 14 20 7 40 7 56 1 12-5 19 3 11 14-12 17-38 29-76 35-48 8-100 7-142 0-32-5-53-8-49-17z"
+      />
+      <path
+        fill="currentColor"
+        opacity={0.55}
+        d="M258 22c10-6 22-6 30 2 6 7 2 16-8 18-12 3-22-2-26-9-2-5 0-9 4-11z"
+      />
+    </svg>
+  );
+}
+
 /** Circular seal used for the "Heritage of Taste" badge ring. */
 export function BadgeRing({ className, strokeWidth = 1.4 }: D) {
   return (

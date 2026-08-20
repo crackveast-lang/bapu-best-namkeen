@@ -148,7 +148,9 @@ export default function Hero() {
         <div className="relative lg:col-span-5 lg:pr-6">
           {/* Each line rises out from behind its own clipping mask, one after
               the next, so the headline sets itself rather than fading on. */}
-          <motion.h1
+          {/* An h2, not an h1: the horizon hero above this one opens the page
+              and carries its only h1. */}
+          <motion.h2
             id="hero-heading"
             initial="hidden"
             animate="shown"
@@ -186,7 +188,7 @@ export default function Hero() {
             >
               <SevStrands className="w-full" />
             </Floater>
-          </motion.h1>
+          </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: reduced ? 0 : 12 }}

@@ -20,6 +20,9 @@ npm start
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**
 - **Tailwind CSS v4** — tokens live in `@theme` at the top of `src/app/globals.css`
 - **Framer Motion** for the reveals, parallax and preloader — see [Motion](#motion)
+- **Three.js + GSAP/ScrollTrigger** for the opening horizon only — see
+  [The horizon](#the-horizon). Three is imported dynamically, so it never
+  touches any other page's bundle.
 - `next/image` for every photograph, with generated blur placeholders
 
 ## Where things live
@@ -28,15 +31,18 @@ npm start
 scripts/
   assets.manifest.mjs    source photo -> web slug mapping
   build-assets.mjs       npm run assets — resizes to WebP + blur placeholders
+  clean-logo.mjs         one-off — repairs the supplied Best Bites screenshot
 src/
   app/
     namkeen/[slug]/      product detail page — one per entry in PRODUCTS
     legal/[policy]/      terms / privacy / refunds scaffolds
     *                    one folder per page
   components/
-    art/                 GwaliorSkyline, Doodles, IngredientIcons — original SVG
+    art/                 GwaliorSkyline, NamkeenCart, Doodles, IngredientIcons
+                         — original SVG, all of it drawn for this site
     product/             Gallery, Accordion, IngredientBreakdown, Features, Related
     ui/                  Media, BuyButton, MarketplaceLockup, Bits
+                         horizon-hero-section.tsx/.css — the WebGL opening
                          motion: Preloader, Reveal, TextReveal, Counter,
                          Parallax, ScrollLine, ScrollProgress, DrawIn,
                          Magnetic, Spotlight, BackToTop, PageTransition
@@ -50,9 +56,104 @@ src/
 public/images/           GENERATED — do not edit
 ```
 
+### The horizon
+
+`components/ui/horizon-hero-section.tsx` opens the homepage: three full-height
+panels — **Two brands, one legacy**, **Best Bites**, **Best Namkeen** —
+scrolling over one pinned WebGL horizon, with the camera flying from in front of
+a Gwalior ridge, through it, and out over the range beyond. It is lit for
+daylight: parchment ground, brown ink, one sun on the ridge line, because the
+rest of the site is printed on warm paper.
+
+The first panel is a printed page rather than a landscape. A wash of parchment
+sits over the render, and on top of it go the drawn layer — `GwaliorSkyline` on
+the ridge, `NamkeenCart` parked in front of it, doodles in the margins — and the
+two brands, each with its badge, its line and its pack. Scrolling thins the wash
+and gives more of the screen back to the horizon.
+
+Panels two and three then take a brand each, and are deliberately **not the same
+page twice**:
+
+| | **Best Bites** | **Bapu Best** |
+|---|---|---|
+| composition | copy left, art right | mirrored: art left, copy right |
+| the range | five packs standing in a row on a shelf, staggered front-to-back | four packs fanned like a hand of cards in front of a bowl in a turning gold ring |
+| the rest of it | named in a line under the shelf | read as a printed list with straplines |
+
+Each brand's own badge stands where a section number would, on the same ivory
+disc the opening screen uses.
+
+Every word on them comes from `BRANDS` and `PRODUCTS` in `data/products.ts` —
+names, taglines, copy, straplines, and the variety count in the small print.
+There is no second set of brand copy to keep in sync, and the three facts under
+each brand are either counted from the data or listed in `VERIFIED_CLAIMS`.
+
+**Which packs appear is decided by the data, not by the layout.** A product is
+shown if it has a `cutout`, and named if it does not — so supplying a studio
+shot for Waffer Mix, Ujjaini Sev, Lahsun Mix or Hing Mixture and adding it to
+the manifest moves it from the "also in the range" line onto the shelf with no
+markup change.
+
+A pack that has only ever been photographed once also needs a card face, since
+the product cards and galleries crop 4:5 and would slice the top off the bag.
+`frame: true` in the manifest drops the cut-out onto the page's own paper at
+that exact ratio — `card-*` in `public/images`.
+
+Every pack in the hero is a **cut-out with a real alpha channel** (`cut-*`), not
+one of the `mix-blend-mode` shots used everywhere else — see [The hero](#the-hero) for why that technique cannot reach
+a backdrop it does not share a stacking context with. `scripts/build-assets.mjs`
+grows them from the same sources with `cutout: true` in the manifest: lift the
+whitepoint, flood in from the border, and keep `255 - min(r,g,b)` as alpha over
+warm ink so the contact shadow survives. Flooding from the border rather than
+keying by colour is the whole trick — the packs are half white label, and a
+colour key deletes it.
+
+**The drawn layer moves on two clocks.** Scroll parallax runs on three speeds —
+the panel, the `.hero-scene` layer inside it, and the fort and cart inside
+that — which is what makes a flat sketch sit *in front of* the render rather
+than on it. On top of that every doodle floats on its own loop, the sparkles
+twinkle, the packs breathe and the seal behind the bowl turns.
+
+The ambient loops are CSS, and they are held back until `data-lively` appears on
+the container, which the entrance timeline sets when it finishes. That is not
+decoration: a running keyframe animation outranks the inline transform GSAP
+writes, so starting them any earlier would have the two fight over every doodle
+for the length of the intro. For the same reason the entrance tweens on the
+drawn layer skip `clearProps` — the parallax writes to those same elements.
+
+Worth knowing before editing it:
+
+- **Progress is measured against the section, not the document.** The page
+  below is long; a document-wide `scrollY / scrollHeight` would have the camera
+  crawl for ten screens.
+- **The canvas is `position: fixed`, not sticky.** A sticky element releases one
+  viewport before its container ends, which slides the horizon away under the
+  last panel. `data-active` on the container takes the canvas away again once
+  the hero no longer fills the screen — otherwise a fixed element would sit on
+  top of the whole page.
+- **Three.js is imported inside the effect**, not at module scope. The panels
+  are ordinary server-rendered HTML, so the copy is in the document with or
+  without JavaScript, and the renderer arrives after hydration.
+- **Ridge silhouettes are `ShapeGeometry` from a polygon.** The closing baseline
+  has to sit below every trough, or the outline crosses itself and triangulates
+  to nothing at all — an invisible mountain with no error to show for it.
+- **The atmosphere shell uses a real view-direction fresnel.** The camera flies
+  *inside* that sphere, and the usual fixed-axis version reads every facing
+  surface as rim light, which on a light ground bleaches the frame to white.
+- **The intro uses `fromTo` with `clearProps`, never `from`.** A `from` tween
+  ends on whatever value it read and leaves it inline, where it outranks the
+  `[data-active]` rules that hide the fixed furniture.
+- Bloom is thresholded above everything except the sun. On a light ground a low
+  threshold does not glow, it just washes.
+
+Under `prefers-reduced-motion` the scene renders still — no drift, no camera
+float, no entrance, no parallax — and every panel is visible from the first
+frame. The ambient loops never start either, because the flag that switches them
+on is set by the entrance timeline that never runs.
+
 ### The hero
 
-Headline left, product right, marquee along the bottom.
+Below the horizon: headline left, product right, marquee along the bottom.
 
 **The pack is not a cut-out.** Cutting these packs out cleanly is impossible by
 colour alone — their labels are themselves white, so any flood fill from the
