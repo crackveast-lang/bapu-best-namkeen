@@ -51,8 +51,9 @@ src/
     site.ts              business facts, marketplace links, verified claims
     products.ts          both brands, every product, pack label, nutrition
     stores.ts            outlets
-    story.ts             timeline, process, testimonials
+    story.ts             house story, timeline, process, testimonials
     image-meta.ts        GENERATED — do not edit
+assets/web/              the five licensed story photographs + SOURCES.md
 public/images/           GENERATED — do not edit
 ```
 
@@ -151,9 +152,69 @@ float, no entrance, no parallax — and every panel is visible from the first
 frame. The ambient loops never start either, because the flag that switches them
 on is set by the entrance timeline that never runs.
 
-### The hero
+### The house
 
-Below the horizon: headline left, product right, marquee along the bottom.
+Below the horizon, `HouseSection.tsx` answers the first question a visitor asks
+on a site carrying two names: *why are there two?* It runs in four acts —
+
+1. **The pin.** Three screens of scroll spent on one screen of content. The
+   house name is a title card from the moment it arrives; the scroll then draws
+   a line down out of it, forks the line in two, lands a brand name under each
+   branch, and finally prints the one sentence that explains the pair.
+2. **The two faces.** Two panels that are deliberately *not* the same card
+   twice: Best Namkeen is printed — block-print ground, die-cut corners, gold
+   hairline frame, serif name, sunburst date. Best Bites is a clean sheet —
+   ivory, straight edges, tracked sans name, one crimson rule. What they share
+   (the crop, the descriptor line, the spacing, the shape of the link) is what
+   makes them read as sisters rather than as strangers on a shelf.
+3. **The bridge.** One kitchen, so the fork closes again before anyone is asked
+   to choose.
+4. **The way in.** Both doors at equal weight, plus *all products*.
+
+Worth knowing before editing it:
+
+- **Nothing that carries the headline starts at opacity 0.** Progress sits at 0
+  for the whole of the pin's approach, so anything hidden at 0 would arrive as a
+  blank maroon screen. Only the fork and what it produces are on the scroll.
+- **Every scroll step is padded out to the full 0–1 range** by `useStep`. Given
+  a partial input range, this version of `useTransform` runs the mapping
+  *backwards* once the input passes the end of it — a step written as
+  `[0.4, 0.56] → [0, 1]` fades in on cue and then quietly fades back out again
+  over the rest of the section. Held at both ends, it stays where it was put.
+- **The column drops on arrival and rises as the fork fills it in.** The column
+  reserves the height the fork and the two names will need, so the title alone
+  would otherwise sit high with a hole under it.
+- **Nothing viewport-sized may scale, blend, or carry `grain` inside the pin.**
+  This is the rule that stops the section flickering, and it cost a debugging
+  session to learn. Three things were fighting the compositor at once: a
+  full-screen photograph on a scroll-driven `scale`, the block-print field on
+  `mix-blend-mode: soft-light`, and `.grain::after` on `mix-blend-mode:
+  multiply`. Chromium re-rasters a composited layer whenever its transform
+  *scale* changes, and a blend layer has to read its backdrop back out every
+  frame it paints — so every frame of a three-screen pin was re-rastering and
+  re-reading the whole viewport. The frames it could not finish showed as
+  white, for a second at a time. Inside the pin: fade, translate and stroke
+  freely (all compositor-only); scale and blend nothing bigger than a card.
+- **`svh`, not `vh`, for the track and the pinned child** (`.pin-track` /
+  `.pin-stage` in `globals.css`). `vh` is the height with a phone's toolbars
+  hidden, so the moment the toolbar collapses mid-scroll both boxes resize, the
+  pin re-measures and the composition jumps. `dvh` changes continuously, which
+  is worse. `svh` never moves while scrolling.
+- Under `prefers-reduced-motion` the pin is not a pin at all: the wrapper loses
+  its height, the stage loses `sticky`, and every step collapses to its settled
+  value, so the same composition renders as one static screen.
+
+The three photographs in this section are the only ones on the site that are not
+the brand's own — see **Images** below.
+
+### The hero (not currently mounted)
+
+`Hero.tsx` and `PackMarquee.tsx` are no longer on the homepage; `HouseSection`
+took the slot. They are kept because the blend technique below is the only way
+these pack shots can be placed on the warm ground, and any future section that
+shows a pack will need it.
+
+Headline left, product right, marquee along the bottom.
 
 **The pack is not a cut-out.** Cutting these packs out cleanly is impossible by
 colour alone — their labels are themselves white, so any flood fill from the
@@ -340,6 +401,16 @@ Source photography is **not** in this repo. `scripts/assets.manifest.mjs` points
 at the brand asset folder on disk; `npm run assets` re-generates
 `public/images/*.webp` and `src/data/image-meta.ts`. The whole image set is
 ~3.5 MB, and `next/image` resizes and re-encodes per device from there.
+
+One exception: the five `story-*` frames in the house section are licensed
+photographs, not the brand's own, and they DO ship in the repo — under
+`assets/web/`, reached by the `root` field on a manifest entry. They are there
+because the section needed editorial imagery (a spice table, a shared plate)
+that the asset library does not contain. None of them shows Bapu Best product,
+packaging, staff or premises, and none is captioned as though it did; the alt
+text describes a basket, a plate, a tray. Licence, credits and swap-out notes
+are in `assets/web/SOURCES.md` — replace them with the family's own photographs
+whenever those exist and only that folder and the manifest change.
 
 ### Placeholders
 

@@ -427,6 +427,36 @@
   .scroll-cue {
     animation: scroll-cue 2s var(--ease-out-soft) infinite;
   }
+
+  /* --- Pinned stage ------------------------------------------------------- *
+     A tall track with a screen-height sticky child inside it (HouseSection).
+
+     `svh`, never `vh` or `dvh`. On a phone, `vh` is the height with the
+     browser's toolbars HIDDEN, so the moment the toolbar collapses mid-scroll
+     both the track and the pinned child change height — the pin re-measures,
+     the composition jumps, and the scroll position it was driven from moves
+     under it. `dvh` is worse: it changes continuously. `svh` is the height
+     with the toolbars shown and never moves while scrolling.
+
+     Two declarations per rule on purpose: a browser too old to know `svh`
+     keeps the `vh` line, which is the behaviour we had before.
+     ----------------------------------------------------------------------- */
+  .pin-stage {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .pin-track {
+    height: 280vh;
+    height: 280svh;
+  }
+
+  @media (min-width: 768px) {
+    .pin-track {
+      height: 320vh;
+      height: 320svh;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

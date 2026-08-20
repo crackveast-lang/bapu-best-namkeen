@@ -108,6 +108,22 @@ Please send, in whatever form is easiest — a voice note is fine:
 
 Fill in `TIMELINE` (set `confirmed: true` per entry) and `STORY_INTRO.body`.
 
+### 3b. "Best Foods" — the house name, and two decisions inside it
+
+The homepage now opens (below the horizon) on a house identity above the two
+brands: **Best Foods**, with the line *"Bringing you timeless taste, in more
+than one name."* Three things in it are decisions rather than facts off a pack,
+so they are yours to confirm — all three live in `src/data/story.ts` → `HOUSE`:
+
+| What | Currently | Confirm |
+| --- | --- | --- |
+| **The house name** | `Best Foods` | It is on no pack and in no document you sent. If the family already trades under a house name, use that instead — it is one string. The legal entity printed under it (`M/s Sunnulal Amit Kumar and Sons · Gwalior`) comes from `LEGAL` and is correct. |
+| **How the brands are named in this story** | `Best Namkeen` and `Best Bites` | The packs read *Bapu Best — Namkeen & Bakery* and *Bappu Best Bites — Namkeen*, and both panels print that pack name underneath. If you would rather the story used the pack names throughout, change `label`. |
+| **What each brand is *for*** | "Traditional namkeen • Classic favourites" / "Snacks & everyday favourites" | This is the split the whole section argues for. If the real distinction is different — price, format, distribution — say so and the copy follows it. |
+
+Nothing in this section makes a manufacturing, sourcing or quality claim beyond
+what is already evidenced elsewhere on the site.
+
 ---
 
 ## 4. Stores
@@ -161,6 +177,20 @@ Also absent, for the same reason — nothing was supplied to support them:
 
 What the site **does** claim, and the evidence for each, is recorded in
 `VERIFIED_CLAIMS` in `src/data/site.ts`.
+
+### Five photographs that are not yours
+
+The house section uses five licensed photographs — a basket of namkeen, sev on a
+plate, a spice table, a shared tray, a bowl of mixture — because the section
+needed editorial imagery the asset library does not have. They are under the
+Pexels licence (commercial use, no attribution required); the files, the credits
+and the swap-out instructions are in `assets/web/SOURCES.md`.
+
+They were chosen to show *the kind of food this is*, never to stand in for your
+kitchen or your packs: none of them is captioned as Bapu Best product, premises
+or people. If you would rather the site showed only your own photography, send
+five frames and it is a one-line change per image in
+`scripts/assets.manifest.mjs`.
 
 ---
 

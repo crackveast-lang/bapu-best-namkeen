@@ -148,8 +148,10 @@ async function frameCut(cut) {
   return sharp(framed);
 }
 
-for (const { out, src, max, quality = 80, whiteBackdrop = false, cutout = false, frame = false } of IMAGES) {
-  const abs = path.join(SOURCE_ROOT, src);
+for (const { out, src, max, quality = 80, whiteBackdrop = false, cutout = false, frame = false, root } of IMAGES) {
+  // `root` is resolved against the repository, so an entry can point at a
+  // folder that ships with the code rather than at the photo drive.
+  const abs = root ? path.resolve(process.cwd(), root, src) : path.join(SOURCE_ROOT, src);
   if (!fs.existsSync(abs)) { missing.push(`${out} <- ${src}`); continue; }
 
   const pipeline = sharp(abs, { failOn: 'none' }).rotate();

@@ -1,8 +1,17 @@
 // Maps source photography (from the brand's own asset library) -> web slugs.
-// `src` is relative to SOURCE_ROOT in build-assets.mjs.
+// `src` is relative to SOURCE_ROOT in build-assets.mjs, unless the entry names
+// its own `root`.
 export const SOURCE_ROOT = 'C:/Users/studi/Downloads/Bapu Best All Resources';
 
-/** @type {{out:string, src:string, max:number, quality?:number}[]} */
+/**
+ * The one folder of photography that is NOT the brand's own — five licensed
+ * frames that dress the house story. Kept in the repository rather than on the
+ * photo drive, so the build works on a machine that has never seen the drive.
+ * See assets/web/SOURCES.md for the licence and the swap-out instructions.
+ */
+export const WEB_ROOT = 'assets/web';
+
+/** @type {{out:string, src:string, max:number, quality?:number, root?:string}[]} */
 export const IMAGES = [
   // ---- Hero -------------------------------------------------------------
   { out: 'hero-ratlami-sev', src: 'Best Namkeen Product images/Best Bites/Ratlami Sev/Ratlami_sev4.png', max: 1800 },
@@ -98,4 +107,15 @@ export const IMAGES = [
 
   // The legible back-of-pack label, shown beside the ingredients accordion.
   { out: 'label-back', src: 'Best Namkeen Product images/Best Bites/Waffer Mix/waffer_mix_2.png', max: 1400 },
+
+  // ---- The house story (licensed, NOT the brand's own) ------------------
+  // The only images on the site that were not shot for Bapu Best. They dress
+  // the "One house, two names" section and are captioned as what they are —
+  // a table, a spice tray, a basket of namkeen — never as this kitchen or
+  // these packs. Licence and swap-out notes: assets/web/SOURCES.md.
+  { out: 'story-house', src: 'story-house.jpg', max: 1800, root: WEB_ROOT },
+  { out: 'story-heritage', src: 'story-heritage.jpg', max: 1600, root: WEB_ROOT },
+  { out: 'story-modern', src: 'story-modern.jpg', max: 1600, root: WEB_ROOT },
+  { out: 'story-spice', src: 'story-spice.jpg', max: 1800, root: WEB_ROOT },
+  { out: 'story-table', src: 'story-table.jpg', max: 1600, root: WEB_ROOT },
 ];

@@ -1,5 +1,95 @@
 import type { ImageKey } from './image-meta';
+import type { BrandId } from './products';
 import type { ProcessSceneKey } from '@/components/art/ProcessScenes';
+
+/**
+ * The house story — one parent identity above the two brands.
+ *
+ * This exists to answer the one question a visitor asks within five seconds of
+ * seeing two names on a namkeen site: *why are there two?* The section built on
+ * it (HouseSection) states the parent first, then forks it, then gives each
+ * brand a visual identity of its own so they read as sisters rather than as
+ * strangers sharing a shelf.
+ *
+ * A NOTE ON "BEST FOODS": unlike everything in site.ts, this house name is not
+ * printed on any pack — it is a brand-architecture decision, supplied by the
+ * business, not a fact taken off the packaging. The legal entity underneath it
+ * is still M/s Sunnulal Amit Kumar and Sons (see LEGAL), and that is what the
+ * section prints beneath the house name.
+ *
+ * `label` is how each brand is spoken about in this story; `packName` is what
+ * is actually printed on the bag. Both are shown, so the story never quietly
+ * renames the product.
+ */
+export type HouseBrand = {
+  id: BrandId;
+  label: string;
+  packName: string;
+  /** The one line that says what this brand is for. */
+  descriptor: string;
+  body: string;
+  since: string;
+  href: string;
+  image: ImageKey;
+  imageAlt: string;
+  /** Drives the panel's whole visual treatment. See HouseSection. */
+  tone: 'heritage' | 'modern';
+};
+
+export const HOUSE = {
+  eyebrow: 'One house',
+  name: 'Best Foods',
+  tagline: 'Bringing you timeless taste, in more than one name.',
+  /**
+   * The sentence that does the actual work. Kept short and kept together —
+   * it is the answer to "why two brands?", and it must be readable in one
+   * glance or it may as well not be there.
+   */
+  explainer:
+    'Best Namkeen and Best Bites are two expressions of the same passion for quality, freshness and delicious Indian snacks.',
+  bridge: {
+    eyebrow: 'One kitchen',
+    heading: 'Same hands. Same masala. Same city.',
+    body: 'Both names are fried, seasoned and sealed in the same Gwalior kitchen, from the same spice list. What changes is the pack — and how far it is built to travel.',
+    image: 'story-spice' as ImageKey,
+    imageAlt: 'Ground chilli, turmeric and cumin in steel bowls on a dark cloth',
+  },
+  close: {
+    heading: 'A taste that has been loved for generations.',
+    standfirst: 'Two names. One commitment to great taste.',
+    image: 'story-table' as ImageKey,
+    imageAlt: 'A shared tray of fried Indian snacks and sev mixture with glasses of tea',
+  },
+  brands: [
+    {
+      id: 'bapu-best',
+      label: 'Best Namkeen',
+      packName: 'Bapu Best — Namkeen & Bakery',
+      descriptor: 'Traditional namkeen • Classic favourites',
+      body: 'The everyday pack Gwalior grew up on. Classic sevs and mixtures, made the way they have always been made, for the people who already know exactly what they are reaching for.',
+      since: '1960',
+      href: '/brands#bapu-best',
+      image: 'story-heritage',
+      imageAlt:
+        'A cane basket of freshly fried sev mixture with peanuts and curry leaves, beside two glasses of tea',
+      tone: 'heritage',
+    },
+    {
+      id: 'best-bites',
+      label: 'Best Bites',
+      packName: 'Bapu Best Bites — Namkeen',
+      descriptor: 'Snacks & everyday favourites',
+      body: 'The same kitchen, in a resealable 400 g pack built to travel. Made for the shelf, the desk drawer and the suitcase — anywhere Gwalior is a long way away.',
+      since: '1990',
+      href: '/brands#best-bites',
+      image: 'story-modern',
+      imageAlt: 'Crisp golden sev served on a white plate against a bright yellow backdrop',
+      tone: 'modern',
+    },
+  ] satisfies HouseBrand[],
+  image: 'story-house' as ImageKey,
+  imageAlt: 'A bowl of sev mixture with peanuts on a dark wooden table, beside squares of Indian sweets',
+} as const;
 
 /**
  * The founding story has not been supplied. Rather than invent one, every
