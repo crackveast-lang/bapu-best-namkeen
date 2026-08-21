@@ -18,8 +18,6 @@ have to change.
 | File                        | Source                                 | Used for                        |
 | --------------------------- | -------------------------------------- | ------------------------------- |
 | `story-house.jpg`           | https://www.pexels.com/photo/10810649/ | The house — opening frame       |
-| `story-heritage.jpg`        | https://www.pexels.com/photo/9557672/  | Best Namkeen panel              |
-| `story-modern.jpg`          | https://www.pexels.com/photo/30575178/ | Best Bites panel                |
 | `story-spice.jpg`           | https://www.pexels.com/photo/31280796/ | Legacy story — the masala beat  |
 | `story-table.jpg`           | https://www.pexels.com/photo/6576317/  | Legacy story — the shared plate |
 | `process-ingredients.jpg`   | https://www.pexels.com/photo/4224259/  | How we make it — 01 Ingredients |

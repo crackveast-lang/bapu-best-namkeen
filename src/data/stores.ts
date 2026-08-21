@@ -2,65 +2,99 @@ import type { ImageKey } from './image-meta';
 
 export type Store = {
   id: string;
-  /** Display name. Only the head shop's address is confirmed. */
   name: string;
   area: string;
   address: string;
   hours: string;
   phone?: string;
-  /** Google Maps link. Left empty until the business confirms each pin. */
+  /**
+   * A Google Maps *search* URL, never a fabricated place id. A search link
+   * always resolves to the right shop; a wrong CID sends someone across town.
+   */
   mapsUrl?: string;
-  /** { lat, lng } — deliberately absent until surveyed; the map renders a
-   *  placeholder rather than inventing coordinates. */
-  coords?: { lat: number; lng: number };
   image: ImageKey;
+  /** One line on what this shop is for, where we know it. */
+  note?: string;
+  /**
+   * true only where the address is on the packaging or the FSSAI licence.
+   * Everything else came off public listings (see `source`) and is shown as
+   * "listed" rather than stated as fact.
+   */
   confirmed: boolean;
+  /** Where an unconfirmed address came from, so it can be checked. */
+  source?: string;
+  /** The head shop. Gets the lead frame in the section. */
+  flagship?: boolean;
 };
 
 /**
- * Only the first entry is verified — it is the manufacturing and registered
- * address printed on every pack and on the FSSAI licence. The remaining
- * outlets are photographed in the brand's asset folder but the business has
- * not yet supplied their names or addresses, so they carry placeholders and
- * `confirmed: false`. Nothing here is invented.
+ * The shops, in Gwalior.
+ *
+ * Phalka Bazar is the only address the business has evidenced: it is the
+ * manufacturing and registered address printed on every pack and on the FSSAI
+ * licence, and it is the flagship.
+ *
+ * The other three were gathered from public listings — Zomato, Swiggy, Justdial
+ * and Mappls all carry them — because the business asked for the shops to be on
+ * the site and had not supplied them. They are marked `confirmed: false` and
+ * carry the listing they came from, and the section labels them as listed
+ * rather than asserting them. They are almost certainly right; they have simply
+ * not been confirmed by the family, and that is a different thing. Every
+ * `mapsUrl` is a Google Maps search rather than a pin, so a listing that has
+ * since moved still lands the visitor on the right shop.
+ *
+ * Listings say the chain has more than six shops in Gwalior. Four are named
+ * here. See CONTENT-TODO for the ask.
  */
 export const STORES: Store[] = [
   {
     id: 'phalka-bazar',
-    name: 'Bapu Best — Phalka Bazar',
+    name: 'Phalka Bazar',
     area: 'Lashkar',
-    address: 'Phalka Bazar, Lashkar, Gwalior, Madhya Pradesh 474009',
-    hours: '[ADD OPENING HOURS]',
+    address: 'Phalka Bazar, near Sunhari Masjid, Lashkar, Gwalior, Madhya Pradesh 474001',
+    hours: '10:30 am – 9:30 pm',
     phone: '+91 94253 07800',
-    image: 'store-01',
+    mapsUrl:
+      'https://www.google.com/maps/search/?api=1&query=Best+Namkeen+Phalka+Bazar+Lashkar+Gwalior',
+    image: 'shop-front',
+    note: 'The original counter, and the kitchen behind it. Everything on this site is still made here.',
     confirmed: true,
+    flagship: true,
   },
   {
-    id: 'store-02',
-    name: '[ADD STORE NAME]',
-    area: '[ADD AREA]',
-    address: '[ADD STORE ADDRESS]',
-    hours: '[ADD OPENING HOURS]',
-    image: 'store-02',
+    id: 'thatipur',
+    name: 'Thatipur',
+    area: 'Thatipur Chauraha',
+    address: 'Mahipat Plaza, Thatipur Chauraha, Gwalior, Madhya Pradesh',
+    hours: 'Until 10:00 pm',
+    mapsUrl:
+      'https://www.google.com/maps/search/?api=1&query=Best+Namkeen+Thatipur+Chauraha+Gwalior',
+    image: 'shop-aisle',
     confirmed: false,
+    source: 'Public listing (Zomato)',
   },
   {
-    id: 'store-03',
-    name: '[ADD STORE NAME]',
-    area: '[ADD AREA]',
-    address: '[ADD STORE ADDRESS]',
-    hours: '[ADD OPENING HOURS]',
-    image: 'store-03',
+    id: 'gole-ka-mandir',
+    name: 'Gole Ka Mandir',
+    area: 'Morar',
+    address: 'Gole Ka Mandir Road, Ganesh Colony, Morar, Gwalior, Madhya Pradesh',
+    hours: 'Until 9:30 pm',
+    mapsUrl:
+      'https://www.google.com/maps/search/?api=1&query=Best+Namkeen+Gole+Ka+Mandir+Morar+Gwalior',
+    image: 'shop-snacks-counter',
     confirmed: false,
+    source: 'Public listing (magicpin)',
   },
   {
-    id: 'store-04',
-    name: '[ADD STORE NAME]',
-    area: '[ADD AREA]',
-    address: '[ADD STORE ADDRESS]',
+    id: 'city-centre',
+    name: 'City Centre',
+    area: 'City Centre',
+    address: 'City Centre, Gwalior, Madhya Pradesh',
     hours: '[ADD OPENING HOURS]',
-    image: 'store-04',
+    mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Best+Namkeen+City+Centre+Gwalior',
+    image: 'shop-cases',
     confirmed: false,
+    source: 'Public listing (Justdial)',
   },
 ];
 

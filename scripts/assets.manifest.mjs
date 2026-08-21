@@ -84,12 +84,12 @@ export const IMAGES = [
   { out: 'detail-kadipatta-flat', src: 'Best Namkeen Product images/Best Bites/Kadipatta Mix/kadipatta.png', max: 1600 },
 
   // ---- Stores (the brand's own shop photographs) -------------------------
-  { out: 'store-01', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.21 PM (1).jpeg', max: 1800 },
-  { out: 'store-02', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.21 PM.jpeg', max: 1800 },
-  { out: 'store-03', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.22 PM.jpeg', max: 1800 },
+  { out: 'store-01', src: 'shop-01.jpeg', max: 1800, root: BRAND_ROOT },
+  { out: 'store-02', src: 'shop-02.jpeg', max: 1800, root: BRAND_ROOT },
+  { out: 'store-03', src: 'shop-03.jpeg', max: 1800, root: BRAND_ROOT },
   { out: 'store-04', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.20 PM.jpeg', max: 1800 },
   { out: 'store-counter', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.19 PM (1).jpeg', max: 1800 },
-  { out: 'store-sweets', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.25 PM.jpeg', max: 1800 },
+  { out: 'store-sweets', src: 'shop-sweets.jpeg', max: 1800, root: BRAND_ROOT },
   { out: 'store-mithai', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.23 PM.jpeg', max: 1800 },
   { out: 'store-shelf', src: 'Store image of best namkeen/WhatsApp Image 2026-07-28 at 1.54.24 PM.jpeg', max: 1800 },
 
@@ -121,8 +121,6 @@ export const IMAGES = [
   // a table, a spice tray, a basket of namkeen — never as this kitchen or
   // these packs. Licence and swap-out notes: assets/web/SOURCES.md.
   { out: 'story-house', src: 'story-house.jpg', max: 1800, root: WEB_ROOT },
-  { out: 'story-heritage', src: 'story-heritage.jpg', max: 1600, root: WEB_ROOT },
-  { out: 'story-modern', src: 'story-modern.jpg', max: 1600, root: WEB_ROOT },
   { out: 'story-spice', src: 'story-spice.jpg', max: 1800, root: WEB_ROOT },
   { out: 'story-table', src: 'story-table.jpg', max: 1600, root: WEB_ROOT },
 
@@ -139,4 +137,13 @@ export const IMAGES = [
 
   // ---- Supplied by the business, straight into the repo ------------------
   { out: 'pour-bowl', src: 'pour-bowl.png', max: 1600, root: BRAND_ROOT },
+
+  // The shops themselves, from the "Best images" folder. `shop-front` is the
+  // one with the sign lit — it is the only frame that shows the name over the
+  // door, so it leads the stores section wherever that section appears.
+  { out: 'shop-front', src: 'shop-front.webp', max: 1400, root: BRAND_ROOT },
+  { out: 'shop-aisle', src: 'shop-aisle.webp', max: 1400, root: BRAND_ROOT },
+  { out: 'shop-snacks-counter', src: 'shop-snacks-counter.webp', max: 1400, root: BRAND_ROOT },
+  { out: 'shop-cases', src: 'shop-cases.webp', max: 1400, root: BRAND_ROOT },
+  { out: 'shop-fridges', src: 'shop-fridges.webp', max: 1400, root: BRAND_ROOT },
 ];

@@ -147,11 +147,40 @@ Worth knowing before editing it:
   `[data-active]` rules that hide the fixed furniture.
 - Bloom is thresholded above everything except the sun. On a light ground a low
   threshold does not glow, it just washes.
+- **Nothing over the canvas may blend or use a backdrop filter.** `.hero-veil`
+  was a fixed, viewport-sized `mix-blend-mode: multiply` layer and the two rails
+  carried `backdrop-filter: blur()`, all three sitting on top of a canvas that
+  repaints every frame — so all three forced a full-viewport readback at 60fps
+  for three screens of scroll. On the third panel, which carries the most
+  geometry, the bloom pass and nine drop-shadowed packs, that dropped the whole
+  screen to white for seconds at a time. The veil is composited normally now and
+  the rails are opaque. Same rule as the house pin, for the same reason.
 
 Under `prefers-reduced-motion` the scene renders still — no drift, no camera
 float, no entrance, no parallax — and every panel is visible from the first
 frame. The ambient loops never start either, because the flag that switches them
 on is set by the entrance timeline that never runs.
+
+### The order of the homepage
+
+```
+1. the horizon      HorizonHero    who this is, over three screens of scroll
+2. the house        HouseSection   why there are two names, what each is for
+3. the shops        StoresSection  where to walk in
+4. the best sellers SignatureSection
+5. the story        LegacySection  six decades of it
+6. the rest         Why / Process / Testimonials / SocialGrid / MarketplaceCTA
+```
+
+Stores sit that high deliberately. This is a sixty-year-old counter business in
+one city, and for a large share of the people who land here the useful answer is
+an address and a pair of opening hours, not a brand film. The story is the
+reward for scrolling past that, not the toll for reaching it.
+
+The short "It started in Gwalior" card that used to sit above the story is gone.
+It restated the address and the year immediately before the story said both,
+better — a page clearing its throat twice. `StorySection.tsx` is still in the
+repo, unmounted.
 
 ### The house
 
@@ -458,6 +487,21 @@ To go back to drawings, or forward to real kitchen photography, only `PROCESS`
 in `src/data/story.ts` and the card body in `ProcessSection.tsx` change. Scenes
 are drawn at 400×500 to match the 4:5 card exactly, with a small parallax
 overscan — keep anything that matters inside x 34–366, y 44–456.
+
+### The shops
+
+`StoresSection.tsx` leads with the one photograph that has the name lit over
+the door and lets the other three follow as a row. Two colours carry the thing
+the copy cannot: **emerald** marks an address that is evidenced — Phalka Bazar,
+which is on the pack and on the FSSAI licence — and **saffron** marks one that
+came off a public listing and is still waiting on the family. The key is printed
+under the row, and `STORES` in `src/data/stores.ts` records the listing each
+unconfirmed address came from.
+
+Every `mapsUrl` is a Google Maps **search**, never a place id, and the map on
+`/stores` is a search embed rather than pins. Nobody has surveyed these shops;
+a hand-typed coordinate would look more certain than we are entitled to be, and
+a search link still lands on the right shop if a listing moves.
 
 ### The legacy story
 

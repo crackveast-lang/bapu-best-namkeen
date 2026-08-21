@@ -93,8 +93,8 @@ Bites** for display and records the exact pack spelling in
 ## 3. The founding story
 
 **Partly written now.** You sent the legacy story — *Six Decades. One Timeless
-Taste.* — and it is on the site twice, word for word: on the homepage after the
-short "It started in Gwalior" card, and on **Our Story** as the long version.
+Taste.* — and it is on the site twice, word for word: on the homepage as the
+Our Story section, and on **Our Story** as the long version.
 It lives in one place, `LEGACY` in `src/data/story.ts`, so editing it there
 changes both.
 
@@ -138,21 +138,36 @@ what is already evidenced elsewhere on the site.
 
 ## 4. Stores
 
-Only **Phalka Bazar** is confirmed — it is the manufacturing and registered
-address on the licence. The other three cards show real photographs of your
-shops, but are marked *"Details to confirm"* because I have no names or
-addresses for them.
+**Four shops are on the site now.** Only one of them came from you.
 
-For each outlet, in `src/data/stores.ts`:
+| Shop | Address | Where it came from |
+| --- | --- | --- |
+| **Phalka Bazar**, Lashkar | Phalka Bazar, near Sunhari Masjid, Gwalior 474001 | Your packaging and the FSSAI licence |
+| **Thatipur** | Mahipat Plaza, Thatipur Chauraha | Public listing (Zomato) |
+| **Gole Ka Mandir**, Morar | Gole Ka Mandir Road, Ganesh Colony | Public listing (magicpin) |
+| **City Centre** | City Centre | Public listing (Justdial) |
 
-- `name`, `area`, `address`, `hours`, `phone`
-- `mapsUrl` — the Google Maps share link
-- `coords` — `{ lat, lng }`
+The three from listings are marked on the site with a **saffron dot** and the
+words "to confirm"; Phalka Bazar carries an **emerald dot** because it is the one
+address that is evidenced. The key is printed under the row, so a visitor can
+see the difference too.
 
-The map section (`src/components/StoreMap.tsx`) is a deliberate placeholder: it
-draws a stylised plan and says how many locations are unplaced. **No coordinates
-were invented.** Once `coords` are filled in, swap that component for a real
-embed — nothing else has to change.
+Listings say the chain has **more than six shops** in Gwalior. Please send, for
+each one: the name you use for it, the street address, the opening hours, and a
+phone number if it has its own. Then every dot goes green.
+
+Opening hours are missing for City Centre and approximate ("until 10 pm") for
+the other two — they came from delivery-app listings, not from you.
+
+The map on **/stores** is a Google Maps *search* embed rather than pinned
+coordinates, for the same reason: nobody has surveyed these shops, and a
+hand-typed coordinate would look more certain than we are entitled to be. Send
+the addresses and it can become real pins.
+
+**Store photography** now comes from the "Best images" folder you supplied —
+five frames including the lit shopfront, which leads the section. The four older
+WhatsApp shop photos moved into the repository (`assets/brand/`) when that
+folder was reorganised, so the build no longer depends on the drive's layout.
 
 ---
 

@@ -22,8 +22,8 @@ export default function SignatureSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
-              eyebrow="Our signature namkeen"
-              title="Made for every craving."
+              eyebrow="Our best sellers"
+              title="The ones Gwalior reaches for."
               titleId="signature-heading"
               lede={`${PRODUCTS.length} mixtures and sevs across our two brands, each with its own pack and its own reason to reach for it.`}
               className="max-w-xl"

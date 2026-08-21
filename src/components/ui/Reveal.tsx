@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -148,12 +148,15 @@ export function Stagger({
 export function StaggerItem({
   children,
   className,
+  style,
   as = 'div',
   y = 20,
   variant = 'up',
 }: {
   children: ReactNode;
   className?: string;
+  /** For passing a per-item CSS custom property, e.g. an accent colour. */
+  style?: CSSProperties;
   as?: Tag;
   y?: number;
   variant?: RevealVariant;
@@ -171,7 +174,7 @@ export function StaggerItem({
   };
 
   return (
-    <Tag className={className} variants={item}>
+    <Tag className={className} style={style} variants={item}>
       {children}
     </Tag>
   );

@@ -409,18 +409,6 @@ export const IMAGE_META = {
     "height": 1800,
     "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQAgCdASoMABAABABoJbACdAEf1u5IJr3KB7AA/tKMIei1ajjYadou0ApRkfabUH+HjOABY7xTyGlVHhilkTMpX2V+FJ4xZURWrJ0Q2GbirdLN26xsG4EJrjOY6lXrgTWwCkAIwAA="
   },
-  "story-heritage": {
-    "src": "/images/story-heritage.webp",
-    "width": 1123,
-    "height": 1600,
-    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoLABAABABoJbACdAEK8ourkoAA/u+c1jt6QyUu7/FOUwJ4NOZm8LsByVWumKRZC8OWdPNHp8+Z5IcKBq3XvwQd1Nhs2DfFpHgU82Ugu0UKgAAA"
-  },
-  "story-modern": {
-    "src": "/images/story-modern.webp",
-    "width": 1067,
-    "height": 1600,
-    "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACQAQCdASoLABAABABoJbACdABv1gAA+eMQcGP2KyGbRwb6JVaRI/9bfji9LqzcrF8AAA=="
-  },
   "story-spice": {
     "src": "/images/story-spice.webp",
     "width": 1800,
@@ -468,6 +456,36 @@ export const IMAGE_META = {
     "width": 1086,
     "height": 1448,
     "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAQCdASoMABAABABoJbACdADcQcaHegAA/vOHHlQixGdURoPY71A1AFib27WBBnCmvQ/hscwmb83j0cuaNDiWnvMPeGM115JH4OUbtJ4vX1BXpwYiLZDyPKgmL2tuxob+/l2oAAA="
+  },
+  "shop-front": {
+    "src": "/images/shop-front.webp",
+    "width": 680,
+    "height": 383,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAQCdASoQAAkABABoJQBOgBIuUFQA+NScLPa1UVIlgWT8LeQ96z26NJ0hRdzETUTUOLMzd+3SWf8c0R4zTs0mSd0xlUwtAAA="
+  },
+  "shop-aisle": {
+    "src": "/images/shop-aisle.webp",
+    "width": 382,
+    "height": 510,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoMABAABABoJQBOgMX/3Evw2+SoAAD9dVGzBWbskeZfOQjM0nD/2u2TUv8GDFckL3j5fvKQ9zIaRmrcYL4jJk1ENSkIFO9ulUuq0Fr5x+QAAA=="
+  },
+  "shop-snacks-counter": {
+    "src": "/images/shop-snacks-counter.webp",
+    "width": 680,
+    "height": 383,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACQAQCdASoQAAkABABoJQBdgBM4BSAA/uwFO9XD7GCjlBMaL2Lc9/De63wOpkEUD4RqXawG84CeAyJYAAA="
+  },
+  "shop-cases": {
+    "src": "/images/shop-cases.webp",
+    "width": 382,
+    "height": 510,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAQCdASoMABAABABoJQBOgBdAmLrAAAD7zJaHxBRVwhJjk+VuajAqUzt1wTv88ARoJ4aYczIQ4JKx4t/3gkHFsSjODPXrtfdpzZGvFeurAAAA"
+  },
+  "shop-fridges": {
+    "src": "/images/shop-fridges.webp",
+    "width": 382,
+    "height": 510,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoMABAABABoJQBOgBuS2F7KIADhWz0UXIj+P+5r86lKBQrQVLHjnRzkHgoCFhnbSvEkEKdlrfEqi2K5gQ7+nAs7Ak4we2QwAAA="
   }
 } as const satisfies Record<string, ImageMeta>;
 

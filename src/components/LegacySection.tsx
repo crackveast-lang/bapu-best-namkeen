@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
+import { useRef, type CSSProperties, type ReactNode } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import Media from '@/components/ui/Media';
 import Reveal, { Stagger, StaggerItem } from '@/components/ui/Reveal';
@@ -26,6 +26,20 @@ import Pattern from '@/components/art/Pattern';
  * the thread is simply full, the reveals collapse to short fades, and the story
  * reads as an ordinary long-form page.
  */
+
+/**
+ * Chosen, prepared, carried — three different promises, so three different
+ * colours rather than three of the same saffron. The greens are the ones the
+ * brand already owns: the vegetarian mark on the pack, and the curry leaf.
+ */
+const EVERY_TONES = ['text-saffron', 'text-gold-soft', 'text-pack-kadipatta'] as const;
+
+/** The same idea for the three shared moments, as custom properties. */
+const SHARED_TONES = [
+  'var(--color-saffron)',
+  'var(--color-emerald)',
+  'var(--color-gold)',
+] as const;
 
 /* ------------------------------------------------------------------ *
  * The thread
@@ -222,10 +236,12 @@ export default function LegacySection() {
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Stagger step={0.14} className="divide-y divide-ivory/12">
-              {LEGACY.every.map((e) => (
+              {LEGACY.every.map((e, i) => (
                 <StaggerItem key={e.lead} y={18} className="py-6 first:pt-0">
                   <p className="text-[clamp(1.2rem,2.8vw,1.7rem)] leading-snug">
-                    <span className="font-display font-semibold text-saffron">{e.lead}</span>{' '}
+                    <span className={`font-display font-semibold ${EVERY_TONES[i]}`}>
+                      {e.lead}
+                    </span>{' '}
                     <span className="text-ivory/85">{e.line}</span>
                   </p>
                 </StaggerItem>
@@ -262,14 +278,24 @@ export default function LegacySection() {
         </Reveal>
 
         <Stagger step={0.12} className="mt-12 grid gap-4 md:grid-cols-3">
-          {LEGACY.shared.parts.map((part) => (
+          {LEGACY.shared.parts.map((part, i) => (
             <StaggerItem
               key={part}
               variant="scale"
-              className="rounded-[1.1rem] border border-ivory/12 bg-ivory/[0.04] p-7 text-center backdrop-blur-[2px] transition-colors duration-500 hover:border-saffron/35 hover:bg-ivory/[0.07]"
+              style={{ '--tone': SHARED_TONES[i] } as CSSProperties}
+              className="group/s relative overflow-hidden rounded-[1.1rem] border border-ivory/12 bg-ivory/[0.04] p-7 text-center transition-[border-color,background-color,transform] duration-500 hover:-translate-y-1 hover:border-[color:var(--tone)]/45 hover:bg-ivory/[0.07]"
             >
-              <Sparkle aria-hidden className="mx-auto mb-4 w-5 text-saffron/70" />
-              <p className="text-[1rem] leading-snug text-ivory/85">{part}</p>
+              {/* Each moment gets its own colour, glowing a little brighter when
+                  you point at it. No backdrop-filter: see the flicker note. */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -top-12 left-1/2 size-32 -translate-x-1/2 rounded-full bg-[color:var(--tone)] opacity-10 blur-2xl transition-opacity duration-500 group-hover/s:opacity-25"
+              />
+              <Sparkle
+                aria-hidden
+                className="relative mx-auto mb-4 w-5 text-[color:var(--tone)] transition-transform duration-500 group-hover/s:scale-110"
+              />
+              <p className="relative text-[1rem] leading-snug text-ivory/85">{part}</p>
             </StaggerItem>
           ))}
         </Stagger>

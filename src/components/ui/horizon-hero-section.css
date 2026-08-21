@@ -56,14 +56,24 @@
 }
 
 /* Paper grain and a soft vignette over the render, so the horizon reads as
-   printed on the same stock as the rest of the site. */
+   printed on the same stock as the rest of the site.
+
+   NO `mix-blend-mode` HERE. This is a fixed, viewport-sized layer sitting on
+   top of a WebGL canvas that repaints every single frame — and a blend layer
+   has to read its backdrop back out of the compositor every frame it paints.
+   That is a full-viewport readback at 60fps for three screens of scroll, and
+   on the third panel (which carries the most geometry, the bloom pass and nine
+   drop-shadowed packs) it is what dropped the whole screen to white.
+
+   Multiply of a faint grey noise over this render is very close to the same
+   noise composited normally at a lower opacity, because the horizon is lit for
+   daylight and its ground is nearly white. So it is composited normally. */
 .hero-veil {
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  mix-blend-mode: multiply;
-  opacity: 0.55;
+  opacity: 0.4;
   transition:
     opacity 0.8s var(--ease-out-soft),
     visibility 0.8s;
@@ -83,9 +93,10 @@
   align-items: center;
   gap: 1.1rem;
   border-radius: 999px;
-  background: rgba(252, 248, 241, 0.6);
+  /* Opaque enough to need no  — see the note on .hero-veil.
+     A backdrop filter over the canvas is the same full-viewport readback. */
+  background: rgba(252, 248, 241, 0.88);
   padding: 0.9rem 0.55rem;
-  backdrop-filter: blur(8px);
   transform: translateY(-50%);
   transition:
     opacity 0.6s var(--ease-out-soft),
@@ -839,9 +850,9 @@
   /* The horizon behind this runs from bleached sky to deep maroon ridge over
      three screens, so the rail carries its own paper to sit on. */
   border-radius: 999px;
-  background: rgba(252, 248, 241, 0.72);
+  /* Opaque rather than blurred — see the note on .hero-veil. */
+  background: rgba(252, 248, 241, 0.92);
   padding: 0.5rem 1rem;
-  backdrop-filter: blur(8px);
   transition:
     opacity 0.6s var(--ease-out-soft),
     visibility 0.6s;

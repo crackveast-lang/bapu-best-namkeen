@@ -1,14 +1,12 @@
 import type { Metadata } from 'next';
-import Media from '@/components/ui/Media';
 import Reveal from '@/components/ui/Reveal';
 import DrawIn from '@/components/ui/DrawIn';
 import Timeline from '@/components/Timeline';
 import LegacySection from '@/components/LegacySection';
 import ProcessSection from '@/components/ProcessSection';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
-import { Copy, Eyebrow, Placeholder, SectionHeading } from '@/components/ui/Bits';
-import { LEGACY, STORY_INTRO } from '@/data/story';
-import { LEGAL } from '@/data/site';
+import { Eyebrow, Placeholder, SectionHeading } from '@/components/ui/Bits';
+import { STORY_INTRO } from '@/data/story';
 import GwaliorSkyline from '@/components/art/GwaliorSkyline';
 import { CircleScribble } from '@/components/art/Doodles';
 import Decor from '@/components/art/Decor';
@@ -50,64 +48,14 @@ export default function OurStoryPage() {
         </div>
       </section>
 
-      {/* ---------------- the story ---------------- */}
-      <section className="bg-ivory py-16 md:py-24" aria-labelledby="founding-heading">
-        <div className="mx-auto grid w-full max-w-[88rem] gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
-          <Reveal className="lg:col-span-6">
-            <figure>
-              <div className="relative aspect-4/5 overflow-hidden rounded-[1.5rem] border border-ink/10 bg-cream">
-                <Media
-                  name={STORY_INTRO.image}
-                  alt="The counter of a Bapu Best shop in Gwalior"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 92vw, 46vw"
-                />
-              </div>
-              <figcaption className="mt-3 text-[0.72rem] tracking-[0.08em] text-ink-faint uppercase">
-                Our shop, Gwalior
-              </figcaption>
-            </figure>
-          </Reveal>
-
-          <Reveal delay={0.1} className="lg:col-span-6 lg:pt-6">
-            <h2 id="founding-heading" className="text-[clamp(1.8rem,4.2vw,2.8rem)] leading-tight">
-              Where it started, and who started it.
-            </h2>
-            <div className="mt-6 space-y-5 text-[0.98rem] leading-relaxed text-ink-soft">
-              <p>
-                We know where it is made: {LEGAL.addressLine}, {LEGAL.city}. We know the year on
-                the pack: 1960. And we now know whose year it was — {LEGACY.founder.name}, and
-                the belief he started with.
-              </p>
-              <div>
-                <Copy value={STORY_INTRO.body} />
-              </div>
-              <p>
-                The long version is below, in the family&rsquo;s own words. What is still open is
-                the middle: when the first counter opened, when the other shops followed, when
-                the kitchen was certified. Those are marked on this page rather than guessed.
-              </p>
-            </div>
-
-            <div className="mt-9 rounded-[1.1rem] border border-dashed border-crimson/35 bg-crimson/[0.04] p-5">
-              <p className="text-[0.78rem] leading-relaxed text-ink-soft">
-                <strong className="font-semibold text-ink">A note on this page.</strong> Every
-                bracketed block is a gap waiting on the business. Nothing about the founding
-                has been invented to fill space — see{' '}
-                <code className="rounded bg-ink/8 px-1 py-0.5 text-[0.72rem]">
-                  CONTENT-TODO.md
-                </code>{' '}
-                in the project for the full list.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ---------------- the long version ---------------- */}
       {/* The story in the business's own words, told down the page. Same
-          component as the homepage — one copy of the narrative, in story.ts. */}
+          component as the homepage — one copy of the narrative, in story.ts.
+
+          It follows the opening screen directly. There used to be a two-column
+          photo-and-paragraph block in between, restating the address and the
+          year before the story got to say either — a page that clears its
+          throat twice. The facts it carried are all in LEGACY, said better. */}
       <LegacySection />
 
       {/* ---------------- timeline ---------------- */}
@@ -129,8 +77,15 @@ export default function OurStoryPage() {
             />
           </Reveal>
           <Timeline />
-          <Reveal className="mt-4 text-center">
+          <Reveal className="mx-auto mt-8 max-w-2xl text-center">
             <Placeholder>Add the dates between 1960 and today</Placeholder>
+            <p className="mt-5 text-[0.78rem] leading-relaxed text-ink-faint">
+              Every bracketed block on this site is a gap waiting on the business, shown as a
+              gap rather than filled with something plausible. Nothing about the founding has
+              been invented — see{' '}
+              <code className="rounded bg-ink/8 px-1 py-0.5 text-[0.72rem]">CONTENT-TODO.md</code>{' '}
+              in the project for the full list.
+            </p>
           </Reveal>
         </div>
       </section>

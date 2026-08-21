@@ -1,44 +1,39 @@
 import HorizonHero from '@/components/ui/horizon-hero-section';
 import HouseSection from '@/components/HouseSection';
-import SignatureSection from '@/components/SignatureSection';
-import WhySection from '@/components/WhySection';
-import StorySection from '@/components/StorySection';
-import LegacySection from '@/components/LegacySection';
-import ProcessSection from '@/components/ProcessSection';
 import StoresSection from '@/components/StoresSection';
+import SignatureSection from '@/components/SignatureSection';
+import LegacySection from '@/components/LegacySection';
+import WhySection from '@/components/WhySection';
+import ProcessSection from '@/components/ProcessSection';
 import Testimonials from '@/components/Testimonials';
 import SocialGrid from '@/components/SocialGrid';
 import MarketplaceCTA from '@/components/MarketplaceCTA';
 
 /**
- * The homepage reads as one story:
- * Gwalior → the house → product → trust → where it started → six decades of it
- * → how it is made → stores → proof → buy.
+ * The homepage, in the order a visitor actually needs it:
  *
- * It opens on the horizon: three screens of scroll that fly the camera through
- * a Gwalior ridge — the house name, then Best Bites, then the range.
+ *   1. the horizon      — who this is, over three screens of scroll
+ *   2. the house        — why there are two names, and what each one is for
+ *   3. the shops        — where to walk in, because most of Gwalior will
+ *   4. the best sellers — what to reach for
+ *   5. the story        — six decades of it, once they care
+ *   6. the rest         — why it tastes like it does, how it is made, proof, buy
  *
- * `HouseSection` then answers the question the horizon leaves behind, which is
- * the first thing anyone asks on a site carrying two names: why are there two?
- * It pins one screen on the parent identity, forks it into Best Namkeen and
- * Best Bites, and gives each of them a face of its own.
- *
- * `StorySection` and `LegacySection` sit together on purpose and in that order:
- * the first is the short card — it started in Gwalior, here is the address,
- * read more — and the second is the telling, six decades of it, delivered a
- * line at a time down a dark screen. Short version, then long version.
+ * Stores sit that high on purpose. This is a sixty-year-old counter business in
+ * one city; for a large share of the people who land here the useful answer is
+ * an address and a pair of opening hours, not a brand film. The story is the
+ * reward for scrolling past it, not the toll for reaching it.
  */
 export default function HomePage() {
   return (
     <>
       <HorizonHero />
       <HouseSection />
-      <SignatureSection />
-      <WhySection />
-      <StorySection />
-      <LegacySection />
-      <ProcessSection />
       <StoresSection />
+      <SignatureSection />
+      <LegacySection />
+      <WhySection />
+      <ProcessSection />
       <Testimonials />
       <SocialGrid />
       <MarketplaceCTA />

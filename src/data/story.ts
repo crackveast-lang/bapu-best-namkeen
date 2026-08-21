@@ -62,9 +62,9 @@ export const HOUSE = {
       body: 'The everyday pack Gwalior grew up on. Classic sevs and mixtures, made the way they have always been made, for the people who already know exactly what they are reaching for.',
       since: '1960',
       href: '/brands#bapu-best',
-      image: 'story-heritage',
+      image: 'brand-bapu-best',
       imageAlt:
-        'A cane basket of freshly fried sev mixture with peanuts and curry leaves, beside two glasses of tea',
+        'A Bapu Best Namkeen & Bakery pack photographed from above with a glass bowl of the mixture on it',
       tone: 'heritage',
     },
     {
@@ -75,8 +75,9 @@ export const HOUSE = {
       body: 'The same kitchen, in a resealable 400 g pack built to travel. Made for the shelf, the desk drawer and the suitcase — anywhere Gwalior is a long way away.',
       since: '1990',
       href: '/brands#best-bites',
-      image: 'story-modern',
-      imageAlt: 'Crisp golden sev served on a white plate against a bright yellow backdrop',
+      image: 'g-indori-b',
+      imageAlt:
+        'A pack of Bapu Best Bites Indori Khatta Meetha standing beside a glass bowl of the mixture',
       tone: 'modern',
     },
   ] satisfies HouseBrand[],
@@ -109,8 +110,8 @@ export const LEGACY = {
     lead: 'began a journey with a simple belief —',
     belief: 'when quality is uncompromised, taste becomes timeless.',
     body: 'What started more than six decades ago has grown into a name trusted by generations.',
-    image: 'store-counter' as ImageKey,
-    imageAlt: 'The counter of a Bapu Best shop in Gwalior',
+    image: 'shop-front' as ImageKey,
+    imageAlt: 'The Bapu Best shopfront in Gwalior at night, the name lit above the door',
   },
   constant:
     'Through the years, while times changed and generations evolved, one thing remained constant — our commitment to quality, freshness, and that unmistakable taste.',
@@ -142,9 +143,8 @@ export const LEGACY = {
   preserve: {
     lead: 'Because while the world around us continues to change, some things are worth preserving.',
     three: ['The taste.', 'The tradition.', 'The trust.'],
-    image: 'story-heritage' as ImageKey,
-    imageAlt:
-      'A cane basket of freshly fried sev mixture with peanuts and curry leaves, beside two glasses of tea',
+    image: 'detail-waffer-pour' as ImageKey,
+    imageAlt: 'Waffer Mix being poured from the pack into a glass bowl',
   },
   sign: {
     brand: 'Best Namkeen',
