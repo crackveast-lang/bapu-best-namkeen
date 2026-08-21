@@ -76,7 +76,9 @@ public/images/           GENERATED — do not edit
 > flicker.
 >
 > A decorative background is not worth a hero that strobes, so it stopped being
-> the default. The three panels were always ordinary server-rendered HTML: every
+> the default — and the range it drew came back as `HorizonRidges.tsx`, flat
+> SVG with the same seeded profile, the same six layers and the same colours.
+> The mountains are still there; only the renderer is gone. The three panels were always ordinary server-rendered HTML: every
 > word, both brand badges, the packs, the drawn skyline, the cart and the
 > buttons are untouched, and the warm gradient on `.hero-container` was always
 > the fallback behind them. It reads as a finished hero, not a broken one.
@@ -550,6 +552,15 @@ Nothing is traced, hotlinked or stock.
   Jai Vilas wing.
 - **`Doodles.tsx`** — the marginal food doodles.
 - **`IngredientIcons.tsx`** — 21 icons for the per-product breakdowns.
+- **`HorizonRidges.tsx`** — the Gwalior range behind the hero, as flat SVG.
+  Same seeded generator, same seed (`0x1960`), same six layers as the WebGL
+  scene drew, so it is the skyline this site has always had rather than a new
+  one that merely rhymes. Depth is carried the way a printer carries it — the
+  near ridge is brand maroon low in the frame, each one behind it paler, higher
+  and shallower. It is `position: sticky` with a negative bottom margin, so it
+  stands behind all three panels, adds no height, and ends with the hero
+  instead of hanging over the section below the way a fixed canvas has to be
+  told to. No canvas, no context, no animation frame: it cannot flicker.
 - **`ProcessScenes.tsx`** — the five "How we make it" scenes. **Not currently
   mounted**: that section now runs on photographs (see below). The file is kept
   because it is original artwork and because the argument it was drawn for is

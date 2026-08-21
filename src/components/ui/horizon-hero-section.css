@@ -60,6 +60,22 @@
   display: none;
 }
 
+/* The drawn range. Sticky, not fixed: it stays behind all three panels for
+   the length of the hero and then ends with it, so it can never sit over the
+   section below — which is the one thing the canvas always needed telling. */
+.hero-ridges {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100svh;
+  /* It occupies no space of its own: the panels are the hero's height, and a
+     sticky element in the flow would add a fourth screen to it. */
+  margin-bottom: -100svh;
+  pointer-events: none;
+}
+
 /* Flat mode: the horizon is off, either by hand (?flat) or because the frame
    watchdog judged this machine could not hold it. The panels keep their warm
    ground and every word on them; only the render is gone. */

@@ -9,6 +9,7 @@ import type { EffectComposer } from 'three/examples/jsm/postprocessing/EffectCom
 import Media from '@/components/ui/Media';
 import BuyButton from '@/components/ui/BuyButton';
 import GwaliorSkyline from '@/components/art/GwaliorSkyline';
+import HorizonRidges from '@/components/art/HorizonRidges';
 import NamkeenCart from '@/components/art/NamkeenCart';
 import {
   BadgeRing,
@@ -1198,6 +1199,14 @@ export function HorizonHero() {
       data-active={isActive}
       data-flat={isFlat ? 'true' : undefined}
     >
+      {/* The range, drawn. It stands in for the render when the scene is off,
+          which is the default — sticky rather than fixed, so it stays behind
+          all three panels and then simply ends with the hero instead of
+          hanging over the section below the way the canvas had to be told to
+          stop doing. Pure SVG in the markup: nothing to schedule, nothing to
+          composite per frame, nothing that can strobe. */}
+      {isFlat ? <HorizonRidges className="hero-ridges" /> : null}
+
       {isFlat ? null : <canvas ref={canvasRef} className="hero-canvas" aria-hidden />}
       <div className="hero-veil" aria-hidden />
 
