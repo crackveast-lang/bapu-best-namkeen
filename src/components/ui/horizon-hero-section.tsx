@@ -283,8 +283,8 @@ export function HorizonHero() {
    * panels stand on the plain parchment ground — they are ordinary
    * server-rendered HTML, so nothing but the horizon itself is lost.
    */
-  const [isFlat, setIsFlat] = useState(false);
-  const flatRef = useRef(false);
+  const [isFlat, setIsFlat] = useState(true);
+  const flatRef = useRef(true);
 
   const threeRefs = useRef<SceneRefs>({
     scene: null,
@@ -301,23 +301,40 @@ export function HorizonHero() {
   });
 
   /* ---------------------------------------------------------------- three */
-  // Checked before the renderer is ever asked for. `?flat` turns the horizon
-  // off and remembers it; `?horizon` turns it back on. It exists so that a
-  // flicker can be proved to be this scene, or ruled out, in one reload rather
-  // than by another round of guessing at it.
+  /**
+   * THE HORIZON IS OFF BY DEFAULT. Turn it on with `?horizon`.
+   *
+   * The WebGL scene caused a flicker on the owner's machine that five rounds of
+   * investigation here could not reproduce or explain — this environment
+   * rasterises WebGL in software, where the fault does not occur, and every
+   * measurement it can take (frame deltas, composited layers, layout
+   * oscillation, tween conflicts, pixel diffs) came back clean. Four fixes
+   * shipped for it. All four were real defects. None of them was the flicker.
+   *
+   * A decorative background is not worth a hero that strobes, so it now has to
+   * be asked for. The three panels were always ordinary server-rendered HTML:
+   * every word, both brand badges, the packs, the drawn skyline, the cart and
+   * the buttons are unaffected. Only the render behind them is gone, and the
+   * warm gradient on `.hero-container` was always its fallback.
+   *
+   * To put it back for everyone, make this default to `true` — one word — and
+   * the scene returns exactly as it was. The frame watchdog below stays either
+   * way, so a machine that opts in and still cannot hold it drops back out.
+   */
   useEffect(() => {
-    let flat = false;
+    let horizon = false;
     try {
       const q = new URLSearchParams(window.location.search);
-      if (q.has('flat')) localStorage.setItem('bapu:flat', '1');
-      if (q.has('horizon')) localStorage.removeItem('bapu:flat');
-      flat = localStorage.getItem('bapu:flat') === '1';
+      if (q.has('horizon')) localStorage.setItem('bapu:horizon', '1');
+      if (q.has('flat')) localStorage.removeItem('bapu:horizon');
+      horizon = localStorage.getItem('bapu:horizon') === '1';
     } catch {
-      /* private mode — just run the scene */
+      /* private mode — stay flat */
     }
-    if (flat) {
-      flatRef.current = true;
-      setIsFlat(true);
+    if (horizon) {
+      flatRef.current = false;
+      setIsFlat(false);
+    } else {
       setIsReady(true);
     }
   }, []);

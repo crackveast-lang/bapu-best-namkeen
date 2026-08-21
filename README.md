@@ -60,6 +60,33 @@ public/images/           GENERATED — do not edit
 
 ### The horizon
 
+> **THE WebGL SCENE IS OFF BY DEFAULT.** Add `?horizon` to any URL to turn it
+> on (remembered in `localStorage` as `bapu:horizon`); `?flat` turns it off
+> again. Everything below still describes it, and it still works — it simply
+> has to be asked for.
+>
+> **Why.** It caused a flicker on the owner's machine, at the seam between two
+> panels, that five rounds of investigation could not reproduce here. This
+> environment rasterises WebGL in software, where the fault does not occur, and
+> every measurement available came back clean: frame-to-frame deltas (mean 3 of
+> 255), composited layer trees, layout oscillation, GSAP tween conflicts,
+> pixel-diffs against the deployed build. Four fixes shipped for it — the
+> viewport blend layers, the ridge depth-writing, the navbar/hero resize loop,
+> the deactivation hysteresis. Every one was a real defect. None of them was the
+> flicker.
+>
+> A decorative background is not worth a hero that strobes, so it stopped being
+> the default. The three panels were always ordinary server-rendered HTML: every
+> word, both brand badges, the packs, the drawn skyline, the cart and the
+> buttons are untouched, and the warm gradient on `.hero-container` was always
+> the fallback behind them. It reads as a finished hero, not a broken one.
+>
+> **To bring it back for everyone**, flip the two defaults at `isFlat` /
+> `flatRef` in `horizon-hero-section.tsx` from `true` to `false`. The frame
+> watchdog stays either way, so a machine that opts in and still cannot hold the
+> scene drops itself back out.
+
+
 `components/ui/horizon-hero-section.tsx` opens the homepage: three full-height
 panels — **Two brands, one legacy**, **Best Bites**, **Best Namkeen** —
 scrolling over one pinned WebGL horizon, with the camera flying from in front of
