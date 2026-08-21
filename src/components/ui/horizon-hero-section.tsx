@@ -277,6 +277,14 @@ export function HorizonHero() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [isActive, setIsActive] = useState(true);
+  /**
+   * Set when the horizon is judged too expensive for this machine, or turned
+   * off by hand with ?flat. Either way the WebGL scene never runs and the three
+   * panels stand on the plain parchment ground — they are ordinary
+   * server-rendered HTML, so nothing but the horizon itself is lost.
+   */
+  const [isFlat, setIsFlat] = useState(false);
+  const flatRef = useRef(false);
 
   const threeRefs = useRef<SceneRefs>({
     scene: null,
@@ -293,6 +301,27 @@ export function HorizonHero() {
   });
 
   /* ---------------------------------------------------------------- three */
+  // Checked before the renderer is ever asked for. `?flat` turns the horizon
+  // off and remembers it; `?horizon` turns it back on. It exists so that a
+  // flicker can be proved to be this scene, or ruled out, in one reload rather
+  // than by another round of guessing at it.
+  useEffect(() => {
+    let flat = false;
+    try {
+      const q = new URLSearchParams(window.location.search);
+      if (q.has('flat')) localStorage.setItem('bapu:flat', '1');
+      if (q.has('horizon')) localStorage.removeItem('bapu:flat');
+      flat = localStorage.getItem('bapu:flat') === '1';
+    } catch {
+      /* private mode — just run the scene */
+    }
+    if (flat) {
+      flatRef.current = true;
+      setIsFlat(true);
+      setIsReady(true);
+    }
+  }, []);
+
   useEffect(() => {
     const refs = threeRefs.current;
     let disposed = false;
@@ -302,7 +331,7 @@ export function HorizonHero() {
 
     const initThree = async () => {
       const canvas = canvasRef.current;
-      if (!canvas) return;
+      if (!canvas || flatRef.current) return;
 
       const [THREE, { EffectComposer: Composer }, { RenderPass }, { UnrealBloomPass }, { OutputPass }] =
         await Promise.all([
@@ -718,11 +747,56 @@ export function HorizonHero() {
       refs.hillDepths = refs.hills.map((hill) => hill.position.z);
     };
 
+    /**
+     * Frame health.
+     *
+     * A decorative background is never worth a page that judders, and this one
+     * cannot be tested on every machine it will meet: a GPU that cannot hold
+     * this scene at frame rate shows it as a flicker, and no amount of tuning
+     * from here will find that out. So the scene watches itself instead. Bad
+     * frames accumulate, good frames pay the debt back down, and if the debt
+     * gets away the horizon switches itself off for good and the three panels
+     * are left standing on the parchment — which is exactly what a machine
+     * without WebGL has always been served.
+     *
+     * The thresholds are deliberately forgiving. 40ms is a missed frame at
+     * 60Hz with room to spare, and the budget is large enough that a garbage
+     * collection, a lazy image decoding or a tab coming back from the
+     * background cannot trip it on their own.
+     */
+    let frameDebt = 0;
+    let lastFrameAt = 0;
+
+    const goFlat = () => {
+      if (flatRef.current) return;
+      flatRef.current = true;
+      if (refs.animationId) cancelAnimationFrame(refs.animationId);
+      refs.animationId = null;
+      setIsFlat(true);
+    };
+
     const animate = () => {
       refs.animationId = requestAnimationFrame(animate);
       if (!refs.composer || !refs.camera) return;
       // Off-screen the frame would be paid for and never seen.
-      if (!activeRef.current) return;
+      if (!activeRef.current) {
+        lastFrameAt = 0;
+        return;
+      }
+
+      const frameAt = performance.now();
+      if (lastFrameAt) {
+        const delta = frameAt - lastFrameAt;
+        // A frame over 40ms is a dropped one; over 250ms the tab was probably
+        // not being drawn at all, which is not this scene's fault.
+        if (delta > 40 && delta < 250) frameDebt += 1;
+        else if (delta < 24) frameDebt = Math.max(0, frameDebt - 0.5);
+        if (frameDebt > 45) {
+          goFlat();
+          return;
+        }
+      }
+      lastFrameAt = frameAt;
 
       const still = reducedRef.current;
       const time = still ? 0 : performance.now() * 0.001;
@@ -1029,9 +1103,14 @@ export function HorizonHero() {
       // panel, which is where a visitor is most likely to be nudging back and
       // forth. Once on it stays on until clearly past; once off it stays off
       // until clearly back.
+      // Off as soon as the hero stops filling the screen, on again only once
+      // it clearly does. The hysteresis is on the SAFE side on purpose: an
+      // earlier "off" means the fixed canvas and the fixed veil stop being
+      // painted over the section below sooner, which is the overlap that made
+      // the trouble spread from the last panel into the one after it.
       const bottomRatio = rect.bottom / viewport;
       const withinView = rect.top < viewport;
-      const active = withinView && (activeRef.current ? bottomRatio > 0.75 : bottomRatio > 0.95);
+      const active = withinView && (activeRef.current ? bottomRatio >= 1 : bottomRatio > 1.04);
       if (active !== activeRef.current) {
         activeRef.current = active;
         setIsActive(active);
@@ -1100,8 +1179,9 @@ export function HorizonHero() {
       className="hero-container cosmos-style"
       data-ready={isReady}
       data-active={isActive}
+      data-flat={isFlat ? 'true' : undefined}
     >
-      <canvas ref={canvasRef} className="hero-canvas" aria-hidden />
+      {isFlat ? null : <canvas ref={canvasRef} className="hero-canvas" aria-hidden />}
       <div className="hero-veil" aria-hidden />
 
       {/* Side rail — where all of this is made. */}

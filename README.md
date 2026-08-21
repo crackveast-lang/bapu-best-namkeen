@@ -147,6 +147,27 @@ Worth knowing before editing it:
   `[data-active]` rules that hide the fixed furniture.
 - Bloom is thresholded above everything except the sun. On a light ground a low
   threshold does not glow, it just washes.
+- **The scene watches its own frame rate and switches itself off.** A
+  decorative background is never worth a page that judders, and this one cannot
+  be tested on every machine it will meet — a GPU that cannot hold it shows it
+  as a flicker, and no amount of tuning from here finds that out. So bad frames
+  accumulate a debt, good frames pay it down, and if the debt gets away the
+  horizon goes `flat` for good: the canvas unmounts, the fixed veil and rail go
+  with it, and the three panels stand on the parchment. They are ordinary
+  server-rendered HTML, so nothing but the render is lost. Thresholds are
+  forgiving on purpose (a frame counts as bad over 40ms, and anything over
+  250ms is assumed to be a backgrounded tab rather than this scene's fault).
+- **`?flat` and `?horizon` force it either way**, remembered in
+  `localStorage` under `bapu:flat`. This exists so that a reported flicker can
+  be pinned on this scene, or ruled out, in one reload instead of another round
+  of guessing — which is what the first three attempts at the flicker cost.
+- **Deactivation frees the layers.** `data-active="false"` sets `display: none`
+  on the canvas, the veil and both rails, not `visibility: hidden` — a hidden
+  element keeps its composited layer, and these are four viewport-sized fixed
+  layers that would otherwise sit over every section below for the rest of the
+  page. The hysteresis is on the safe side too: off as soon as the hero stops
+  filling the screen, back on only past 1.04, so the fixed furniture stops
+  overlapping the next section as early as possible.
 - **`--hero-offset` is measured AT REST, and nothing scroll-derived may ever
   feed layout again.** This was the flicker — the real one, after two wrong
   answers. The property publishes the distance from the top of the document to

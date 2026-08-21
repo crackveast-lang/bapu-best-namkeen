@@ -46,13 +46,26 @@
 }
 
 /* Past the hero the canvas has nothing left to say — and a fixed element left
-   behind would sit on top of every section below it. */
+   behind would sit on top of every section below it.
+
+   `display: none`, not `visibility: hidden`. A hidden element keeps its
+   composited layer, and these are four viewport-sized fixed layers sitting on
+   top of whatever section comes next; taking them out of the box tree hands
+   the memory back instead of holding it for the rest of the page. Nothing is
+   lost by dropping the fade — by the time this fires the hero is off-screen. */
 .hero-container[data-active="false"] .hero-canvas,
 .hero-container[data-active="false"] .hero-veil,
 .hero-container[data-active="false"] .side-menu,
 .hero-container[data-active="false"] .scroll-progress {
-  opacity: 0;
-  visibility: hidden;
+  display: none;
+}
+
+/* Flat mode: the horizon is off, either by hand (?flat) or because the frame
+   watchdog judged this machine could not hold it. The panels keep their warm
+   ground and every word on them; only the render is gone. */
+.hero-container[data-flat="true"] .hero-veil,
+.hero-container[data-flat="true"] .side-menu {
+  display: none;
 }
 
 /* Paper grain and a soft vignette over the render, so the horizon reads as
@@ -93,7 +106,7 @@
   align-items: center;
   gap: 1.1rem;
   border-radius: 999px;
-  /* Opaque enough to need no  — see the note on .hero-veil.
+  /* Opaque enough to need no `backdrop-filter` — see the note on .hero-veil.
      A backdrop filter over the canvas is the same full-viewport readback. */
   background: rgba(252, 248, 241, 0.88);
   padding: 0.9rem 0.55rem;
