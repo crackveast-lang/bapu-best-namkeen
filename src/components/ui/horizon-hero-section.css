@@ -73,7 +73,41 @@
   /* It occupies no space of its own: the panels are the hero's height, and a
      sticky element in the flow would add a fourth screen to it. */
   margin-bottom: -100svh;
+  overflow: hidden;
   pointer-events: none;
+}
+
+/* Each band is a single compositor translate. They are taller than the frame
+   and hang below it, so the near band can travel up without ever lifting its
+   own foot into view. */
+.hero-ridge-band {
+  position: absolute;
+  inset: 0 0 -18% 0;
+}
+
+.hero-ridge-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The sun on the ridge line, and the paper the range stands in. Both are still
+   — only the ridges travel. */
+.hero-ridge-sun {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    38% 34% at 50% 46%,
+    rgba(242, 185, 85, 0.5),
+    rgba(224, 138, 30, 0.12) 55%,
+    rgba(224, 138, 30, 0) 100%
+  );
+}
+
+.hero-ridge-haze {
+  position: absolute;
+  inset: 55% 0 0 0;
+  background: linear-gradient(180deg, rgba(246, 239, 226, 0), rgba(246, 239, 226, 0.55));
 }
 
 /* Flat mode: the horizon is off, either by hand (?flat) or because the frame

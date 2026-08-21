@@ -552,7 +552,24 @@ Nothing is traced, hotlinked or stock.
   Jai Vilas wing.
 - **`Doodles.tsx`** — the marginal food doodles.
 - **`IngredientIcons.tsx`** — 21 icons for the per-product breakdowns.
-- **`HorizonRidges.tsx`** — the Gwalior range behind the hero, as flat SVG.
+- **`HorizonRidges.tsx`** — the Gwalior range behind the hero, as flat SVG,
+  **and the hero's scroll effect**. Six ridges in three bands, each band
+  translating at its own rate over the length of the hero (far -1.5%, mid -5%,
+  near -12%), which is what reads as flying into the range rather than past a
+  picture of it. Every rule this section learned the hard way holds here:
+  nothing renders per frame, nothing scales (only translates — Chromium
+  re-rasterises a layer whose transform *scale* changes), nothing blends,
+  nothing feeds layout, the scroll band is re-measured on resize and never on
+  scroll, and the input range is padded at both ends so `useTransform` cannot
+  run its mapping backwards past the hero. Three bands rather than six: six
+  promoted viewport-sized textures for a difference nobody can see is exactly
+  the trade this hero has already been punished for.
+
+  Measured after the change — band transforms all `scale(1,1)`, translate values
+  flat past the hero, hero height unchanged, mean frame-to-frame delta 2 of 255
+  with no spikes.
+
+  It is otherwise the same drawing as before:
   Same seeded generator, same seed (`0x1960`), same six layers as the WebGL
   scene drew, so it is the skyline this site has always had rather than a new
   one that merely rhymes. Depth is carried the way a printer carries it — the
