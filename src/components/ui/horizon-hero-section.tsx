@@ -153,6 +153,27 @@ function BrandMark({ id, className = '' }: { id: BrandId; className?: string }) 
 type CSSVars = React.CSSProperties & Record<'--accent', string>;
 
 
+/**
+ * What covers what, stated rather than sorted for.
+ *
+ * Every object in this scene is transparent and none of them writes depth, so
+ * the depth buffer decides nothing and draw order decides everything. Left to
+ * itself three.js re-sorts transparent objects every frame by their distance
+ * from the camera — and these objects move every frame, so a sort key can flip
+ * between two neighbours and swap which one is on top. On six overlapping
+ * viewport-sized ridges that reads as the whole panel strobing.
+ *
+ * Numbering them removes the question. Back to front, and the ridges take the
+ * six slots from `hillsFrom` upward.
+ */
+const RENDER_ORDER = {
+  sky: -1,
+  haze: 0,
+  hillsFrom: 0, // + 1..6, far ridge lowest
+  motes: 10,
+  atmosphere: 11,
+} as const;
+
 /** Camera stops, one per panel. Section 0 sits in front of the ridge, 1 is
  *  among it, 2 is out the far side in open haze. */
 const CAMERA_STOPS = [
@@ -408,7 +429,7 @@ export function HorizonHero() {
 
       const sky = new THREE.Mesh(geometry, material);
       sky.position.z = -3400;
-      sky.renderOrder = -1;
+      sky.renderOrder = RENDER_ORDER.sky;
       refs.scene?.add(sky);
       refs.sky = sky as ShaderMesh;
     };
@@ -500,6 +521,7 @@ export function HorizonHero() {
         });
 
         const motes = new THREE.Points(geometry, material);
+        motes.renderOrder = RENDER_ORDER.motes;
         refs.scene?.add(motes);
         refs.motes.push(motes as ShaderPoints);
       }
@@ -559,6 +581,7 @@ export function HorizonHero() {
       // Behind the furthest ridge, in front of the sky: the band of warm light
       // the whole range is standing in.
       haze.position.z = -2000;
+      haze.renderOrder = RENDER_ORDER.haze;
       refs.scene?.add(haze);
       refs.haze = haze as ShaderMesh;
     };
@@ -611,11 +634,30 @@ export function HorizonHero() {
           transparent: true,
           opacity: layer.opacity,
           side: THREE.DoubleSide,
+          // THIS IS THE ONE THAT MATTERS. A transparent material that still
+          // writes depth punches a hole in the depth buffer where it draws, so
+          // whichever ridge is drawn first hides every ridge behind it — and
+          // three.js re-sorts transparent objects EVERY FRAME. These six planes
+          // are enormous, they overlap almost completely (each one runs down to
+          // y = -1200), and they move on every frame: the scroll pushes their z
+          // and the idle drift nudges their y, which is exactly what the sort
+          // key is computed from. So the order flipped between frames and two
+          // maroon ridges swapped places over and over — the whole panel
+          // strobing like a bulb, worst on the third screen where the camera
+          // has flown deepest and the overlap is greatest.
+          //
+          // Every other layer in this scene already sets it. The ridges were
+          // the only ones left writing depth.
+          depthWrite: false,
         });
 
         const hill = new THREE.Mesh(geometry, material);
         hill.position.z = layer.distance;
         hill.position.y = layer.distance;
+        // And with nothing writing depth, order is the only thing left that
+        // decides what covers what — so it is stated rather than sorted for.
+        // `layers` runs near-to-far, painting runs far-to-near.
+        hill.renderOrder = RENDER_ORDER.hillsFrom + (layers.length - index);
         hill.userData = { baseZ: layer.distance, baseOpacity: layer.opacity, index };
         refs.scene?.add(hill);
         refs.hills.push(hill as HillMesh);
@@ -665,7 +707,9 @@ export function HorizonHero() {
         depthWrite: false,
       });
 
-      refs.scene?.add(new THREE.Mesh(geometry, material));
+      const shell = new THREE.Mesh(geometry, material);
+      shell.renderOrder = RENDER_ORDER.atmosphere;
+      refs.scene?.add(shell);
     };
 
     const cacheHillDepths = () => {
@@ -947,7 +991,18 @@ export function HorizonHero() {
 
       // The hero is done once it no longer fills the screen; the fixed canvas
       // has to be gone by then or it would cover the page below.
-      const active = rect.bottom > viewport * 0.9 && rect.top < viewport;
+      //
+      // Two thresholds, not one. `data-active` flips `opacity` and
+      // `visibility` on the canvas, the veil and both rails, and stops the
+      // render loop — so a single boundary is a switch that a trackpad's
+      // sub-pixel jitter can flip many times a second, strobing the whole
+      // horizon. The boundary also happens to sit right at the end of the last
+      // panel, which is where a visitor is most likely to be nudging back and
+      // forth. Once on it stays on until clearly past; once off it stays off
+      // until clearly back.
+      const bottomRatio = rect.bottom / viewport;
+      const withinView = rect.top < viewport;
+      const active = withinView && (activeRef.current ? bottomRatio > 0.75 : bottomRatio > 0.95);
       if (active !== activeRef.current) {
         activeRef.current = active;
         setIsActive(active);

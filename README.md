@@ -147,14 +147,32 @@ Worth knowing before editing it:
   `[data-active]` rules that hide the fixed furniture.
 - Bloom is thresholded above everything except the sun. On a light ground a low
   threshold does not glow, it just washes.
+- **Every object in the scene is transparent, so NOTHING may write depth and
+  everything needs an explicit `renderOrder`.** This is what made the third
+  panel flicker like a bulb. The six ridge planes were the only meshes left on
+  three.js's default `depthWrite: true` while being `transparent: true` — so
+  each one punched a hole in the depth buffer where it drew and hid the ridges
+  behind it. three.js re-sorts transparent objects **every frame** by distance,
+  and these planes move every frame (the scroll pushes their z, the idle drift
+  nudges their y, and the sort key is computed from exactly that), so two
+  neighbours could swap order between frames and two viewport-sized maroon
+  ridges traded places over and over. Worst on panel three, where the camera
+  has flown deepest and the overlap is greatest. Fixed with
+  `depthWrite: false` plus the `RENDER_ORDER` table at the top of the file:
+  sky, haze, six ridges far-to-near, motes, atmosphere. If you add anything to
+  this scene, give it a slot in that table.
+- **The `data-active` toggle has hysteresis, and needs it.** It flips
+  `opacity` and `visibility` on the canvas, the veil and both rails, and stops
+  the render loop. A single threshold sat right at the end of the last panel —
+  exactly where a visitor nudges back and forth — so trackpad jitter could
+  strobe the whole horizon. On at 0.95, off at 0.75.
 - **Nothing over the canvas may blend or use a backdrop filter.** `.hero-veil`
-  was a fixed, viewport-sized `mix-blend-mode: multiply` layer and the two rails
-  carried `backdrop-filter: blur()`, all three sitting on top of a canvas that
-  repaints every frame — so all three forced a full-viewport readback at 60fps
-  for three screens of scroll. On the third panel, which carries the most
-  geometry, the bloom pass and nine drop-shadowed packs, that dropped the whole
-  screen to white for seconds at a time. The veil is composited normally now and
-  the rails are opaque. Same rule as the house pin, for the same reason.
+  was a fixed, viewport-sized `mix-blend-mode: multiply` layer and both rails
+  carried `backdrop-filter: blur()`, all sitting on a canvas that repaints
+  every frame — three full-viewport backdrop readbacks at 60fps for three
+  screens of scroll. That was a real cost and it is gone (the veil composites
+  normally, the rails are opaque), but on its own it was **not** what caused
+  the flicker: the depth-write bug above was.
 
 Under `prefers-reduced-motion` the scene renders still — no drift, no camera
 float, no entrance, no parallax — and every panel is visible from the first
