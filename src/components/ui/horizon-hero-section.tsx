@@ -271,6 +271,8 @@ export function HorizonHero() {
   const activeRef = useRef(true);
   const reducedRef = useRef(false);
   const offsetRef = useRef(-1);
+  /** Set by a resize, so the next read re-measures the offset even mid-page. */
+  const remeasureRef = useRef(false);
 
   const [currentSection, setCurrentSection] = useState(0);
   const [isReady, setIsReady] = useState(false);
@@ -979,10 +981,37 @@ export function HorizonHero() {
       // of a full viewport would hang that far past the fold — and everything
       // the opening screen anchors to its own bottom edge would go with it.
       // Publishing the offset lets the first panel subtract it.
-      const offset = Math.round(rect.top + window.scrollY);
-      if (offset !== offsetRef.current) {
-        offsetRef.current = offset;
-        container.style.setProperty('--hero-offset', `${offset}px`);
+      //
+      // MEASURED AT REST ONLY, AND THIS IS THE WHOLE BALLGAME. `--hero-offset`
+      // feeds `min-height: calc(100svh - var(--hero-offset))` on the first
+      // panel, which makes it *layout* — and layout must never be derived from
+      // something the scroll changes. It was, and the result was a closed loop:
+      //
+      //   scroll past 24px -> the navbar shrinks (h-24 -> h-16)
+      //     -> this offset shrinks with it
+      //     -> panel one grows, because it is 100svh MINUS the offset
+      //     -> the container grows, the document grows
+      //     -> the browser moves the scroll position under our feet
+      //     -> which can put it back under 24px, and the navbar grows again
+      //     -> round and round, several times a second
+      //
+      // The trace that caught it: the container height stepping 2654 -> 2687
+      // mid-scroll, and one frame where the page scrolled 4px BACKWARDS while
+      // the wheel was going forwards. `progress` below is measured against that
+      // same container height, so every pass through the loop jumped the camera
+      // and every parallax in the hero — which is why the flicker was on all
+      // three panels and not just the one.
+      //
+      // At rest is the only moment this is the number we actually want: the
+      // header at its resting height, nothing animating. `remeasureRef` lets a
+      // resize ask for a fresh one.
+      if (window.scrollY <= 1 || offsetRef.current < 0 || remeasureRef.current) {
+        remeasureRef.current = false;
+        const offset = Math.round(rect.top + window.scrollY);
+        if (offset !== offsetRef.current) {
+          offsetRef.current = offset;
+          container.style.setProperty('--hero-offset', `${offset}px`);
+        }
       }
       // Measured against this section, not the document: everything below the
       // hero is a normal page and must not eat into the camera's travel.
@@ -1046,14 +1075,21 @@ export function HorizonHero() {
       frame = requestAnimationFrame(read);
     };
 
+    // A resize genuinely changes the offset, so it is the one thing allowed to
+    // ask for a fresh measurement while the page is scrolled.
+    const onResize = () => {
+      remeasureRef.current = true;
+      onScroll();
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('resize', onResize);
     read();
 
     return () => {
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 

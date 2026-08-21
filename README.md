@@ -147,6 +147,31 @@ Worth knowing before editing it:
   `[data-active]` rules that hide the fixed furniture.
 - Bloom is thresholded above everything except the sun. On a light ground a low
   threshold does not glow, it just washes.
+- **`--hero-offset` is measured AT REST, and nothing scroll-derived may ever
+  feed layout again.** This was the flicker — the real one, after two wrong
+  answers. The property publishes the distance from the top of the document to
+  the top of the hero, and the first panel consumes it as
+  `min-height: calc(100svh - var(--hero-offset))`. That makes it *layout*. It
+  was being recomputed on every scroll, and the navbar shrinks as you scroll
+  (`h-24` to `h-16`), so:
+
+  ```
+  scroll past 24px -> navbar shrinks -> offset shrinks
+    -> panel one grows (it is 100svh MINUS the offset)
+    -> container grows -> document grows
+    -> the browser moves the scroll position under our feet
+    -> which can drop it back under 24px -> navbar grows -> repeat
+  ```
+
+  The header and the hero taking turns resizing each other, several times a
+  second. `progress` is measured against that same container height, so every
+  pass jumped the camera and every parallax in the hero at once — which is why
+  it was on all three panels, not one. Traced: container height stepping
+  2654 -> 2687 mid-scroll, and a frame where the page scrolled **4px backwards**
+  while the wheel went forwards. After the fix both are single-valued.
+
+  If you ever need a scroll-derived number in this component again, use it for
+  `transform` or `opacity`. Never for anything that changes a box.
 - **Every object in the scene is transparent, so NOTHING may write depth and
   everything needs an explicit `renderOrder`.** This is what made the third
   panel flicker like a bulb. The six ridge planes were the only meshes left on
