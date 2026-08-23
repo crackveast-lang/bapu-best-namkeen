@@ -10,7 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { products, AMAZON_URL, FLIPKART_URL } from "@/lib/products";
+import { products } from "@/lib/products";
+import BuyButtons from "./BuyButtons";
 import { Star, Sparkle } from "./Doodles";
 
 const REEL_SLUGS = ["ratlami-sev", "sada-sev", "kadipatta-mix", "indori-khatta-meetha", "milan-mixture"];
@@ -89,24 +90,7 @@ export default function CinematicReel() {
                   {p.desc}
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-2.5 lg:mt-6 lg:gap-3">
-                  <a
-                    href={AMAZON_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-orange px-5 py-3 text-sm font-bold text-cream shadow-md shadow-orange/25 transition-transform hover:scale-[1.05] active:scale-[0.97] lg:px-6 lg:text-base"
-                  >
-                    Buy on Amazon
-                    <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">→</span>
-                  </a>
-                  <a
-                    href={FLIPKART_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group rounded-full bg-green px-5 py-3 text-sm font-bold text-cream shadow-md shadow-green/20 transition-transform hover:scale-[1.05] active:scale-[0.97] lg:px-6 lg:text-base"
-                  >
-                    Buy on Flipkart
-                    <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">→</span>
-                  </a>
+                  <BuyButtons slug={p.slug} size="sm" />
                   <Link
                     href={`/products/${p.slug}`}
                     className="text-sm font-semibold text-charcoal/60 underline decoration-charcoal/30 underline-offset-4 transition-colors hover:text-orange-deep"

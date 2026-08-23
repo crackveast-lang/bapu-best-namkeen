@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { AMAZON_URL, FLIPKART_URL, type Product } from "@/lib/products";
+import { type Product } from "@/lib/products";
+import { BuyPills } from "./BuyButtons";
 import { Star, HandArrow } from "./Doodles";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -99,22 +100,7 @@ export default function ProductCard({ p, index }: { p: Product; index: number })
           >
             View product <span>→</span>
           </Link>
-          <a
-            href={AMAZON_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-orange/60 px-4 py-2 text-sm font-bold text-orange-deep transition-colors hover:bg-orange hover:text-cream"
-          >
-            Amazon ↗
-          </a>
-          <a
-            href={FLIPKART_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-green/50 px-4 py-2 text-sm font-bold text-green transition-colors hover:bg-green hover:text-cream"
-          >
-            Flipkart ↗
-          </a>
+          <BuyPills slug={p.slug} />
         </div>
       </div>
     </motion.div>

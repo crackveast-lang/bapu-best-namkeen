@@ -35,6 +35,56 @@ export const FLIPKART_URL = "https://www.flipkart.com/search?q=best%20namkeen%20
 export const ZOMATO_URL = "https://link.zomato.com/xqzv/rshare?id=237243839b9b947b";
 export const INSTAGRAM_URL = "https://www.instagram.com/bestnamkeen/";
 
+/**
+ * Per-product marketplace listings. A null value means the product is not
+ * listed on that platform yet — the matching Buy button is simply not rendered.
+ */
+type Listing = { amazon: string | null; flipkart: string | null };
+
+const MARKETPLACE: Record<string, Listing> = {
+  "ratlami-sev": {
+    amazon: "https://www.amazon.in/dp/B0HCTPG4VQ",
+    // TODO: the Flipkart URL supplied for Ratlami Sev was the Lahsun Sev listing
+    // (itm74b440200210d). Left unset rather than pointing to the wrong product.
+    flipkart: null,
+  },
+  "sada-sev": {
+    amazon: "https://www.amazon.in/dp/B0HDDBZX8F",
+    flipkart: "https://www.flipkart.com/bappu-best-bites-namkeen-sada-sev/p/itmbc1795b58eb2d?pid=SNSHPSBPZT5PZY2R",
+  },
+  "kadipatta-mix": {
+    amazon: "https://www.amazon.in/dp/B0HD1BDGRL",
+    flipkart: "https://www.flipkart.com/bappu-best-bites-namkeen-kadipatta-mix/p/itm01bb05df72b51?pid=SNSHQA3UXPQ6H7PM",
+  },
+  "indori-khatta-meetha": {
+    amazon: "https://www.amazon.in/dp/B0HCXG7CJ7",
+    flipkart: null,
+  },
+  "milan-mixture": {
+    amazon: "https://www.amazon.in/dp/B0HCWWQ5HB",
+    flipkart: "https://www.flipkart.com/bappu-best-bites-namkeen-milan-mixture/p/itm0f901239c23e6?pid=SNSHQACUAPBKS8EW",
+  },
+  "ujjaini-sev": { amazon: null, flipkart: null },
+  "lahsun-mix": {
+    amazon: null,
+    flipkart: "https://www.flipkart.com/bappu-best-bites-namkeen-lahsun-sev-garlic/p/itm74b440200210d?pid=SNSHQAUY2FMNBZFR",
+  },
+  "waffer-mix": {
+    amazon: "https://www.amazon.in/dp/B0HD19NB53",
+    flipkart: "https://www.flipkart.com/bappu-best-bites-namkeen-wafer-mix/p/itm76959c7e87972?pid=SNSHQAZFGGGCZ6GN",
+  },
+};
+
+/** Amazon listing for a product, or null when it is not on Amazon. */
+export function amazonFor(slug: string) {
+  return MARKETPLACE[slug]?.amazon ?? null;
+}
+
+/** Flipkart listing for a product, or null when it is not on Flipkart. */
+export function flipkartFor(slug: string) {
+  return MARKETPLACE[slug]?.flipkart ?? null;
+}
+
 const MIX_INGREDIENTS =
   "Gram flour (besan), edible vegetable oil, rice flakes, peanuts, chickpea & lentil dals, whole spices & condiments — red chilli, clove, black pepper, hing, dry mango — iodized salt and black salt. Full list on every pack.";
 const SEV_INGREDIENTS =

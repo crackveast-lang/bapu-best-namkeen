@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { AMAZON_URL, FLIPKART_URL, ZOMATO_URL, type Product } from "@/lib/products";
+import { ZOMATO_URL, amazonFor, flipkartFor, type Product } from "@/lib/products";
+import BuyButtons from "./BuyButtons";
 import ProductGallery from "./ProductGallery";
 import ProductCard from "./ProductCard";
 import { SevSquiggle, Star, Sparkle, Chilli, Coriander } from "./Doodles";
@@ -101,24 +102,7 @@ export default function ProductPageContent({
               transition={{ duration: 0.7, delay: 0.55, ease: easeOut }}
               className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             >
-              <a
-                href={AMAZON_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group rounded-full bg-orange px-8 py-4 text-center text-base font-bold text-cream shadow-lg shadow-orange/30 transition-transform hover:scale-[1.05] active:scale-[0.97]"
-              >
-                Buy on Amazon
-                <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">↗</span>
-              </a>
-              <a
-                href={FLIPKART_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group rounded-full bg-green px-8 py-4 text-center text-base font-bold text-cream shadow-lg shadow-green/25 transition-transform hover:scale-[1.05] active:scale-[0.97]"
-              >
-                Buy on Flipkart
-                <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">↗</span>
-              </a>
+              <BuyButtons slug={p.slug} />
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
@@ -126,9 +110,11 @@ export default function ProductPageContent({
               transition={{ duration: 0.7, delay: 0.65 }}
               className="mt-4 flex flex-wrap items-center gap-4 text-sm font-semibold text-charcoal/60"
             >
-              <a href={ZOMATO_URL} target="_blank" rel="noopener noreferrer" className="underline decoration-orange/50 underline-offset-4 transition-colors hover:text-orange-deep">
-                or order on Zomato ↗
-              </a>
+              {(amazonFor(p.slug) || flipkartFor(p.slug)) && (
+                <a href={ZOMATO_URL} target="_blank" rel="noopener noreferrer" className="underline decoration-orange/50 underline-offset-4 transition-colors hover:text-orange-deep">
+                  or order on Zomato ↗
+                </a>
+              )}
               <Link href="/#stores" className="transition-colors hover:text-orange-deep">
                 Visit a store in Gwalior →
               </Link>
