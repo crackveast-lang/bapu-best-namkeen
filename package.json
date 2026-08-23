@@ -1,31 +1,30 @@
 {
-  "name": "bapu-best-namkeen",
+  "name": "bappu-best-bites",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "assets": "node scripts/build-assets.mjs",
-    "marks": "node scripts/build-brand-marks.mjs"
+    "images": "node scripts/process-images.mjs"
   },
   "dependencies": {
-    "framer-motion": "13.1.0",
-    "gsap": "3.15.0",
-    "next": "16.3.1",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "three": "0.185.1"
+    "framer-motion": "^12.23.0",
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.4",
+    "next": "^15.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.3.3",
-    "@types/node": "24.3.0",
-    "@types/react": "19.1.12",
-    "@types/react-dom": "19.1.9",
-    "@types/three": "0.185.4",
-    "postcss": "8.5.26",
-    "sharp": "0.35.3",
-    "tailwindcss": "4.3.3",
-    "typescript": "5.9.3"
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "playwright-core": "^1.62.1",
+    "postcss": "^8.5.3",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^4.1.8",
+    "typescript": "^5.8.3"
   }
 }

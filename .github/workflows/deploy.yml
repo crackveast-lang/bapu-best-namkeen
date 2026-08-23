@@ -20,10 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAGES: 'true'
-      # The site lives under /<repo> on Pages, so links and raw <img> srcs
-      # need the prefix. Both are read by next.config.ts and src/lib/asset.ts.
+      # The site lives under /<repo> on Pages, so links and asset URLs need the prefix.
       NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
-      NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v4
 
