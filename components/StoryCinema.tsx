@@ -76,7 +76,7 @@ function Moment1960() {
       {/* packet drifting through the moment */}
       <motion.div
         style={{ y: yPacket }}
-        className="pointer-events-none absolute top-[18%] left-[42%] z-0 hidden w-40 -rotate-12 opacity-90 lg:block"
+        className="pointer-events-none absolute top-[50%] left-[44%] z-0 hidden w-36 -rotate-12 opacity-90 lg:block"
       >
         <Image
           src="/products/milan-mixture.webp"

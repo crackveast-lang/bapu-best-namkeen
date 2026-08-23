@@ -28,10 +28,10 @@ export default function ProductGallery({
     setIdx((i) => (i + dir + images.length) % images.length);
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       {/* main stage */}
       <div
-        className="relative flex aspect-[4/4.4] items-center justify-center overflow-hidden rounded-[2rem] sm:aspect-[4/4.1]"
+        className="relative flex aspect-[4/4.4] w-full items-center justify-center overflow-hidden rounded-[2rem] sm:aspect-[4/4.1]"
         style={{ backgroundColor: tint }}
       >
         <AnimatePresence mode="wait">
@@ -57,7 +57,7 @@ export default function ProductGallery({
                 width={520}
                 height={680}
                 priority
-                className="packet-shadow h-full w-auto object-contain transition-transform duration-700 hover:scale-[1.04] hover:rotate-1"
+                className="packet-shadow h-full w-auto max-w-full object-contain transition-transform duration-700 hover:scale-[1.04] hover:rotate-1"
                 draggable={false}
               />
             ) : (

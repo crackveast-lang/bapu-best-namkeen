@@ -66,7 +66,7 @@ export default function Combos() {
 function ComboRow({ combo, index }: { combo: Combo; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const yStack = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const yStack = useTransform(scrollYProgress, [0, 1], [24, -24]);
   const yDoodle = useTransform(scrollYProgress, [0, 1], [30, -70]);
   const items = comboProducts(combo);
   const flip = index % 2 === 1;
@@ -81,12 +81,12 @@ function ComboRow({ combo, index }: { combo: Combo; index: number }) {
       className="group grid items-center gap-10 lg:grid-cols-2 lg:gap-16"
     >
       {/* packet stack */}
-      <div className={`relative ${flip ? "lg:order-2" : ""}`}>
+      <div className={`relative mb-6 lg:mb-0 ${flip ? "lg:order-2" : ""}`}>
         <div
           className="absolute inset-x-[8%] top-[8%] h-[84%]"
           style={{ backgroundColor: combo.tint, borderRadius: "58% 42% 50% 50% / 46% 54% 46% 54%" }}
         />
-        <motion.div style={{ y: yStack }} className="relative flex h-[340px] items-end justify-center sm:h-[420px]">
+        <motion.div style={{ y: yStack }} className="relative flex h-[360px] items-end justify-center sm:h-[440px]">
           {items.map((p, i) => {
             const n = items.length;
             const mid = (n - 1) / 2;
@@ -101,7 +101,7 @@ function ComboRow({ combo, index }: { combo: Combo; index: number }) {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.8, delay: 0.15 + i * 0.12, ease: easeOut }}
                 style={{ left: `calc(50% + ${x}% - ${n > 3 ? 15 : 19}%)`, zIndex: Math.abs(off) < 0.6 ? 10 : 5 - Math.abs(off) }}
-                className={`absolute bottom-[8%] w-[38%] max-w-[210px] origin-bottom transition-transform duration-700 sm:w-[34%] ${
+                className={`absolute bottom-[16%] w-[36%] max-w-[210px] origin-bottom transition-transform duration-700 sm:w-[34%] ${
                   off < 0 ? "group-hover:-translate-x-3 group-hover:-rotate-3" : off > 0 ? "group-hover:translate-x-3 group-hover:rotate-3" : "group-hover:-translate-y-3"
                 }`}
               >
@@ -122,9 +122,9 @@ function ComboRow({ combo, index }: { combo: Combo; index: number }) {
           <Sparkle className="absolute top-[40%] right-[4%] w-5" />
         </motion.div>
         {combo.note && (
-          <span className="font-hand absolute -bottom-2 left-[10%] flex items-end gap-1 text-2xl text-orange-deep">
+          <span className="font-hand absolute top-2 left-[6%] hidden items-start gap-1 text-2xl text-orange-deep sm:flex">
             {combo.note}
-            <HandArrow className="wiggle-on-hover w-10 rotate-[-40deg]" />
+            <HandArrow className="wiggle-on-hover mt-2 w-10 rotate-[60deg]" />
           </span>
         )}
       </div>

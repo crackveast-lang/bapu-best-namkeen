@@ -47,8 +47,9 @@ const CARE = [
   "Made in an ISO 22000:2018 certified kitchen",
 ];
 
-function gal(slug: string, count: number) {
-  return Array.from({ length: count }, (_, i) => `/products/gal/${slug}-${i + 1}.webp`);
+/** Curated gallery picks (indexes into public/products/gal/<slug>-N.webp) */
+function pick(slug: string, indexes: number[]) {
+  return indexes.map((i) => `/products/gal/${slug}-${i}.webp`);
 }
 
 export const products: Product[] = [
@@ -64,7 +65,7 @@ export const products: Product[] = [
     flavor: "Fiery masala",
     weight: "400g",
     img: "/products/ratlami-sev.webp",
-    gallery: ["/products/ratlami-sev.webp", ...gal("ratlami-sev", 8)],
+    gallery: ["/products/ratlami-sev.webp", ...pick("ratlami-sev", [2, 3, 6, 7, 8])],
     highlights: CARE,
     ingredientsNote: SEV_INGREDIENTS,
     perfectFor: ["Chai time", "Poha topping", "Spice lovers", "Everyday snacking"],
@@ -85,7 +86,7 @@ export const products: Product[] = [
     flavor: "Lightly salted",
     weight: "400g",
     img: "/products/sada-sev.webp",
-    gallery: ["/products/sada-sev.webp", ...gal("sada-sev", 14)],
+    gallery: ["/products/sada-sev.webp", ...pick("sada-sev", [6, 1, 4, 9, 3])],
     highlights: CARE,
     ingredientsNote: SEV_INGREDIENTS,
     perfectFor: ["Chaat & bhel", "Chai time", "Kids' tiffin", "Everyday snacking"],
@@ -105,7 +106,7 @@ export const products: Product[] = [
     flavor: "Herby & spicy",
     weight: "400g",
     img: "/products/kadipatta-mix.webp",
-    gallery: ["/products/kadipatta-mix.webp", ...gal("kadipatta-mix", 7)],
+    gallery: ["/products/kadipatta-mix.webp", ...pick("kadipatta-mix", [7, 1, 2, 4, 6])],
     highlights: CARE,
     ingredientsNote: MIX_INGREDIENTS,
     perfectFor: ["Chai time", "Evening cravings", "Herb lovers", "Road trips"],
@@ -126,7 +127,7 @@ export const products: Product[] = [
     flavor: "Sweet & tangy",
     weight: "400g",
     img: "/products/indori-khatta.webp",
-    gallery: ["/products/indori-khatta.webp", ...gal("indori-khatta-meetha", 7)],
+    gallery: ["/products/indori-khatta.webp", ...pick("indori-khatta-meetha", [3, 5, 2, 7, 4])],
     highlights: CARE,
     ingredientsNote: MIX_INGREDIENTS,
     perfectFor: ["Family gatherings", "Kids' favourite", "Chai time", "Festivals"],
@@ -146,7 +147,7 @@ export const products: Product[] = [
     flavor: "Classic mixture",
     weight: "400g",
     img: "/products/milan-mixture.webp",
-    gallery: ["/products/milan-mixture.webp", ...gal("milan-mixture", 8)],
+    gallery: ["/products/milan-mixture.webp", ...pick("milan-mixture", [6, 1, 4, 3, 7])],
     highlights: CARE,
     ingredientsNote: MIX_INGREDIENTS,
     perfectFor: ["Guests & gatherings", "Chai time", "Celebrations", "Everyday snacking"],
@@ -165,9 +166,9 @@ export const products: Product[] = [
       "Coarse, honest strands with a peppery kick that builds slowly. The old-timers' choice for a reason.",
     flavor: "Peppery",
     weight: "400g",
-    img: "/products/life-ujjaini-flat.webp",
+    img: "/products/gal/ujjaini-sev-3.webp",
     photo: true,
-    gallery: gal("ujjaini-sev", 10),
+    gallery: pick("ujjaini-sev", [3, 8, 1, 5, 7]),
     highlights: CARE,
     ingredientsNote: MIX_INGREDIENTS,
     perfectFor: ["Spice lovers", "Chai time", "Poha topping", "Old-school snackers"],
@@ -186,9 +187,9 @@ export const products: Product[] = [
       "Bold and savoury — the garlic hits first, the crunch carries it. Not for the faint-hearted, beloved by everyone else.",
     flavor: "Garlic & spice",
     weight: "400g",
-    img: "/products/life-lahsun-back.webp",
+    img: "/products/gal/lahsun-mix-8.webp",
     photo: true,
-    gallery: gal("lahsun-mix", 9),
+    gallery: pick("lahsun-mix", [8, 6, 9, 2, 4, 3]),
     highlights: CARE,
     ingredientsNote: MIX_INGREDIENTS,
     perfectFor: ["Garlic lovers", "Evening chai", "Drinks-side snack", "Road trips"],
@@ -207,7 +208,7 @@ export const products: Product[] = [
     flavor: "Hing masala",
     weight: "400g",
     img: "/products/waffer-mix.webp",
-    gallery: ["/products/waffer-mix.webp", ...gal("waffer-mix", 6)],
+    gallery: ["/products/waffer-mix.webp", ...pick("waffer-mix", [6, 2, 5, 4, 3])],
     highlights: CARE,
     ingredientsNote: MIX_INGREDIENTS,
     perfectFor: ["Movie nights", "Chai time", "Light snacking", "Kids' favourite"],

@@ -40,11 +40,12 @@ export default function ProductPageContent({
           </Link>
         </motion.div>
 
-        <div className="mt-6 grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        <div className="mt-6 grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: easeOut }}
+            className="min-w-0"
           >
             <ProductGallery
               images={p.gallery}
@@ -54,7 +55,7 @@ export default function ProductPageContent({
             />
           </motion.div>
 
-          <div>
+          <div className="min-w-0">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -66,7 +67,7 @@ export default function ProductPageContent({
               >
                 {p.flavor}
               </span>
-              <h1 className="display mt-5 text-5xl text-charcoal sm:text-6xl">{p.name}</h1>
+              <h1 className="display mt-5 text-[clamp(2.4rem,9vw,3.75rem)] text-charcoal">{p.name}</h1>
               <p className="font-hand mt-2 text-3xl" style={{ color: p.pouch }}>
                 {p.tagline}
               </p>
@@ -98,13 +99,13 @@ export default function ProductPageContent({
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.55, ease: easeOut }}
-              className="mt-9 flex flex-wrap items-center gap-4"
+              className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             >
               <a
                 href={AMAZON_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group rounded-full bg-orange px-8 py-4 text-base font-bold text-cream shadow-lg shadow-orange/30 transition-transform hover:scale-[1.05] active:scale-[0.97]"
+                className="group rounded-full bg-orange px-8 py-4 text-center text-base font-bold text-cream shadow-lg shadow-orange/30 transition-transform hover:scale-[1.05] active:scale-[0.97]"
               >
                 Buy on Amazon
                 <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">↗</span>
@@ -113,7 +114,7 @@ export default function ProductPageContent({
                 href={FLIPKART_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group rounded-full bg-green px-8 py-4 text-base font-bold text-cream shadow-lg shadow-green/25 transition-transform hover:scale-[1.05] active:scale-[0.97]"
+                className="group rounded-full bg-green px-8 py-4 text-center text-base font-bold text-cream shadow-lg shadow-green/25 transition-transform hover:scale-[1.05] active:scale-[0.97]"
               >
                 Buy on Flipkart
                 <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">↗</span>

@@ -1,38 +1,29 @@
 "use client";
 
-/* Pinned, scroll-scrubbed product presentation — the "commercial while you scroll".
-   Beat 1: Ratlami Sev center stage.
-   Beat 2: Ratlami tucks left + shrinks; Indori Khatta Meetha sweeps in.
-   Beat 3: Milan Mixture rises; the others frame it. */
+/* Pinned, scroll-scrubbed product reel — five products, one moment each.
+   Layout contract: text lives in the left lane, packets in the right lane.
+   Packet transforms are bounded so they never cross into the text lane
+   (desktop) or the text block (mobile, where the stage sits above the text). */
 
 import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { products, AMAZON_URL, FLIPKART_URL } from "@/lib/products";
+import { Star, Sparkle } from "./Doodles";
 
-const beats = [
-  {
-    n: "01",
-    name: "Ratlami Sev",
-    line: "Bold. Spicy. Addictive.",
-    body: "Thick-cut sev with the legendary Ratlam masala — cloves, pepper, fire.",
-    color: "#23348c",
-  },
-  {
-    n: "02",
-    name: "Indori Khatta Meetha",
-    line: "Sweet meets tang.",
-    body: "Indore's seesaw of sweet and sour, with peanuts in every handful.",
-    color: "#0e8794",
-  },
-  {
-    n: "03",
-    name: "Milan Mixture",
-    line: "Everything, together.",
-    body: "Flakes, sev, dals and nuts — the mixture every tea tray asks for.",
-    color: "#4a2c1a",
-  },
-];
+const REEL_SLUGS = ["ratlami-sev", "sada-sev", "kadipatta-mix", "indori-khatta-meetha", "milan-mixture"];
+const reel = REEL_SLUGS.map((s) => products.find((p) => p.slug === s)!);
+
+/* packet states — all percentages are of the packet's own size, and the
+   stage is wide enough that "prev" and "next" stay inside the right lane */
+const STATES = {
+  next: { xPercent: 55, yPercent: 12, scale: 0.78, rotate: 16, opacity: 0 },
+  active: { xPercent: 0, yPercent: 0, scale: 1, rotate: 3, opacity: 1 },
+  prev: { xPercent: -30, yPercent: 16, scale: 0.55, rotate: -12, opacity: 0.55 },
+  gone: { xPercent: -42, yPercent: 26, scale: 0.42, rotate: -18, opacity: 0 },
+};
 
 export default function CinematicReel() {
   const wrap = useRef<HTMLDivElement>(null);
@@ -42,41 +33,34 @@ export default function CinematicReel() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      const packets = reel.map((_, i) => `.reel-packet-${i}`);
+      const texts = reel.map((_, i) => `.reel-text-${i}`);
+
+      packets.forEach((sel, i) => gsap.set(sel, i === 0 ? STATES.active : STATES.next));
+      texts.forEach((sel, i) => gsap.set(sel, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 50, pointerEvents: i === 0 ? "auto" : "none" }));
+
       const tl = gsap.timeline({
-        defaults: { ease: "power2.inOut" },
+        defaults: { ease: "power2.inOut", duration: 1 },
         scrollTrigger: {
           trigger: wrap.current,
           start: "top top",
-          end: "+=2600",
+          end: `+=${reel.length * 900}`,
           pin: true,
           scrub: 1,
         },
       });
 
-      // ---- initial state
-      gsap.set(".reel-ratlami", { xPercent: 0, yPercent: 6, rotate: -4, scale: 1 });
-      gsap.set(".reel-indori", { xPercent: 130, yPercent: 16, rotate: 18, scale: 0.9, opacity: 0 });
-      gsap.set(".reel-milan", { xPercent: -20, yPercent: 130, rotate: -14, scale: 0.85, opacity: 0 });
-      gsap.set(".reel-text-1", { opacity: 1, y: 0 });
-      gsap.set([".reel-text-2", ".reel-text-3"], { opacity: 0, y: 60 });
-
-      // ---- beat 1 -> 2
-      tl.to(".reel-ratlami", { xPercent: -98, yPercent: 22, rotate: -16, scale: 0.6, duration: 1 }, 0.35)
-        .to(".reel-indori", { xPercent: 0, yPercent: 0, rotate: 5, scale: 1, opacity: 1, duration: 1 }, 0.4)
-        .to(".reel-text-1", { opacity: 0, y: -60, duration: 0.45 }, 0.35)
-        .to(".reel-text-2", { opacity: 1, y: 0, duration: 0.5 }, 0.7)
-        .to(".reel-stage", { backgroundColor: "rgba(41,182,197,0.10)", duration: 1 }, 0.4)
-
-        // ---- beat 2 -> 3
-        .to(".reel-indori", { xPercent: 88, yPercent: 24, rotate: 17, scale: 0.58, duration: 1 }, 1.75)
-        .to(".reel-milan", { xPercent: 0, yPercent: 4, rotate: -2, scale: 1.02, opacity: 1, duration: 1 }, 1.8)
-        .to(".reel-ratlami", { xPercent: -112, yPercent: 18, rotate: -20, scale: 0.48, duration: 1 }, 1.8)
-        .to(".reel-text-2", { opacity: 0, y: -60, duration: 0.45 }, 1.75)
-        .to(".reel-text-3", { opacity: 1, y: 0, duration: 0.5 }, 2.1)
-        .to(".reel-stage", { backgroundColor: "rgba(74,44,26,0.08)", duration: 1 }, 1.8)
-
-        // breathing room at the end
-        .to({}, { duration: 0.4 });
+      reel.forEach((p, i) => {
+        if (i === 0) return;
+        const at = i * 1.4;
+        tl.to(packets[i - 1], STATES.prev, at);
+        if (i >= 2) tl.to(packets[i - 2], STATES.gone, at);
+        tl.to(packets[i], STATES.active, at + 0.05);
+        tl.to(texts[i - 1], { opacity: 0, y: -40, pointerEvents: "none", duration: 0.45 }, at);
+        tl.to(texts[i], { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.5 }, at + 0.35);
+        tl.to(".reel-stage", { backgroundColor: p.tint, duration: 1 }, at);
+      });
+      tl.to({}, { duration: 0.5 });
     }, wrap);
 
     return () => ctx.revert();
@@ -84,47 +68,75 @@ export default function CinematicReel() {
 
   return (
     <section ref={wrap} className="relative overflow-hidden">
-      <div className="reel-stage flex h-svh items-center">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-6 px-5 sm:px-8 lg:grid-cols-2">
-          {/* text beats */}
-          <div className="relative z-20 order-2 h-56 lg:order-1 lg:h-80">
-            {beats.map((b, i) => (
-              <div key={b.n} className={`reel-text-${i + 1} absolute inset-0 flex flex-col justify-center`}>
-                <span className="display text-7xl lg:text-8xl" style={{ color: b.color, opacity: 0.25 }}>
-                  {b.n}
+      <div className="reel-stage flex h-svh flex-col justify-center" style={{ backgroundColor: reel[0].tint }}>
+        <p className="font-hand pointer-events-none absolute top-24 left-1/2 z-20 -translate-x-1/2 text-2xl whitespace-nowrap text-charcoal/50 sm:top-28">
+          the line-up, one by one ↓
+        </p>
+
+        <div className="mx-auto grid w-full max-w-7xl grid-rows-[minmax(0,42svh)_auto] items-center gap-4 px-5 pt-16 sm:px-8 lg:grid-cols-[minmax(0,46%)_minmax(0,54%)] lg:grid-rows-1 lg:gap-8 lg:pt-0">
+          {/* ---------- text lane ---------- */}
+          <div className="relative z-20 order-2 h-[36svh] min-h-[250px] lg:order-1 lg:h-[60svh] lg:min-h-[420px]">
+            {reel.map((p, i) => (
+              <div key={p.slug} className={`reel-text-${i} absolute inset-0 flex flex-col justify-center`}>
+                <span className="display text-5xl leading-none lg:text-8xl" style={{ color: p.pouch, opacity: 0.25 }}>
+                  {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="display mt-2 text-4xl text-charcoal lg:text-6xl">{b.name}</h3>
-                <p className="mt-3 text-xl font-bold" style={{ color: b.color }}>
-                  {b.line}
+                <h3 className="display mt-1 text-3xl text-charcoal sm:text-4xl lg:mt-2 lg:text-6xl">{p.name}</h3>
+                <p className="mt-1.5 text-lg font-bold lg:mt-3 lg:text-xl" style={{ color: p.pouch }}>
+                  {p.tagline}
                 </p>
-                <p className="mt-2 max-w-sm text-base leading-relaxed text-charcoal/65">{b.body}</p>
+                <p className="mt-1.5 line-clamp-2 max-w-md text-sm leading-relaxed text-charcoal/65 sm:text-base lg:mt-2 lg:line-clamp-none">
+                  {p.desc}
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-2.5 lg:mt-6 lg:gap-3">
+                  <a
+                    href={AMAZON_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group rounded-full bg-orange px-5 py-3 text-sm font-bold text-cream shadow-md shadow-orange/25 transition-transform hover:scale-[1.05] active:scale-[0.97] lg:px-6 lg:text-base"
+                  >
+                    Buy on Amazon
+                    <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">→</span>
+                  </a>
+                  <a
+                    href={FLIPKART_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group rounded-full bg-green px-5 py-3 text-sm font-bold text-cream shadow-md shadow-green/20 transition-transform hover:scale-[1.05] active:scale-[0.97] lg:px-6 lg:text-base"
+                  >
+                    Buy on Flipkart
+                    <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">→</span>
+                  </a>
+                  <Link
+                    href={`/products/${p.slug}`}
+                    className="text-sm font-semibold text-charcoal/60 underline decoration-charcoal/30 underline-offset-4 transition-colors hover:text-orange-deep"
+                  >
+                    View product
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* packet stage */}
-          <div className="relative order-1 h-[46svh] lg:order-2 lg:h-[74svh]">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="reel-ratlami">
-                <Image src="/products/ratlami-sev.webp" alt="Ratlami Sev packet" width={620} height={840} className="packet-shadow max-h-[42svh] w-auto lg:max-h-[62svh]" />
+          {/* ---------- packet lane ---------- */}
+          <div className="relative order-1 h-full min-h-0 lg:order-2 lg:h-[74svh]">
+            <Star className="absolute top-[8%] right-[10%] w-6" />
+            <Sparkle className="absolute bottom-[14%] left-[12%] w-5 text-green" />
+            {reel.map((p, i) => (
+              <div key={p.slug} className="absolute inset-0 flex items-center justify-center">
+                <div className={`reel-packet-${i} will-change-transform`}>
+                  <Image
+                    src={p.img}
+                    alt={`${p.name} packet`}
+                    width={620}
+                    height={840}
+                    className="packet-shadow max-h-[38svh] w-auto lg:max-h-[60svh]"
+                    priority={i === 0}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="reel-indori">
-                <Image src="/products/indori-khatta.webp" alt="Indori Khatta Meetha packet" width={620} height={840} className="packet-shadow max-h-[42svh] w-auto lg:max-h-[62svh]" />
-              </div>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="reel-milan">
-                <Image src="/products/milan-mixture.webp" alt="Milan Mixture packet" width={620} height={840} className="packet-shadow max-h-[42svh] w-auto lg:max-h-[62svh]" />
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-
-        {/* section label */}
-        <div className="pointer-events-none absolute top-24 left-1/2 -translate-x-1/2 sm:top-28">
-          <span className="font-hand text-2xl text-charcoal/50">the line-up, one by one ↓</span>
         </div>
       </div>
     </section>
