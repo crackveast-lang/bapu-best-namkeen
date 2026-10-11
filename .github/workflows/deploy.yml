@@ -20,8 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAGES: 'true'
-      # The site lives under /<repo> on Pages, so links and asset URLs need the prefix.
-      NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+      # Served from the root of the custom domain (www.bestnamkeen.com), so no
+      # base path. Without a custom domain this would be /<repo name>.
+      NEXT_PUBLIC_BASE_PATH: ''
     steps:
       - uses: actions/checkout@v4
 
