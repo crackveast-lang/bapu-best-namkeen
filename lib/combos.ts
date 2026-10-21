@@ -8,9 +8,6 @@ export type Combo = {
   desc: string;
   /** product slugs from lib/products.ts — only real products */
   productSlugs: string[];
-  /** optional — leave null until a real listing exists; the CTA renders disabled */
-  amazonUrl: string | null;
-  flipkartUrl: string | null;
   /** optional display price, e.g. "₹499" — omitted when null */
   price: string | null;
   /** small handwritten note on the composition */
@@ -27,8 +24,6 @@ export const combos: Combo[] = [
     tagline: "The three everyone asks for.",
     desc: "Ratlami Sev for the heat, Sada Sev for the classics, Indori Khatta Meetha for the sweet-tang seesaw. Our most-reordered trio.",
     productSlugs: ["ratlami-sev", "sada-sev", "indori-khatta-meetha"],
-    amazonUrl: null,
-    flipkartUrl: null,
     price: null,
     note: "start here",
     accent: "#23348c",
@@ -41,8 +36,6 @@ export const combos: Combo[] = [
     tagline: "More namkeen. More to share.",
     desc: "Four full packs so nobody has to negotiate — Milan Mixture, Kadipatta Mix, Sada Sev and Ratlami Sev on the same tray.",
     productSlugs: ["milan-mixture", "kadipatta-mix", "sada-sev", "ratlami-sev"],
-    amazonUrl: null,
-    flipkartUrl: null,
     price: null,
     note: "for the whole table",
     accent: "#4a2c1a",
@@ -55,8 +48,6 @@ export const combos: Combo[] = [
     tagline: "Pour the chai. We'll handle the crunch.",
     desc: "Light, leafy and feather-crisp — Sada Sev, Kadipatta Mix and Waffer Mix, the three that pair best with a hot cup.",
     productSlugs: ["sada-sev", "kadipatta-mix", "waffer-mix"],
-    amazonUrl: null,
-    flipkartUrl: null,
     price: null,
     note: "chai approved",
     accent: "#2e6b34",

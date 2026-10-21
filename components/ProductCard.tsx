@@ -77,6 +77,9 @@ export default function ProductCard({ p, index }: { p: Product; index: number })
           <span className="rounded-full border border-charcoal/15 px-3 py-1 text-[11px] font-bold text-charcoal/60">
             {p.weight}
           </span>
+          <span className="ml-auto rounded-full bg-charcoal px-3 py-1 text-[13px] font-bold text-cream">
+            {p.price}
+          </span>
         </div>
       </motion.div>
 

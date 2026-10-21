@@ -9,6 +9,8 @@ export type Product = {
   crunch: string;
   flavor: string;
   weight: string;
+  /** display price per pack, e.g. "₹160" */
+  price: string;
   img: string;
   /** true when img is a photograph rather than a transparent cutout */
   photo?: boolean;
@@ -34,6 +36,17 @@ export const AMAZON_URL = "https://www.amazon.in/s?k=best+namkeen+gwalior";
 export const FLIPKART_URL = "https://www.flipkart.com/search?q=best%20namkeen%20gwalior";
 export const ZOMATO_URL = "https://link.zomato.com/xqzv/rshare?id=237243839b9b947b";
 export const INSTAGRAM_URL = "https://www.instagram.com/bestnamkeen/";
+
+/** Price of every 400g pack. */
+export const PACK_PRICE = "₹160";
+
+/** WhatsApp ordering number — country code + number, digits only. */
+export const WHATSAPP_NUMBER = "919425307800";
+
+/** wa.me link that opens a chat with the order message already typed. */
+export function whatsappLink(message: string) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 
 /**
  * Per-product marketplace listings. A null value means the product is not
@@ -114,6 +127,7 @@ export const products: Product[] = [
       "Thick, rugged strands that snap loud and finish warm. The spice arrives a second after the crunch — that's the Ratlami way.",
     flavor: "Fiery masala",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/ratlami-sev.webp",
     gallery: ["/products/ratlami-sev.webp", ...pick("ratlami-sev", [2, 3, 6, 7, 8])],
     highlights: CARE,
@@ -135,6 +149,7 @@ export const products: Product[] = [
       "Feather-fine strands with a delicate, clean crunch. Mild, buttery besan flavour that plays well with chaat, poha, or a plain afternoon.",
     flavor: "Lightly salted",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/sada-sev.webp",
     gallery: ["/products/sada-sev.webp", ...pick("sada-sev", [6, 1, 4, 9, 3])],
     highlights: CARE,
@@ -155,6 +170,7 @@ export const products: Product[] = [
       "Light and leafy — every handful crackles with fried kadipatta and the gentle bite of green chilli. Herby first, spicy after.",
     flavor: "Herby & spicy",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/kadipatta-mix.webp",
     gallery: ["/products/kadipatta-mix.webp", ...pick("kadipatta-mix", [7, 1, 2, 4, 6])],
     highlights: CARE,
@@ -176,6 +192,7 @@ export const products: Product[] = [
       "Soft flakes, crunchy dals and the occasional peanut jackpot. Sweet on the tongue, tangy at the finish.",
     flavor: "Sweet & tangy",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/indori-khatta.webp",
     gallery: ["/products/indori-khatta.webp", ...pick("indori-khatta-meetha", [3, 5, 2, 7, 4])],
     highlights: CARE,
@@ -196,6 +213,7 @@ export const products: Product[] = [
       "Every handful is different — flake, strand, dal, nut. A rolling, layered crunch with a warm masala finish.",
     flavor: "Classic mixture",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/milan-mixture.webp",
     gallery: ["/products/milan-mixture.webp", ...pick("milan-mixture", [6, 1, 4, 3, 7])],
     highlights: CARE,
@@ -216,6 +234,7 @@ export const products: Product[] = [
       "Coarse, honest strands with a peppery kick that builds slowly. The old-timers' choice for a reason.",
     flavor: "Peppery",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/gal/ujjaini-sev-3.webp",
     photo: true,
     gallery: pick("ujjaini-sev", [3, 8, 1, 5, 7]),
@@ -237,6 +256,7 @@ export const products: Product[] = [
       "Bold and savoury — the garlic hits first, the crunch carries it. Not for the faint-hearted, beloved by everyone else.",
     flavor: "Garlic & spice",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/gal/lahsun-mix-8.webp",
     photo: true,
     gallery: pick("lahsun-mix", [8, 6, 9, 2, 4, 3]),
@@ -257,6 +277,7 @@ export const products: Product[] = [
       "Shatter-light wafers against soft masala dust — the kind of crunch you hear across the room and finish before the chai cools.",
     flavor: "Hing masala",
     weight: "400g",
+    price: PACK_PRICE,
     img: "/products/waffer-mix.webp",
     gallery: ["/products/waffer-mix.webp", ...pick("waffer-mix", [6, 2, 5, 4, 3])],
     highlights: CARE,

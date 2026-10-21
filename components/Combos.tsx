@@ -7,7 +7,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { combos, comboProducts, type Combo } from "@/lib/combos";
-import { ZOMATO_URL } from "@/lib/products";
+import { whatsappLink } from "@/lib/products";
 import { HandArrow, Star, Seeds, Peanut, Sparkle, Burst } from "./Doodles";
 import { DrawnUnderline } from "./AnimatedDoodles";
 
@@ -156,45 +156,20 @@ function ComboRow({ combo, index }: { combo: Combo; index: number }) {
         )}
 
         <div className="mt-7 flex flex-wrap items-center gap-3">
-          <BuyButton href={combo.amazonUrl} label="Buy on Amazon" className="bg-orange text-cream shadow-lg shadow-orange/30" />
-          <BuyButton href={combo.flipkartUrl} label="Buy on Flipkart" className="bg-green text-cream shadow-lg shadow-green/25" />
+          <a
+            href={whatsappLink(
+              `Hi Best Namkeen! I'd like to order the ${combo.name} (${items.map((p) => p.name).join(", ")}).`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/b rounded-full bg-green px-7 py-4 text-base font-bold text-cream shadow-lg shadow-green/25 transition-transform hover:scale-[1.05] active:scale-[0.97]"
+          >
+            Order on WhatsApp
+            <span className="ml-2 inline-block transition-transform group-hover/b:translate-x-1">→</span>
+          </a>
         </div>
-        <a
-          href={ZOMATO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 inline-block text-sm font-semibold text-charcoal/60 underline decoration-orange/50 underline-offset-4 transition-colors hover:text-orange-deep"
-        >
-          or order the packs on Zomato ↗
-        </a>
         <Burst className="wiggle-on-hover mt-6 hidden w-6 text-orange lg:block" />
       </div>
     </motion.article>
-  );
-}
-
-/** Renders a disabled "coming soon" pill when no real link exists yet. */
-function BuyButton({ href, label, className }: { href: string | null; label: string; className: string }) {
-  if (!href) {
-    return (
-      <span
-        aria-disabled
-        className="cursor-not-allowed rounded-full border-2 border-dashed border-charcoal/20 px-6 py-3.5 text-sm font-bold text-charcoal/40"
-        title="Listing coming soon"
-      >
-        {label} · soon
-      </span>
-    );
-  }
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group/b rounded-full px-7 py-4 text-base font-bold transition-transform hover:scale-[1.05] active:scale-[0.97] ${className}`}
-    >
-      {label}
-      <span className="ml-2 inline-block transition-transform group-hover/b:translate-x-1">→</span>
-    </a>
   );
 }

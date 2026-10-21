@@ -53,6 +53,7 @@ export const stores: Store[] = [
     name: "City Centre",
     locality: "City Centre, Gwalior",
     address: "City Centre, Gwalior, MP",
+    hours: "9:00 am – 9:00 pm",
     img: "/stores/store-city.webp",
     caption: "Sweets, gajak and every Best Namkeen pack under one roof.",
     mapsUrl: maps("Bapu Best Namkeen, City Centre, Gwalior"),

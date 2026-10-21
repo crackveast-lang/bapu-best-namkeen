@@ -72,6 +72,10 @@ export default function ProductPageContent({
               <p className="font-hand mt-2 text-3xl" style={{ color: p.pouch }}>
                 {p.tagline}
               </p>
+              <p className="mt-5 flex items-baseline gap-2">
+                <span className="display text-4xl text-charcoal">{p.price}</span>
+                <span className="text-sm font-bold text-charcoal/50">/ {p.weight} pack</span>
+              </p>
             </motion.div>
 
             <motion.p
