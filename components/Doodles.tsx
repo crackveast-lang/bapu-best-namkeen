@@ -258,3 +258,61 @@ export function Peanut({ className }: P) {
     </svg>
   );
 }
+
+/* ---- Diwali ---- */
+
+/** Clay diya with a flickering flame (flame animates via .diya-flame). */
+export function Diya({ className }: P) {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden>
+      <g className="diya-flame">
+        <path d="M32 8c5 7 7 12 7 16a7 7 0 0 1-14 0c0-4 2-9 7-16z" fill="#f2a23a" />
+        <path d="M32 17c2.6 3.6 3.6 6.2 3.6 8a3.6 3.6 0 0 1-7.2 0c0-1.8 1-4.4 3.6-8z" fill="#fbe0a0" />
+      </g>
+      <path
+        d="M6 36c2 11 13 18 26 18s24-7 26-18c-8 3-17 4.5-26 4.5S14 39 6 36z"
+        fill="#b95c0d"
+        stroke="#4a2c1a"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M14 44c5 2.6 11 3.6 18 3.6s13-1 18-3.6" stroke="#f7d9b4" strokeWidth="1.6" strokeLinecap="round" strokeDasharray="1 4.5" />
+    </svg>
+  );
+}
+
+/** Small marigold (genda phool). */
+export function Marigold({ className }: P) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden>
+      {[0, 45, 90, 135, 180, 225, 270, 315].map((r) => (
+        <ellipse key={r} cx="24" cy="12" rx="6.5" ry="9" fill="#ef9a10" stroke="#b95c0d" strokeWidth="1.4" transform={`rotate(${r} 24 24)`} />
+      ))}
+      <circle cx="24" cy="24" r="7" fill="#e07b1f" stroke="#b95c0d" strokeWidth="1.4" />
+      <path d="M21 22.5c1.5 1 4.5 1 6 0M21.5 26c1.4.8 3.6.8 5 0" stroke="#b95c0d" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Line-drawn rangoli — used as a faint watermark (colour from currentColor). */
+export function Rangoli({ className }: P) {
+  const petals = Array.from({ length: 12 }, (_, i) => i * 30);
+  return (
+    <svg viewBox="0 0 200 200" fill="none" className={className} aria-hidden stroke="currentColor" strokeLinecap="round">
+      <circle cx="100" cy="100" r="94" strokeWidth="1.2" strokeDasharray="2 6" />
+      <circle cx="100" cy="100" r="80" strokeWidth="1.4" />
+      {petals.map((r) => (
+        <g key={r} transform={`rotate(${r} 100 100)`}>
+          <path d="M100 22c10 14 10 30 0 42-10-12-10-28 0-42z" strokeWidth="1.4" />
+          <circle cx="100" cy="14" r="2.2" fill="currentColor" stroke="none" />
+          <path d="M100 64c6 6 14 8 20 6" strokeWidth="1" transform="rotate(15 100 100)" />
+        </g>
+      ))}
+      <circle cx="100" cy="100" r="34" strokeWidth="1.4" />
+      {petals.map((r) => (
+        <path key={`i${r}`} d="M100 68c5 7 5 14 0 20-5-6-5-13 0-20z" strokeWidth="1.2" transform={`rotate(${r + 15} 100 100)`} />
+      ))}
+      <circle cx="100" cy="100" r="9" strokeWidth="1.4" />
+    </svg>
+  );
+}

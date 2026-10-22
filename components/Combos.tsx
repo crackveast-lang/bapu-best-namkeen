@@ -8,7 +8,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { combos, comboProducts, type Combo } from "@/lib/combos";
 import { whatsappLink } from "@/lib/products";
-import { HandArrow, Star, Seeds, Peanut, Sparkle, Burst } from "./Doodles";
+import { HandArrow, Star, Seeds, Peanut, Sparkle, Burst, Diya } from "./Doodles";
 import { DrawnUnderline } from "./AnimatedDoodles";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -50,6 +50,16 @@ export default function Combos() {
             className="font-hand mt-4 text-2xl text-charcoal/55"
           >
             bundles of the real packs — nothing invented, just more of it
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-orange/30 bg-orange-soft/50 py-1.5 pr-4 pl-2 text-sm font-bold text-orange-deep"
+          >
+            <Diya className="w-7" />
+            Diwali gifting sorted — order any combo on WhatsApp.
           </motion.p>
         </div>
 

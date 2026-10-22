@@ -121,3 +121,18 @@ body {
     animation: none;
   }
 }
+
+/* ---- Diwali: diya flame flicker ---- */
+@keyframes diya-flicker {
+  0%, 100% { transform: scale(1, 1) rotate(0deg); opacity: 1; }
+  30% { transform: scale(0.94, 1.06) rotate(-3deg); opacity: 0.9; }
+  60% { transform: scale(1.04, 0.96) rotate(2deg); opacity: 1; }
+}
+.diya-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: diya-flicker 1.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .diya-flame { animation: none; }
+}

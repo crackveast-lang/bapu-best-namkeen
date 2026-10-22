@@ -11,7 +11,7 @@ import Image from "next/image";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { AMAZON_URL, FLIPKART_URL, ZOMATO_URL } from "@/lib/products";
 import { useIntroReady } from "@/lib/intro";
-import { Chilli, SevSquiggle, Star, Sparkle, Seeds, HandArrow, Peanut, Burst, Coriander } from "./Doodles";
+import { Chilli, SevSquiggle, Seeds, HandArrow, Peanut, Coriander, Diya, Marigold, Rangoli } from "./Doodles";
 import { DrawnUnderline, DrawnCircle } from "./AnimatedDoodles";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -113,7 +113,10 @@ export default function Hero() {
           className="flex items-center gap-3"
         >
           <Image src="/brand/logo.webp" alt="Best Namkeen logo" width={56} height={56} priority className="h-11 w-11 sm:h-13 sm:w-13" />
-          <span className="font-script text-2xl text-brand-red sm:text-3xl">Best Namkeen</span>
+          <span className="flex flex-col items-start leading-tight">
+            <span className="text-[11px] font-bold tracking-[0.22em] text-charcoal/50 uppercase">From the house of</span>
+            <span className="font-script text-2xl text-brand-red sm:text-3xl">Best Namkeen</span>
+          </span>
         </motion.div>
 
         <motion.p
@@ -128,12 +131,17 @@ export default function Hero() {
         </motion.p>
 
         {/* 2. headline */}
-        <h1 className="display mt-5 text-[clamp(2.7rem,6.8vw,6.4rem)] text-charcoal">
-          <Reveal show={ready} delay={0.45}>The crunch</Reveal>
+        {/* sub-brand headline — Best Bite Namkeen, by Best Namkeen (above) */}
+        <h1 className="display relative mt-5 text-[clamp(2.7rem,6.8vw,6.4rem)] text-charcoal">
+          {/* festive: faint rangoli behind the headline */}
+          <Rangoli className="pointer-events-none absolute top-1/2 left-1/2 -z-10 w-[2.3em] -translate-x-1/2 -translate-y-1/2 text-orange opacity-[0.22]" />
+          <Reveal show={ready} delay={0.45}>
+            Best <span className="text-orange">Bite</span>
+          </Reveal>
           <Reveal show={ready} delay={0.58} pad>
             <span className="relative inline-block whitespace-nowrap">
-              you&apos;ll <span className="text-orange">remember.</span>
-              <DrawnUnderline delay={1.5} className="absolute -bottom-[0.22em] right-0 -z-10 h-[0.16em] w-[58%]" />
+              Namkeen.
+              <DrawnUnderline delay={1.5} className="absolute -bottom-[0.22em] right-0 -z-10 h-[0.16em] w-[70%]" />
             </span>
           </Reveal>
         </h1>
@@ -146,8 +154,8 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.85, ease: easeOut }}
           className="mt-5 max-w-lg text-lg leading-relaxed text-charcoal/70"
         >
-          Small-batch namkeen made the Gwalior way — real besan, whole spices,
-          and recipes that haven&apos;t changed in six decades.
+          The crunch you&apos;ll remember — Best Namkeen&apos;s six decades of Gwalior
+          recipes, now in Best Bite packs. Real besan, whole spices, small batches.
         </motion.p>
 
         {/* 4. CTAs — Amazon & Flipkart primary, Zomato secondary */}
@@ -225,8 +233,8 @@ export default function Hero() {
         <Drift show={ready} delay={1.9} className="absolute bottom-[8%] left-[36%] hidden w-24 lg:block">
           <SevSquiggle className="bob" />
         </Drift>
-        <Drift show={ready} delay={2.0} className="absolute right-[7%] bottom-[40%] w-6">
-          <Star className="bob" />
+        <Drift show={ready} delay={2.0} className="absolute right-[6%] bottom-[40%] w-9 sm:w-11">
+          <Diya className="bob" />
         </Drift>
         <Drift show={ready} delay={2.05} className="absolute bottom-[3%] left-1/2 hidden w-16 -translate-x-1/2 sm:block">
           <Seeds className="bob" />
@@ -234,12 +242,20 @@ export default function Hero() {
         <Drift show={ready} delay={2.1} className="absolute right-[30%] bottom-[12%] hidden w-9 lg:block">
           <Peanut className="bob rotate-12" />
         </Drift>
-        <Drift show={ready} delay={2.15} className="absolute top-[22%] right-[12%] hidden w-5 text-green lg:block">
-          <Sparkle className="bob" />
+        <Drift show={ready} delay={2.15} className="absolute top-[22%] right-[12%] hidden w-9 lg:block">
+          <Marigold className="bob" />
         </Drift>
-        <Drift show={ready} delay={2.2} className="absolute top-[26%] left-[10%] hidden w-6 text-orange lg:block">
-          <Burst className="bob" />
+        <Drift show={ready} delay={2.2} className="absolute top-[28%] left-[11%] hidden w-12 lg:block">
+          <Diya className="bob" />
         </Drift>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={ready ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 2.3 }}
+          className="font-hand absolute top-[21%] left-[7%] hidden -rotate-6 text-2xl text-orange-deep lg:block"
+        >
+          Shubh Deepavali ✦
+        </motion.div>
         <Drift show={ready} delay={2.25} className="absolute right-[4%] bottom-[22%] hidden w-9 sm:block">
           <Coriander className="bob" />
         </Drift>

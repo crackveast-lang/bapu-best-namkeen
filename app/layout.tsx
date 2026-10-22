@@ -26,7 +26,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Best Namkeen — Crunch That Feels Like Home",
+  title: "Best Bite Namkeen — from the house of Best Namkeen, Gwalior",
   description:
     "Small-batch Indian namkeen from Gwalior — a legacy of taste since 1960. Ratlami Sev, Khatta Meetha, Kadipatta Mix and more, plus four stores across Gwalior. Order on Zomato.",
 };

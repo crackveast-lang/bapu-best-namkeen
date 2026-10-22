@@ -1,6 +1,8 @@
-import { Chilli } from "./Doodles";
+import { Chilli, Diya } from "./Doodles";
 
-const words = ["Crunch", "Masala", "Sev", "Chai Time", "Namkeen", "Indore Style", "Since 1997"];
+const words = ["Crunch", "Masala", "Shubh Deepavali", "Sev", "Chai Time", "Namkeen", "Diwali Gifting", "Indore Style", "Since 1997"];
+/** Festive words get a diya instead of the chilli separator. */
+const festive = new Set(["Shubh Deepavali", "Diwali Gifting"]);
 
 export default function Marquee() {
   return (
@@ -12,7 +14,7 @@ export default function Marquee() {
               {words.map((w) => (
                 <span key={`${copy}-${w}`} className="flex items-center">
                   <span className="display px-6 text-3xl text-cream sm:text-4xl">{w}</span>
-                  <Chilli className="w-7 shrink-0 -rotate-12" />
+                  {festive.has(w) ? <Diya className="w-9 shrink-0" /> : <Chilli className="w-7 shrink-0 -rotate-12" />}
                 </span>
               ))}
             </div>
