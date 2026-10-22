@@ -39,7 +39,7 @@ export default function AllProductsContent() {
           className="mt-4 flex items-center gap-2 text-charcoal/50"
         >
           <span className="font-hand text-2xl">
-            eight recipes, all made in Gwalior since 1960
+            eight Best Bite recipes, packed in Gwalior since 1997
           </span>
           <HandArrow className="w-12 rotate-45" />
         </motion.div>

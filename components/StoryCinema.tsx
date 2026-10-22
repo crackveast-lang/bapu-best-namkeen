@@ -218,9 +218,9 @@ function MomentGenerations() {
             transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
             className="mt-5 max-w-md text-lg leading-relaxed text-charcoal/70"
           >
-            Every ingredient is carefully chosen. Every recipe is prepared
-            with care. And every bite carries the same dedication that started
-            it all.
+            In 1997, those recipes went into packs and Best Bite Namkeen was
+            born — so every bite carries the same dedication that started it
+            all, wherever you are.
           </motion.p>
         </div>
       </div>

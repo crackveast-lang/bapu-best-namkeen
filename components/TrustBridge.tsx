@@ -24,7 +24,7 @@ const points = [
   },
   {
     n: "03",
-    title: "Now sealed for you",
+    title: "Sealed for you since 1997",
     body: "Packed in a 400g zip-lock pouch, so that taste can reach your home, your city and your gifts.",
   },
 ];
@@ -89,9 +89,9 @@ export default function TrustBridge() {
             transition={{ duration: 0.7, delay: 0.08, ease: easeOut }}
             className="display text-5xl text-charcoal sm:text-7xl"
           >
-            Trusted at the counter.
+            At the counter since 1960.
             <br />
-            <span className="text-orange">Now in your pack.</span>
+            <span className="text-orange">In your pack since 1997.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -101,7 +101,7 @@ export default function TrustBridge() {
             className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-charcoal/70"
           >
             If you&apos;ve ever bought namkeen at a Best Namkeen store in Gwalior, you already know
-            Best Bite. It&apos;s the same trust — just packed so it can come home with you.
+            Best Bite. Since 1997 it&apos;s been the same trust — packed so it can come home with you.
           </motion.p>
         </div>
 
@@ -182,7 +182,7 @@ export default function TrustBridge() {
               <span className="display block text-3xl text-charcoal">
                 Best <span className="text-orange">Bite</span> Namkeen
               </span>
-              <span className="font-hand text-xl text-charcoal/60">the same taste, sealed fresh</span>
+              <span className="font-hand text-xl text-charcoal/60">the same taste, packed since 1997</span>
             </figcaption>
           </motion.figure>
         </div>

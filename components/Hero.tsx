@@ -154,8 +154,8 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.85, ease: easeOut }}
           className="mt-5 max-w-lg text-lg leading-relaxed text-charcoal/70"
         >
-          The crunch you&apos;ll remember — Best Namkeen&apos;s six decades of Gwalior
-          recipes, now in Best Bite packs. Real besan, whole spices, small batches.
+          The crunch you&apos;ll remember — Best Namkeen&apos;s Gwalior recipes, packed as
+          Best Bite since 1997. Real besan, whole spices, small batches.
         </motion.p>
 
         {/* 4. CTAs — Amazon & Flipkart primary, Zomato secondary */}
