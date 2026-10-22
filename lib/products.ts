@@ -41,7 +41,7 @@ export const INSTAGRAM_URL = "https://www.instagram.com/bestnamkeen/";
 export const PACK_PRICE = "₹160";
 
 /** WhatsApp ordering number — country code + number, digits only. */
-export const WHATSAPP_NUMBER = "919425307800";
+export const WHATSAPP_NUMBER = "918878212000";
 
 /** wa.me link that opens a chat with the order message already typed. */
 export function whatsappLink(message: string) {

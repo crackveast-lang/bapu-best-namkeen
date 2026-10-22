@@ -5,6 +5,8 @@ import Marquee from "@/components/Marquee";
 import CinematicReel from "@/components/CinematicReel";
 import ProductShowcase from "@/components/ProductShowcase";
 import Combos from "@/components/Combos";
+import BulkOrders from "@/components/BulkOrders";
+import TrustBridge from "@/components/TrustBridge";
 import FloatingComposition from "@/components/FloatingComposition";
 import WhyUs from "@/components/WhyUs";
 import StoryCinema from "@/components/StoryCinema";
@@ -25,10 +27,13 @@ export default function Home() {
         {/* discover */}
         <Hero />
         <Marquee />
+        {/* trust: Best Namkeen → Best Bite */}
+        <TrustBridge />
         {/* taste */}
         <CinematicReel />
         <ProductShowcase />
         <Combos />
+        <BulkOrders />
         <FloatingComposition />
         <WhyUs />
         {/* learn */}
