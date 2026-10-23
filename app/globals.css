@@ -21,6 +21,7 @@
   --font-display: var(--font-anton);
   --font-body: var(--font-bricolage);
   --font-script: var(--font-pacifico);
+  --font-bites: var(--font-kaushan);
   --font-hand: var(--font-caveat);
 }
 
@@ -135,4 +136,13 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .diya-flame { animation: none; }
+}
+
+/* ---- Best Bites wordmark: white brush letters, red outline (as on the pack logo) ---- */
+.bites-logo {
+  color: #fff;
+  -webkit-text-stroke: 0.14em #c8102e;
+  paint-order: stroke fill;
+  text-shadow: 0.04em 0.05em 0 #8c0e15;
+  padding: 0 0.12em;
 }

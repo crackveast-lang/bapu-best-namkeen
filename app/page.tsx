@@ -27,7 +27,7 @@ export default function Home() {
         {/* discover */}
         <Hero />
         <Marquee />
-        {/* trust: Best Namkeen → Best Bite */}
+        {/* trust: Best Namkeen → Best Bites */}
         <TrustBridge />
         {/* taste */}
         <CinematicReel />

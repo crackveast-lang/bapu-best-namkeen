@@ -8,6 +8,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, Sparkle, Seeds, SevSquiggle, Stamp1960 } from "./Doodles";
 import { DrawnUnderline } from "./AnimatedDoodles";
+import BestBites from "./BestBites";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -218,7 +219,7 @@ function MomentGenerations() {
             transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
             className="mt-5 max-w-md text-lg leading-relaxed text-charcoal/70"
           >
-            In 1997, those recipes went into packs and Best Bite Namkeen was
+            In 1997, those recipes went into packs and <BestBites namkeen /> was
             born — so every bite carries the same dedication that started it
             all, wherever you are.
           </motion.p>

@@ -1,13 +1,14 @@
 "use client";
 
 /* Trust bridge — the parent/sub-brand relationship told from the customer's
-   side: the Best Namkeen counter you already know → the Best Bite pack in
+   side: the Best Namkeen counter you already know → the Best Bites pack in
    your hand. A dotted line draws itself between the two and a small heart
    ("the same trust") travels along it. */
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkle } from "./Doodles";
+import BestBites from "./BestBites";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -15,7 +16,11 @@ const points = [
   {
     n: "01",
     title: "Same family",
-    body: "Best Bite is made by the Best Namkeen family — the people behind the counters you've bought from since 1960.",
+    body: (
+      <>
+        <BestBites /> is made by the Best Namkeen family — the people behind the counters you&apos;ve bought from since 1960.
+      </>
+    ),
   },
   {
     n: "02",
@@ -72,7 +77,7 @@ export default function TrustBridge() {
   return (
     <section id="trust" className="relative overflow-hidden bg-cream py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-5xl text-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +85,7 @@ export default function TrustBridge() {
             transition={{ duration: 0.6, ease: easeOut }}
             className="mb-3 text-xs font-bold tracking-[0.22em] text-orange-deep uppercase"
           >
-            Who makes Best Bite?
+            Who makes <BestBites className="text-[1.5em]" />?
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -101,7 +106,7 @@ export default function TrustBridge() {
             className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-charcoal/70"
           >
             If you&apos;ve ever bought namkeen at a Best Namkeen store in Gwalior, you already know
-            Best Bite. Since 1997 it&apos;s been the same trust — packed so it can come home with you.
+            {" "}<BestBites />. Since 1997 it&apos;s been the same trust — packed so it can come home with you.
           </motion.p>
         </div>
 
@@ -170,7 +175,7 @@ export default function TrustBridge() {
               <div className="bob packet-shadow h-[92%] lg:h-[115%] lg:-translate-y-[6%]" style={{ "--bob-rot": "-6deg" } as React.CSSProperties}>
                 <Image
                   src="/products/ratlami-sev.webp"
-                  alt="A Best Bite Namkeen Ratlami Sev pack"
+                  alt="A Best Bites Namkeen Ratlami Sev pack"
                   width={420}
                   height={560}
                   className="h-full w-auto object-contain"
@@ -179,10 +184,10 @@ export default function TrustBridge() {
             </div>
             <figcaption className="mt-4 text-center">
               <span className="text-[11px] font-bold tracking-[0.22em] text-charcoal/50 uppercase">The pack in your hand</span>
-              <span className="display block text-3xl text-charcoal">
-                Best <span className="text-orange">Bite</span> Namkeen
+              <span className="mt-2 block">
+                <BestBites variant="logo" namkeen className="text-5xl" />
               </span>
-              <span className="font-hand text-xl text-charcoal/60">the same taste, packed since 1997</span>
+              <span className="font-hand mt-1 block text-xl text-charcoal/60">the same taste, packed since 1997</span>
             </figcaption>
           </motion.figure>
         </div>

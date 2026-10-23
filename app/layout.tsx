@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Bricolage_Grotesque, Pacifico, Caveat } from "next/font/google";
+import { Anton, Bricolage_Grotesque, Pacifico, Caveat, Kaushan_Script } from "next/font/google";
 import "./globals.css";
 import Preloader from "@/components/Preloader";
 
@@ -20,15 +20,21 @@ const pacifico = Pacifico({
   variable: "--font-pacifico",
 });
 
+const kaushan = Kaushan_Script({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-kaushan",
+});
+
 const caveat = Caveat({
   subsets: ["latin"],
   variable: "--font-caveat",
 });
 
 export const metadata: Metadata = {
-  title: "Best Bite Namkeen — from the house of Best Namkeen, Gwalior",
+  title: "Best Bites Namkeen — from the house of Best Namkeen, Gwalior",
   description:
-    "Best Bite Namkeen — packed since 1997 by Best Namkeen, Gwalior's namkeen makers since 1960. Ratlami Sev, Khatta Meetha, Kadipatta Mix and more, plus four stores across Gwalior.",
+    "Best Bites Namkeen — packed since 1997 by Best Namkeen, Gwalior's namkeen makers since 1960. Ratlami Sev, Khatta Meetha, Kadipatta Mix and more, plus four stores across Gwalior.",
 };
 
 export default function RootLayout({
@@ -37,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${anton.variable} ${bricolage.variable} ${pacifico.variable} ${caveat.variable} grain antialiased`}
+        className={`${anton.variable} ${bricolage.variable} ${pacifico.variable} ${caveat.variable} ${kaushan.variable} grain antialiased`}
       >
         <Preloader />
         {children}

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { products } from "@/lib/products";
 import ProductCard from "./ProductCard";
 import { HandArrow, Chilli, Star } from "./Doodles";
+import BestBites from "./BestBites";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -39,7 +40,7 @@ export default function AllProductsContent() {
           className="mt-4 flex items-center gap-2 text-charcoal/50"
         >
           <span className="font-hand text-2xl">
-            eight Best Bite recipes, packed in Gwalior since 1997
+            eight <BestBites /> recipes, packed in Gwalior since 1997
           </span>
           <HandArrow className="w-12 rotate-45" />
         </motion.div>

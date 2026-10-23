@@ -13,6 +13,7 @@ import { AMAZON_URL, FLIPKART_URL, ZOMATO_URL } from "@/lib/products";
 import { useIntroReady } from "@/lib/intro";
 import { Chilli, SevSquiggle, Seeds, HandArrow, Peanut, Coriander, Diya, Marigold, Rangoli } from "./Doodles";
 import { DrawnUnderline, DrawnCircle } from "./AnimatedDoodles";
+import BestBites from "./BestBites";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 const pop = [0.34, 1.56, 0.64, 1] as const;
@@ -131,12 +132,12 @@ export default function Hero() {
         </motion.p>
 
         {/* 2. headline */}
-        {/* sub-brand headline — Best Bite Namkeen, by Best Namkeen (above) */}
+        {/* sub-brand headline — Best Bites Namkeen, by Best Namkeen (above) */}
         <h1 className="display relative mt-5 text-[clamp(2.7rem,6.8vw,6.4rem)] text-charcoal">
           {/* festive: faint rangoli behind the headline */}
           <Rangoli className="pointer-events-none absolute top-1/2 left-1/2 -z-10 w-[2.3em] -translate-x-1/2 -translate-y-1/2 text-orange opacity-[0.22]" />
           <Reveal show={ready} delay={0.45}>
-            Best <span className="text-orange">Bite</span>
+            <BestBites variant="logo" className="text-[1.08em]" />
           </Reveal>
           <Reveal show={ready} delay={0.58} pad>
             <span className="relative inline-block whitespace-nowrap">
@@ -155,7 +156,7 @@ export default function Hero() {
           className="mt-5 max-w-lg text-lg leading-relaxed text-charcoal/70"
         >
           The crunch you&apos;ll remember — Best Namkeen&apos;s Gwalior recipes, packed as
-          Best Bite since 1997. Real besan, whole spices, small batches.
+          {" "}<BestBites /> since 1997. Real besan, whole spices, small batches.
         </motion.p>
 
         {/* 4. CTAs — Amazon & Flipkart primary, Zomato secondary */}
