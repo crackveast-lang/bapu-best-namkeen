@@ -9,7 +9,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
-import { AMAZON_URL, FLIPKART_URL, ZOMATO_URL } from "@/lib/products";
+import { AMAZON_URL, ZOMATO_URL } from "@/lib/products";
 import { useIntroReady } from "@/lib/intro";
 import { Chilli, SevSquiggle, Seeds, HandArrow, Peanut, Coriander, Diya, Marigold, Rangoli } from "./Doodles";
 import { DrawnUnderline, DrawnCircle } from "./AnimatedDoodles";
@@ -116,7 +116,7 @@ export default function Hero() {
           <Image src="/brand/logo.webp" alt="Best Namkeen logo" width={56} height={56} priority className="h-11 w-11 sm:h-13 sm:w-13" />
           <span className="flex flex-col items-start leading-tight">
             <span className="text-[11px] font-bold tracking-[0.22em] text-charcoal/50 uppercase">From the house of</span>
-            <span className="font-script text-2xl text-brand-red sm:text-3xl">Best Namkeen</span>
+            <span className="font-script text-2xl text-namkeen-blue sm:text-3xl">Best Namkeen</span>
           </span>
         </motion.div>
 
@@ -159,7 +159,7 @@ export default function Hero() {
           {" "}<BestBites /> since 1997. Real besan, whole spices, small batches.
         </motion.p>
 
-        {/* 4. CTAs — Amazon & Flipkart primary, Zomato secondary */}
+        {/* 4. CTAs — Amazon primary, Zomato secondary */}
         <motion.div
           initial="hidden"
           animate={state}
@@ -175,15 +175,6 @@ export default function Hero() {
               className="group rounded-full bg-orange px-7 py-4 text-base font-bold text-cream shadow-lg shadow-orange/30 transition-transform hover:scale-[1.05] active:scale-[0.97]"
             >
               Buy on Amazon
-              <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
-            </a>
-            <a
-              href={FLIPKART_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-full bg-green px-7 py-4 text-base font-bold text-cream shadow-lg shadow-green/25 transition-transform hover:scale-[1.05] active:scale-[0.97]"
-            >
-              Buy on Flipkart
               <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>

@@ -14,18 +14,17 @@ export default function Footer() {
           <div className="sm:col-span-2">
             <div className="flex items-center gap-3">
               <Image
-                src="/brand/logo.webp"
-                alt="Bapu Best Namkeen logo — since 1960"
-                width={64}
-                height={64}
-                className="h-16 w-16 object-contain"
+                src="/brand/best-bites-logo.webp"
+                alt="Bappu Best Bites Namkeen logo"
+                width={720}
+                height={334}
+                className="h-20 w-auto object-contain"
               />
-              <div>
-                <p className="font-script text-3xl text-brand-red">Best Namkeen</p>
-                <p className="mt-0.5 text-[11px] font-bold tracking-[0.24em] text-cream/50 uppercase">
-                  Gwalior · Since 1960
-                </p>
-              </div>
+              <p className="text-[11px] leading-relaxed font-bold tracking-[0.24em] text-cream/50 uppercase">
+                From the house of
+                <br />
+                Best Namkeen · Since 1960
+              </p>
             </div>
             <p className="mt-5 max-w-sm leading-relaxed text-cream/65">
               Small-batch namkeen from Gwalior — carrying forward a legacy of

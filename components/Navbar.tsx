@@ -34,21 +34,13 @@ export default function Navbar() {
       >
         <Link href="/" className="flex items-center gap-2.5">
           <Image
-            src="/brand/logo.webp"
-            alt="Bapu Best Namkeen logo"
-            width={40}
-            height={40}
-            className="h-10 w-10 object-contain"
+            src="/brand/best-bites-logo.webp"
+            alt="Bappu Best Bites Namkeen logo"
+            width={720}
+            height={334}
+            className="h-10 w-auto object-contain sm:h-11"
             priority
           />
-          <span className="flex flex-col leading-none">
-            <span className="font-script text-lg leading-tight text-brand-red sm:text-xl">
-              Best Namkeen
-            </span>
-            <span className="hidden text-[9px] font-bold tracking-[0.2em] text-charcoal/55 sm:block">
-              GWALIOR · SINCE 1960
-            </span>
-          </span>
         </Link>
 
         <ul className="hidden items-center gap-1 lg:flex">

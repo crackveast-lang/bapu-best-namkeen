@@ -68,13 +68,13 @@ export default function Preloader() {
               initial={{ opacity: 0, scale: 0.6, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-              className="w-24 sm:w-28"
+              className="w-52 sm:w-64"
             >
               <Image
-                src="/brand/logo.webp"
+                src="/brand/best-bites-logo.webp"
                 alt=""
-                width={240}
-                height={240}
+                width={720}
+                height={334}
                 priority
                 className="drop-shadow-[0_14px_24px_rgba(36,30,22,0.25)]"
               />

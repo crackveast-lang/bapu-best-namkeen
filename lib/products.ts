@@ -29,10 +29,10 @@ export type Product = {
 
 /**
  * Purchase destinations — CTA hierarchy: Amazon & Flipkart primary, Zomato secondary.
- * Amazon/Flipkart currently open the brand's storefront search; swap in the
- * exact product/storefront listing URLs when available.
+ * AMAZON_URL is the Best Bites brand store on Amazon; Flipkart still opens a
+ * search until a storefront URL is available.
  */
-export const AMAZON_URL = "https://www.amazon.in/s?k=best+namkeen+gwalior";
+export const AMAZON_URL = "https://www.amazon.in/stores/page/00A41B7B-D062-4F35-BDA0-043C223B4D61";
 export const FLIPKART_URL = "https://www.flipkart.com/search?q=best%20namkeen%20gwalior";
 export const ZOMATO_URL = "https://link.zomato.com/xqzv/rshare?id=237243839b9b947b";
 export const INSTAGRAM_URL = "https://www.instagram.com/bestnamkeen/";
