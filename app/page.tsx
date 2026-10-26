@@ -27,19 +27,19 @@ export default function Home() {
         {/* discover */}
         <Hero />
         <Marquee />
-        {/* shop: the shelf, right after the hero */}
+        {/* shop: the shelf, right after the hero, then bigger orders */}
         <ProductShowcase />
-        {/* trust: Best Namkeen → Best Bites */}
-        <TrustBridge />
-        {/* taste */}
-        <CinematicReel />
-        <Combos />
         <BulkOrders />
-        <FloatingComposition />
-        <WhyUs />
-        {/* learn */}
+        <Combos />
+        {/* learn: since 1960 */}
         <StoryCinema />
         <Founder />
+        {/* taste: one pack at a time */}
+        <CinematicReel />
+        {/* trust: Best Namkeen → Best Bites, and why */}
+        <TrustBridge />
+        <WhyUs />
+        <FloatingComposition />
         <ChaiTime />
         {/* order now */}
         <ZomatoSection />

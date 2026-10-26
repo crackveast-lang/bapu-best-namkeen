@@ -26,7 +26,7 @@ const STACK = [
 
 export default function BulkOrders() {
   return (
-    <section id="bulk" className="relative bg-cream-2 pb-24 sm:pb-32">
+    <section id="bulk" className="relative bg-cream-2 pt-24 sm:pt-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
