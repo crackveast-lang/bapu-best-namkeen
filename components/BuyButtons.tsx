@@ -74,10 +74,13 @@ export default function BuyButtons({
   );
 }
 
-/** Compact pill variants for product cards. */
-export function BuyPills({ slug }: { slug: string }) {
+/** Compact pill variants for product cards. `compact` lets them share one row
+    in a two-up phone grid (below sm). */
+export function BuyPills({ slug, compact = false }: { slug: string; compact?: boolean }) {
   const amazon = amazonFor(slug);
   const flipkart = flipkartFor(slug);
+  const fit = compact ? "max-sm:flex-1 max-sm:justify-center max-sm:px-1.5 max-sm:py-1.5 max-sm:text-[11px]" : "";
+  const arrow = compact ? "max-sm:hidden" : "";
 
   if (!amazon && !flipkart) {
     return (
@@ -85,9 +88,9 @@ export function BuyPills({ slug }: { slug: string }) {
         href={ZOMATO_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 rounded-full border-2 border-orange/60 px-4 py-2 text-sm font-bold text-orange-deep transition-colors hover:bg-orange hover:text-cream"
+        className={`inline-flex items-center gap-2 rounded-full border-2 border-orange/60 px-4 py-2 text-sm font-bold text-orange-deep transition-colors hover:bg-orange hover:text-cream ${fit}`}
       >
-        Zomato ↗
+        Zomato <span className={arrow}>↗</span>
       </a>
     );
   }
@@ -99,9 +102,9 @@ export function BuyPills({ slug }: { slug: string }) {
           href={amazon}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border-2 border-orange/60 px-4 py-2 text-sm font-bold text-orange-deep transition-colors hover:bg-orange hover:text-cream"
+          className={`inline-flex items-center gap-2 rounded-full border-2 border-orange/60 px-4 py-2 text-sm font-bold text-orange-deep transition-colors hover:bg-orange hover:text-cream ${fit}`}
         >
-          Amazon ↗
+          Amazon <span className={arrow}>↗</span>
         </a>
       )}
       {flipkart && (
@@ -109,9 +112,9 @@ export function BuyPills({ slug }: { slug: string }) {
           href={flipkart}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border-2 border-green/50 px-4 py-2 text-sm font-bold text-green transition-colors hover:bg-green hover:text-cream"
+          className={`inline-flex items-center gap-2 rounded-full border-2 border-green/50 px-4 py-2 text-sm font-bold text-green transition-colors hover:bg-green hover:text-cream ${fit}`}
         >
-          Flipkart ↗
+          Flipkart <span className={arrow}>↗</span>
         </a>
       )}
     </>

@@ -46,7 +46,8 @@ export default function AllProductsContent() {
         </motion.div>
       </div>
 
-      <div className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+      {/* two-up on phones, with the right column dropped a little for a staggered shelf */}
+      <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:gap-x-6 sm:gap-y-14 lg:grid-cols-3">
         {products.map((p, i) => (
           <motion.div
             key={p.slug}
@@ -54,9 +55,9 @@ export default function AllProductsContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7, delay: (i % 3) * 0.12, ease: easeOut }}
-            className={i % 3 === 1 ? "lg:-mt-10" : ""}
+            className={`${i % 2 === 1 ? "max-sm:mt-8" : ""} ${i % 3 === 1 ? "lg:-mt-10" : ""}`}
           >
-            <ProductCard p={p} index={i} />
+            <ProductCard p={p} index={i} compact />
           </motion.div>
         ))}
       </div>

@@ -27,11 +27,12 @@ export default function Home() {
         {/* discover */}
         <Hero />
         <Marquee />
+        {/* shop: the shelf, right after the hero */}
+        <ProductShowcase />
         {/* trust: Best Namkeen → Best Bites */}
         <TrustBridge />
         {/* taste */}
         <CinematicReel />
-        <ProductShowcase />
         <Combos />
         <BulkOrders />
         <FloatingComposition />
