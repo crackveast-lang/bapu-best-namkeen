@@ -103,7 +103,7 @@ function Moment1960() {
             transition={{ duration: 0.8, delay: 0.25, ease: easeOut }}
             className="mt-4 max-w-md text-lg leading-relaxed text-charcoal/70"
           >
-            <strong className="text-charcoal">Shri Seth Sunny Lal Bedar</strong> began a
+            <strong className="text-charcoal">Shri Seth Sunnulal Bedar</strong> began a
             journey with a simple belief — when quality is uncompromised,
             taste becomes timeless.
           </motion.p>

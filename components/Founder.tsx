@@ -116,7 +116,7 @@ export default function Founder() {
             transition={{ duration: 0.7, delay: 0.2, ease: easeOut }}
             className="mt-7 max-w-md text-lg leading-relaxed text-charcoal/70"
           >
-            In 1960, <strong className="text-charcoal">Shri Seth Sunny Lal Bedar</strong> set
+            In 1960, <strong className="text-charcoal">Shri Seth Sunnulal Bedar</strong> set
             up shop in Gwalior&apos;s Phalka Bazar with a kadhai, a recipe, and
             a refusal to compromise on quality.
           </motion.p>
